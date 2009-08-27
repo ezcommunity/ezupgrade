@@ -1,0 +1,26 @@
+INSTALLATION
+
+* Export (don't check out) ezupgrade to the web root of where the upgraded
+  installation will reside.
+
+* Check out ezcopy to the /lib folder of ezupgrade (making the directory
+  /lib/ezcopy) and and follow its installation instructions. Finally, copy the
+  ezcopy.ini file from lib/ezcopy/settings/ to settings/  
+
+
+CONFIGURATION
+
+* chmod 777 ezupgrade
+
+
+USAGE
+
+Run
+
+php ezupgrade
+
+
+ASSUMPTIONS
+
+DB dumps are assumed to be in a directory under the eZ root called "_dbdump/" and 
+have the name "[db_name].sql".
