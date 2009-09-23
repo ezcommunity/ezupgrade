@@ -65,13 +65,16 @@ class upgradeFunctions
 		$sql = $this->dbBasePath . $this->dbType . '/4.1/dbupdate-4.1.2-to-4.1.3.sql';
 		$this->updateDB($sql);
 	}
-	
+	function updateDB402A()
+	{
+		$sql = $this->dbBasePath . $this->dbType . '/4.2/unstable/dbupdate-4.1.0-to-4.2.0alpha1.sql';
+		$this->updateDB( $sql );
+	}
 	function updateDBOE501()
 	{
 		$sql = '/extension/ezoe/update/database/5.0/dbupdate-5.0.0-to-5.0.1.sql';
 		$this->updateDB($sql);
 	}
-	
 	function updateOERewriteRules()
 	{
 		$this->manualAttention('Add to rewrite rules: RewriteRule ^/var/[^/]+/cache/public/.* - [L]');
