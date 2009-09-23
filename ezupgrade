@@ -24,7 +24,6 @@ $data = array(	'upgrade_from_version'  => $fromVersion,
 				'old_folder_name'		=> $oldFolder,
 				'new_folder_name'		=> $newFolder );
 
-var_dump( $data );
 if ( $upgrade->checkParamsBeforeRunning( $data ) )
 {
 	$upgrade->setUpgradeData($data);
