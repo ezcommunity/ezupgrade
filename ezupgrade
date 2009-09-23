@@ -5,15 +5,21 @@ include_once( "classes/ezupgrade.php" );
 $upgrade = new eZUpgrade;
 $account 	 = $argv[1];
 
-echo $account;
-$fromVersion = $upgrade->cfg->getSetting( 'account', 'Account_coast', 'FromVersion');
 
-echo $fromVersion;
+$fromVersion 	= $upgrade->cfg->getSetting( 'account', 'Account_'.$account, 'FromVersion');
+$toVersion		= $upgrade->cfg->getSetting( 'account', 'Account_'.$account, 'ToVersion');
+$basePath		= $upgrade->cfg->getSetting( 'account', 'Account_'.$account, 'BasePath');
+$oldFolder		= $upgrade->cfg->getSetting( 'account', 'Account_'.$account, 'OldInstallFolderName');
+$newFolder		= $upgrade->cfg->getSetting( 'account', 'Account_'.$account, 'NewInstallFolderName');
+
 // TODO: fetch from script params
-$data = array(	'upgrade_from_version'  => '4.1.0', 
-				'upgrade_to_version' 	=> '4.1.3', 
-				'upgrade_base_path'		=> '/Applications/XAMPP/htdocs/upgrade_new/', 
-				'account_name'			=> 'spania');
+$data = array(	'upgrade_from_version'  => $fromVersion, 
+				'upgrade_to_version' 	=> $toVersion, 
+				'upgrade_base_path'		=> $basePath, 
+				'account_name'			=> $account,
+				'old_folder_name'		=> $oldFolder,
+				'new_folder_name'		=> $newFolder );
+var_dump( $data );
 /*
 
 
