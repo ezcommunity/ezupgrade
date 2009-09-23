@@ -628,7 +628,6 @@ class eZUpgrade extends eZCopy
 		else
 		{
 			$this->log('Downloading distro ');
-			var_dump( $this->upgradeVersionSettings );
 			// download the file
 			$command = "curl -s -o $filename " .  $this->upgradeVersionSettings['DownloadURL'] . " 2>&1";
 			exec($command, $output, $rc);
