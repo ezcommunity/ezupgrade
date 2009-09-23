@@ -179,7 +179,6 @@ class eZUpgrade extends eZCopy
 		}
 		else
 		{
-			var_dump( $this->fetchAllVersions() );
 			$this->log("Unable to get version position for version $versionNo. The version is not specified in the INI files.\n", 'R', true);	
 		}
 	}
