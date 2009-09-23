@@ -745,6 +745,7 @@ class eZUpgrade extends eZCopy
 	}
 	function checkParamsBeforeRunning( $data )
 	{
+		// TODO: Make som checks and return some errors!
 		return true;
 	}
 }
