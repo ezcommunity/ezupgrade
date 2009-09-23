@@ -743,6 +743,10 @@ class eZUpgrade extends eZCopy
 		$this->log("\nUSAGE\n", 'heading');
 		$this->log("php ezupgrade [account_username]\n\n");
 	}
+	function checkParamsBeforeRunning( $data )
+	{
+		return true;
+	}
 }
 
 ?>
