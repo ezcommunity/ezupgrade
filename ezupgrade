@@ -5,7 +5,8 @@ include_once( "classes/ezupgrade.php" );
 $upgrade = new eZUpgrade;
 $account 	 = $argv[1];
 
-$fromVersion = $upgrade->cfg->getSetting('account', 'Account_' . $account, 'FromVersion');
+echo $account;
+//$fromVersion = $upgrade->cfg->getSetting( 'account', 'Account_' . $account, 'FromVersion');
 
 echo $fromVersion;
 // TODO: fetch from script params
