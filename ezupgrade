@@ -5,6 +5,11 @@ include_once( "classes/ezupgrade.php" );
 $upgrade = new eZUpgrade;
 $account 	 = $argv[1];
 
+if ( $argc < 1 )
+{
+	$upgrade->describeUsage();
+	exit();
+}
 
 $fromVersion 	= $upgrade->cfg->getSetting( 'account', 'Account_'.$account, 'FromVersion');
 $toVersion		= $upgrade->cfg->getSetting( 'account', 'Account_'.$account, 'ToVersion');
@@ -19,7 +24,7 @@ $data = array(	'upgrade_from_version'  => $fromVersion,
 				'account_name'			=> $account,
 				'old_folder_name'		=> $oldFolder,
 				'new_folder_name'		=> $newFolder );
-var_dump( $data );
+
 /*
 
 
