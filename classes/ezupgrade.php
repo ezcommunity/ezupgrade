@@ -738,6 +738,11 @@ class eZUpgrade extends eZCopy
 			return $this->cfg->getSetting('ezupgrade', 'General', 'Versions');
 		}
 	}
+	function describeUsage()
+	{
+		$this->log("\nUSAGE\n", 'heading');
+		$this->log("php ezupgrade [account_username]\n\n");
+	}
 }
 
 ?>
