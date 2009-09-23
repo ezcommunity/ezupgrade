@@ -497,7 +497,7 @@ class eZUpgrade extends eZCopy
 	
 	function fetchFolderContents($folderName)
 	{
-		$cmd = 'cd ' . $this->data['document_root'] . $this->data['ssh_user'] . '/' . $folderName . ';ls';
+		$cmd = 'cd ' . $this->data['document_root'] . $this->cfg->getSetting('account', 'Account_' .$this->data['ssh_user'], 'OldInstallFolderName')  . '/' . $folderName . ';ls';
 		
 		exec($cmd, $result);
 		
