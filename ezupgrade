@@ -5,7 +5,7 @@ include_once( "classes/ezupgrade.php" );
 $upgrade = new eZUpgrade;
 $account 	 = $argv[1];
 
-if ( $argc < 1 )
+if ( $account == '' )
 {
 	$upgrade->describeUsage();
 	exit();
