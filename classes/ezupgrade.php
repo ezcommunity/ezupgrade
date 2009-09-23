@@ -551,7 +551,7 @@ class eZUpgrade extends eZCopy
 				$this->log("Copying " . $dir . $element ." ");
 				
 				// copy the element
-				$cmd = "cd " . $this->data['document_root'] . "; cp -R " . $this->data['ssh_user'] . "/" . $dir . $element . " " . $this->getNewDistroFolderName() . "/" . $dir;
+				$cmd = "cd " . $this->data['document_root'] . "; cp -R " . $this->cfg->getSetting('account', 'Account_' .$this->data['ssh_user'], 'OldInstallFolderName') . "/" . $dir . $element . " " . $this->getNewDistroFolderName() . "/" . $dir;
 				
 				// execute command
 				exec($cmd);
