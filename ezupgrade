@@ -17,7 +17,6 @@ $basePath		= $upgrade->cfg->getSetting( 'account', 'Account_'.$account, 'BasePat
 $oldFolder		= $upgrade->cfg->getSetting( 'account', 'Account_'.$account, 'OldInstallFolderName');
 $newFolder		= $upgrade->cfg->getSetting( 'account', 'Account_'.$account, 'NewInstallFolderName');
 
-// TODO: fetch from script params
 $data = array(	'upgrade_from_version'  => $fromVersion, 
 				'upgrade_to_version' 	=> $toVersion, 
 				'upgrade_base_path'		=> $basePath, 
@@ -25,12 +24,15 @@ $data = array(	'upgrade_from_version'  => $fromVersion,
 				'old_folder_name'		=> $oldFolder,
 				'new_folder_name'		=> $newFolder );
 
-/*
+if ( $upgrade->checkParamsBeforeRunning( $data ) )
+{
+	$upgrade->setUpgradeData($data);
+	$upgrade->run();
+}
+else
+{
+	echo 'error';
+}
 
-
-$upgrade->setUpgradeData($data);
-
-$upgrade->run();
-*/
 
 ?>
