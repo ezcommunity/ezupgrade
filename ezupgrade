@@ -2,10 +2,10 @@
 <?php
 
 include_once( "classes/ezupgrade.php" );
-
+$upgrade = new eZUpgrade;
 $account 	 = $argv[1];
 
-$fromVersion = $this->cfg->getSetting('account', 'Account_' . $account, 'FromVersion');
+$fromVersion = $upgrade->cfg->getSetting('account', 'Account_' . $account, 'FromVersion');
 
 echo $fromVersion;
 // TODO: fetch from script params
@@ -14,7 +14,7 @@ $data = array(	'upgrade_from_version'  => '4.1.0',
 				'upgrade_base_path'		=> '/Applications/XAMPP/htdocs/upgrade_new/', 
 				'account_name'			=> 'spania');
 /*
-$upgrade = new eZUpgrade;
+
 
 $upgrade->setUpgradeData($data);
 
