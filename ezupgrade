@@ -6,7 +6,7 @@ $upgrade = new eZUpgrade;
 $account 	 = $argv[1];
 
 echo $account;
-//$fromVersion = $upgrade->cfg->getSetting( 'account', 'Account_' . $account, 'FromVersion');
+$fromVersion = $upgrade->cfg->getSetting( 'account', 'Account_coast', 'FromVersion');
 
 echo $fromVersion;
 // TODO: fetch from script params
