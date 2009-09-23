@@ -519,6 +519,8 @@ class eZUpgrade extends eZCopy
 	{
 		$elementList = $this->fetchFolderContents($dir);
 		
+		$this->log( 'NewDistroFolderName: ' . $this->getNewDistroFolderName() );
+		var_dump( $this->data );
 		// for each element
 		foreach($elementList as $element)
 		{
