@@ -65,9 +65,9 @@ class upgradeFunctions
 		$sql = $this->dbBasePath . $this->dbType . '/4.1/dbupdate-4.1.2-to-4.1.3.sql';
 		$this->updateDB($sql);
 	}
-	function updateDB402A()
+	function updateDB402()
 	{
-		$sql = $this->dbBasePath . $this->dbType . '/4.2/unstable/dbupdate-4.1.0-to-4.2.0alpha1.sql';
+		$sql = $this->dbBasePath . $this->dbType . '/4.2/dbupdate-4.1.0-to-4.2.0.sql';
 		$this->updateDB( $sql );
 	}
 	function updateDBOE501()
