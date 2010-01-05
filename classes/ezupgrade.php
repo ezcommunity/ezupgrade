@@ -111,7 +111,7 @@ class eZUpgrade extends eZCopy
 	{
 		if(!file_exists($this->getDBDumpLocation()))
 		{
-			$this->log("No database dump directory exists. The upgrade process expects a directory named " . $this->data['document_root'] . $this->data['ssh_user'] . "/". $this->dbDumpDir . " in the root if the old installation which contains the DB dumps as SQL files.", 'critical');
+			$this->log("No database dump directory exists. The upgrade process expects a directory named " . $this->getDBDumpLocation() . " which contains the DB dumps as SQL files.", 'critical');
 		}
 	}
 	
