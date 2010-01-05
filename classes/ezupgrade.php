@@ -109,7 +109,7 @@ class eZUpgrade extends eZCopy
 		
 	function checkForDBDumps()
 	{
-		if(!file_exists($this->data['document_root'] . $this->data['ssh_user'] . "/" . $this->dbDumpDir))
+		if(!file_exists($this->getDBDumpLocation()))
 		{
 			$this->log("No database dump directory exists. The upgrade process expects a directory named " . $this->data['document_root'] . $this->data['ssh_user'] . "/". $this->dbDumpDir . " in the root if the old installation which contains the DB dumps as SQL files.", 'critical');
 		}
@@ -243,7 +243,7 @@ class eZUpgrade extends eZCopy
 	
 	function fetchUpgradeFromVersion()
 	{
-		$this->upgradeFromVersion = $this->upgradeData['upgrade_from_version'];
+		$this->upgradeFromVersion = $this->data['ez_version'];
 	}
 	
 	function fetchUpgradeSteps()
@@ -295,6 +295,11 @@ class eZUpgrade extends eZCopy
 		return $upgradeStepList;
 	}
 	
+	function getDBDumpLocation()
+	{
+		return $this->data['document_root'] . $this->data['ssh_user'] . "/" . $this->dbDumpDir;
+	}
+	
 	function copyDatabases()
 	{
 		// fetch the list of unique databases being used
@@ -316,7 +321,7 @@ class eZUpgrade extends eZCopy
 			$this->createDatabase($newDBName);
 			
 			// apply db dump
-			$sqlFile = $this->data['document_root'] . $this->data['ssh_user'] . "/" . $this->dbDumpDir . $db['Database'] . '.sql';
+			$sqlFile = $this->getDBDumpLocation() . $db['Database'] . '.sql';
 			$this->applyDatabase($newDBName, $sqlFile);
 		}
 	}

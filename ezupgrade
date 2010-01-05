@@ -11,16 +11,16 @@ if ( $account == '' )
 	exit();
 }
 
-$fromVersion 	= $upgrade->cfg->getSetting( 'account', 'Account_'.$account, 'FromVersion');
-$toVersion		= $upgrade->cfg->getSetting( 'account', 'Account_'.$account, 'ToVersion');
-$basePath		= $upgrade->cfg->getSetting( 'account', 'Account_'.$account, 'BasePath');
-$oldFolder		= $upgrade->cfg->getSetting( 'account', 'Account_'.$account, 'OldInstallFolderName');
-$newFolder		= $upgrade->cfg->getSetting( 'account', 'Account_'.$account, 'NewInstallFolderName');
+$blockName = 'Account_'.$account;
 
-$data = array(	'upgrade_from_version'  => $fromVersion, 
+$toVersion		= $upgrade->cfg->getSetting( 'account', $blockName, 'ToVersion');
+$basePath		= $upgrade->cfg->getSetting( 'account', $blockName, 'BasePath');
+$oldFolder		= $upgrade->cfg->getSetting( 'account', $blockName, 'OldInstallFolderName');
+$newFolder		= $upgrade->cfg->getSetting( 'account', $blockName, 'NewInstallFolderName');
+
+$data = array(	'account_name'			=> $account,
 				'upgrade_to_version' 	=> $toVersion, 
 				'upgrade_base_path'		=> $basePath, 
-				'account_name'			=> $account,
 				'old_folder_name'		=> $oldFolder,
 				'new_folder_name'		=> $newFolder );
 
