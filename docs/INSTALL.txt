@@ -21,7 +21,7 @@ USAGE
 
 Run
 
-php ezupgrade [account_name]
+php ezupgrade [account_username]
 
 
 ASSUMPTIONS
