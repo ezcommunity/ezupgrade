@@ -297,7 +297,7 @@ class eZUpgrade extends eZCopy
 	
 	function getDBDumpLocation()
 	{
-		return $this->data['document_root'] . $this->data['ssh_user'] . "/" . $this->dbDumpDir;
+		return $this->upgradeData['upgrade_base_path'] . $this->upgradeData['old_folder_name'] . "/" . $this->dbDumpDir;
 	}
 	
 	function copyDatabases()
