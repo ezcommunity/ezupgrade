@@ -24,7 +24,7 @@ class eZUpgrade extends eZCopy
 	
 	function run()
 	{	
-		$this->log("\nInitiating upgrade\n");
+		$this->log("\nInitiating upgrade\n", 'heading');
 		
 		/*
 		 * TODO: At this point, the old installation might be alongside the new one on 
@@ -102,7 +102,7 @@ class eZUpgrade extends eZCopy
 	
 	function preUpgradeChecks()
 	{
-		$this->log('Performing pre-upgrade checks ');
+		$this->log('Performing pre-upgrade checks ', 'heading');
 		$this->checkForDBDumps();
 		$this->log("OK\n", 'ok');
 	}
@@ -111,7 +111,7 @@ class eZUpgrade extends eZCopy
 	{
 		if(!file_exists($this->data['document_root'] . $this->data['ssh_user'] . "/" . $this->dbDumpDir))
 		{
-			$this->log("No database dump directory exists. The upgrade process expects a directory named " . $this->data['document_root'] . $this->data['ssh_user'] . "/". $this->dbDumpDir . " in the root if the old installation which contains the DB dumps as SQL files.", 'R', true);
+			$this->log("No database dump directory exists. The upgrade process expects a directory named " . $this->data['document_root'] . $this->data['ssh_user'] . "/". $this->dbDumpDir . " in the root if the old installation which contains the DB dumps as SQL files.", 'critical');
 		}
 	}
 	
@@ -125,7 +125,7 @@ class eZUpgrade extends eZCopy
 		{
 			$this->data['new_distro_folder_name'] = 'ezpublish-' . $this->upgradeToVersion;
 			
-			$this->log('The folder name for the new distro is not specified. Guessing ' . $this->data['new_distro_folder_name'] . "\n", 'r');
+			$this->log('The folder name for the new distro is not specified. Guessing ' . $this->data['new_distro_folder_name'] . "\n", 'warning');
 			
 			return $this->data['new_distro_folder_name'];
 		}
@@ -149,7 +149,7 @@ class eZUpgrade extends eZCopy
 			
 			if($access['User'] == 'root' OR $access['Password'] == '')
 			{
-				$this->log("A DB user was not granted access because the password was empty, or the username was root.\n", 'r');			
+				$this->log("A DB user was not granted access because the password was empty, or the username was root.\n", 'critical');
 			}
 			else
 			{
@@ -164,7 +164,7 @@ class eZUpgrade extends eZCopy
 		// if the version we are upgrading to is less recent than the upgrade version requested
 		if($this->getVersionPosition($this->upgradeToVersion) > $this->getVersionPosition($this->upgradeData['upgrade_to_version']))
 		{
-			$this->log('You wanted to upgrade to version ' . $this->upgradeData['upgrade_to_version'] . ' but this iteration was only able to upgrade to ' . $this->upgradeToVersion . '. You need to run the script again with updated version parameters.', 'r');
+			$this->log('You wanted to upgrade to version ' . $this->upgradeData['upgrade_to_version'] . ' but this iteration was only able to upgrade to ' . $this->upgradeToVersion . '. You need to run the script again with updated version parameters.', 'warning');
 		}
 	}
 	
@@ -179,7 +179,7 @@ class eZUpgrade extends eZCopy
 		}
 		else
 		{
-			$this->log("Unable to get version position for version $versionNo. The version is not specified in the INI files.\n", 'R', true);	
+			$this->log("Unable to get version position for version $versionNo. The version is not specified in the INI files.\n", 'critical');	
 		}
 	}
 	
@@ -209,7 +209,7 @@ class eZUpgrade extends eZCopy
 		// for each applicable version
 		foreach($upgradeStepList as $version => $upgradeStep)
 		{
-			$this->log("Running upgrades for v. $version\n");
+			$this->log("Running upgrades for v. $version\n", 'heading');
 			
 			// for each upgrade function
 			foreach($upgradeStep['UpgradeFunctions'] as $upgrade)
