@@ -3,8 +3,9 @@
 
 include_once( "classes/ezupgrade.php" );
 $upgrade = new eZUpgrade;
-$account 	 = $argv[1];
+$account = $argv[1];
 
+// if no account name is specified
 if ( $account == '' )
 {
 	$upgrade->describeUsage();
