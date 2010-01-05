@@ -1,7 +1,6 @@
 INSTALLATION
 
-* Export (don't check out) ezupgrade to the web root of where the upgraded
-  installation will reside.
+* Check out ezupgrade to the web root of where the upgraded installation will reside.
 
 * Check out ezcopy to the /lib folder of ezupgrade (making the directory
   /lib/ezcopy) and and follow its installation instructions. Finally, copy the
