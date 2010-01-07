@@ -10,7 +10,7 @@ class upgradeFunctions
 	function upgradeFunctions(&$upgrade)
 	{
 		$this->attention 	= array();
-		$this->dbBasePath 	= '/update/database/';
+		$this->dbBasePath 	= 'update/database/';
 		$this->dbType		= 'mysql';
 		$this->upgrade		= $upgrade;
 	}
