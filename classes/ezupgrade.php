@@ -130,7 +130,7 @@ class eZUpgrade extends eZCopy
 	
 	function getNewDistroPathName()
 	{
-		return $this->data['document_root'] . $this->getNewDistroFolderName();
+		return $this->getNewDistroFolderName();
 	}
 	
 	function preUpgradeChecks()
