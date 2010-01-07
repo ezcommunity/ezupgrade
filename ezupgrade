@@ -16,14 +16,12 @@ $blockName = 'Account_'.$account;
 
 $toVersion		= $upgrade->cfg->getSetting( 'account', $blockName, 'ToVersion');
 $basePath		= $upgrade->cfg->getSetting( 'account', $blockName, 'BasePath');
-$oldFolder		= $upgrade->cfg->getSetting( 'account', $blockName, 'OldInstallFolderName');
-$newFolder		= $upgrade->cfg->getSetting( 'account', $blockName, 'NewInstallFolderName');
+$instLoc		= $upgrade->cfg->getSetting( 'account', $blockName, 'ExistingInstallationLocation');
 
 $data = array(	'account_name'			=> $account,
 				'upgrade_to_version' 	=> $toVersion, 
 				'upgrade_base_path'		=> $basePath, 
-				'old_folder_name'		=> $oldFolder,
-				'new_folder_name'		=> $newFolder );
+				'existing_install'		=> $instLoc);
 
 if ( $upgrade->checkParamsBeforeRunning( $data ) )
 {

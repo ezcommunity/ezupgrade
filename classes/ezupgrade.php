@@ -14,6 +14,9 @@ class eZUpgrade extends eZCopy
 	var $upgradeToVersion;
 	var $versionList;
 	
+	// The full path to where the old installation is located.
+	var $oldInstallationPath;
+	
 	function eZUpgrade()
 	{
 		// run constructor for parent class
@@ -26,23 +29,8 @@ class eZUpgrade extends eZCopy
 	{	
 		$this->log("\nInitiating upgrade\n", 'heading');
 		
-		/*
-		 * TODO: At this point, the old installation might be alongside the new one on 
-		 * the new server, or it might be an an entirely different server alltogether.
-		 * We need some way of knowing this, so we can either download it first, or
-		 * access it directly.
-		 * 
-		 * For instance, if we are upgrading from 4.0.0 to 4.0.1, we will most likely
-		 * be on the same server the whole time.
-		 */
-		
-		// TODO: copy existing distro from current location (use /ezcopy)
-		// $this->ezcopy->actionDownloadAll($this->data['account_name']);
-		
-		// TODO: Remove - we temporarily fetch settings here, but this is done when 
-		// the installation is downloaded (the previous step, which is curently
-		// commented out)
-		$this->selectAccount($this->upgradeData['account_name']);
+		// prepare existing installation
+		$this->prepareExistingInstallation();
 		
 		// fetch the version number of the current version from the database
 		$this->fetchUpgradeFromVersion();
@@ -88,6 +76,51 @@ class eZUpgrade extends eZCopy
 		$this->checkForFinalUpgrade();
 		
 		$this->log("Upgrade from v. " . $this->upgradeFromVersion . " to v. " . $this->upgradeToVersion . " complete\n\n", 'ok');
+	}
+	
+	function prepareExistingInstallation()
+	{
+		// if the existing installation is located at a remote location
+		if($this->upgradeData['existing_install'] == 'remote')
+		{
+			$this->log("The existing installation is located remotely. We need to copy it to a local location.\n");
+			
+			// copy existing distro from current location (use /ezcopy)
+			$this->ezcopy->actionDownloadAll($this->data['account_name']);
+			
+			// set the location of the locally downloaded copy 
+			$this->setOldInstallationPath($this->getCopyLocation());
+		}
+		
+		// if the existing installation is located locally
+		else
+		{
+			$this->log("The existing installation is located locally at " . $this->upgradeData['existing_install'] . "\n");
+			
+			// set the location of the old installation
+			$this->setOldInstallationPath($this->upgradeData['existing_install']);
+			
+			// We need to fetch the settings here. If the old installation was located remotely,
+			// this would have been done as a part of the process of copying the
+			// installation
+			$this->selectAccount($this->upgradeData['account_name']);
+			
+			// tell ezcopy that we want the following actions to be performed locally, and where the base path is
+			$this->setIsLocal(true, $this->upgradeData['existing_install']);
+			
+			// dump the database of the existing installation
+			$this->dumpDatabase();
+		}
+	}
+	
+	function setOldInstallationPath($path)
+	{
+		$this->oldInstallationPath = $path;
+	}
+	
+	function getOldInstallationPath()
+	{
+		return $this->oldInstallationPath;
 	}
 	
 	function postUpgradeTasks()
@@ -502,7 +535,7 @@ class eZUpgrade extends eZCopy
 	
 	function fetchFolderContents($folderName)
 	{
-		$cmd = 'cd ' . $this->data['document_root'] . $this->cfg->getSetting('account', 'Account_' .$this->data['ssh_user'], 'OldInstallFolderName')  . '/' . $folderName . ';ls';
+		$cmd = 'cd ' . $this->getOldInstallationPath() . $folderName . ';ls';
 		
 		exec($cmd, $result);
 		
@@ -554,7 +587,7 @@ class eZUpgrade extends eZCopy
 				$this->log("Copying " . $dir . $element ." ");
 				
 				// copy the element
-				$cmd = "cd " . $this->data['document_root'] . "; cp -R " . $this->cfg->getSetting('account', 'Account_' .$this->data['ssh_user'], 'OldInstallFolderName') . "/" . $dir . $element . " " . $this->getNewDistroFolderName() . "/" . $dir;
+				$cmd = "cp -R " . $this->getOldInstallationPath() . $dir . $element . " " . $this->getNewDistroFolderName() . "/" . $dir;
 				
 				// execute command
 				exec($cmd);
