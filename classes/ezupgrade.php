@@ -164,6 +164,18 @@ class eZUpgrade extends eZCopy
 		}
 	}
 	
+	function validDatabaseConnectionDetails($access)
+	{
+		if($access['User'] == 'root' OR $access['Password'] == '')
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	
 	function grantAccessToNewDatabases()
 	{
 		// for each existing access
@@ -180,7 +192,7 @@ class eZUpgrade extends eZCopy
 			 *  and that the username is not "root"
 			 */
 			
-			if($access['User'] == 'root' OR $access['Password'] == '')
+			if($this->validDatabaseConnectionDetails($access))
 			{
 				$this->log("A DB user was not granted access because the password was empty, or the username was root.\n", 'critical');
 			}
@@ -506,8 +518,8 @@ class eZUpgrade extends eZCopy
 		{
 			$dbName = $dbAccess['Database'];
 			
-			// unless the database has already been added
-			if(!isset($result[$dbName]))
+			// unless the database has already been added, and provided that the connection details are valid
+			if(!isset($result[$dbName]) AND $this->validDatabaseConnectionDetails($dbAccess))
 			{
 				$result[$dbName] = $dbAccess;
 				$this->log("- " . $dbAccess['Database'] . "\n");
