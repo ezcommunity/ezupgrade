@@ -667,7 +667,7 @@ class eZUpgrade extends eZCopy
 		// if no distro location is specified
 		else
 		{
-			$this->log('Downloading distro ');
+			$this->log("Downloading distro ($filename)");
 			// download the file
 			$command = "curl -s -o $filename " .  $this->upgradeVersionSettings['DownloadURL'] . " 2>&1";
 			exec($command, $output, $rc);
