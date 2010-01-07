@@ -452,7 +452,7 @@ class eZUpgrade extends eZCopy
 	
 	function getSiteIniFiles()
 	{
-		$siteIniList = ezcBaseFile::findRecursive( $this->getNewDistroPathName() . "/settings", array( '@site\.ini@' ) );
+		$siteIniList = ezcBaseFile::findRecursive( $this->getNewDistroPathName() . "settings", array( '@site\.ini@' ) );
 		
 		$result = array();
 		foreach($siteIniList as $siteIniFilePath)
