@@ -156,7 +156,7 @@ class eZUpgrade extends eZCopy
 		}
 		else
 		{
-			$this->data['new_distro_folder_name'] = 'ezpublish-' . $this->upgradeToVersion;
+			$this->data['new_distro_folder_name'] = $this->upgradeData['upgrade_base_path'] . 'ezpublish-' . $this->upgradeToVersion;
 			
 			$this->log('The folder name for the new distro is not specified. Guessing ' . $this->data['new_distro_folder_name'] . "\n", 'warning');
 			
@@ -684,7 +684,7 @@ class eZUpgrade extends eZCopy
 		// they package their distros, but we use this for now
 		// Previously, we tried fetching the last created folder, but since the unpacked
 		// distro uses the date it was packed, this does not work
-		$this->data['new_distro_folder_name'] = $newDistroFolderName;
+		$this->data['new_distro_folder_name'] = $this->upgradeData['upgrade_base_path'] . $newDistroFolderName;
 		
 		// $last_line = exec("cd " . $this->upgradeData['upgrade_base_path'] . ";ls -lrt | grep ^d");
 		// $this->data['new_distro_folder_name'] = rtrim(array_pop(preg_split("/[\s]+/", $last_line,-1,PREG_SPLIT_NO_EMPTY)), "\n");
