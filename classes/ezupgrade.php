@@ -546,7 +546,7 @@ class eZUpgrade extends eZCopy
 	{
 		$this->log("Copying var/ directory ");
 		
-		$cmd = ';cp -R ' . $this->getOldInstallationPath() . 'var/' . '* ' . $this->getNewDistroFolderName() . 'var';
+		$cmd = 'cp -R ' . $this->getOldInstallationPath() . 'var/' . '* ' . $this->getNewDistroFolderName() . 'var';
 				
 		exec($cmd, $result);
 		
