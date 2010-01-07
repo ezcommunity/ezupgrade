@@ -27,7 +27,7 @@ class eZUpgrade extends eZCopy
 	
 	function run()
 	{	
-		$this->log("\nInitiating upgrade\n", 'heading');
+		$this->log("\nINITIATING UPGRADE\n", 'heading');
 		
 		// prepare existing installation
 		$this->prepareExistingInstallation();
