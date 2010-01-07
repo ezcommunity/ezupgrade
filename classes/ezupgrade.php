@@ -649,7 +649,7 @@ class eZUpgrade extends eZCopy
 			$this->log('Copying distro from specified location ');
 			
 			// build distro file name and path
-			$distroFile = $distroLocation . '/' . $newDistroFolderName . '-gpl.tar.gz';
+			$distroFile = $distroLocation . $newDistroFolderName . '-gpl.tar.gz';
 			
 			// make sure the diso file exists at the specified location
 			if(!file_exists($distroFile))
