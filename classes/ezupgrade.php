@@ -335,6 +335,8 @@ class eZUpgrade extends eZCopy
 	
 	function copyDatabases()
 	{
+		$this->log("Copying databases\n", 'heading');
+		
 		// fetch the list of unique databases being used
 		$dbList = $this->fetchDbList();
 		
@@ -508,6 +510,7 @@ class eZUpgrade extends eZCopy
 			if(!isset($result[$dbName]))
 			{
 				$result[$dbName] = $dbAccess;
+				$this->log("- $dbAccess\n");
 			}
 		}
 		
@@ -516,6 +519,8 @@ class eZUpgrade extends eZCopy
 	
 	function copyFiles()
 	{
+		$this->log("Copying files\n", 'heading');
+		
 		// copy the var files
 		$this->copyVarFiles();
 		
