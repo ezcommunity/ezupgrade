@@ -546,7 +546,7 @@ class eZUpgrade extends eZCopy
 	{
 		$this->log("Copying var/ directory ");
 		
-		$cmd = 'cd ' . $this->data['document_root'] . ';cp -R ' . $this->data['ssh_user'] . '/var/' . '* ' . $this->getNewDistroFolderName() . '/var';
+		$cmd = ';cp -R ' . $this->getOldInstallationPath() . 'var/' . '* ' . $this->getNewDistroFolderName() . 'var';
 				
 		exec($cmd, $result);
 		
@@ -562,7 +562,7 @@ class eZUpgrade extends eZCopy
 		{
 			$elementExists = false;
 			// check if the element exists in the new distro
-			$target = $this->getNewDistroFolderName() . "/" . $dir . $element;
+			$target = $this->getNewDistroFolderName() . $dir . $element;
 			if(file_exists($this->data['document_root'] . $target))
 			{
 				$elementExists = true;	
@@ -587,7 +587,7 @@ class eZUpgrade extends eZCopy
 				$this->log("Copying " . $dir . $element ." ");
 				
 				// copy the element
-				$cmd = "cp -R " . $this->getOldInstallationPath() . $dir . $element . " " . $this->getNewDistroFolderName() . "/" . $dir;
+				$cmd = "cp -R " . $this->getOldInstallationPath() . $dir . $element . " " . $this->getNewDistroFolderName() . $dir;
 				
 				// execute command
 				exec($cmd);
