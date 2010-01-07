@@ -510,7 +510,7 @@ class eZUpgrade extends eZCopy
 			if(!isset($result[$dbName]))
 			{
 				$result[$dbName] = $dbAccess;
-				$this->log("- $dbAccess\n");
+				$this->log("- " . $dbAccess['Database'] . "\n");
 			}
 		}
 		
