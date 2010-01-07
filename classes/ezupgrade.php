@@ -589,6 +589,8 @@ class eZUpgrade extends eZCopy
 				// copy the element
 				$cmd = "cp -R " . $this->getOldInstallationPath() . $dir . $element . " " . $this->getNewDistroFolderName() . "/" . $dir;
 				
+				$this->log($cmd . "\n\n");
+				
 				// execute command
 				exec($cmd);
 				
