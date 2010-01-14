@@ -479,7 +479,11 @@ class eZUpgrade extends eZCopy
 				$result[] = $parts[1];	
 			}
 		}
-		
+		ob_start();
+		var_dump($result);
+		$buffer=ob_get_contents();
+		ob_end_clean();
+		$this->log( 'settings: ' . $buffer , 'critical' );
 		return $result;
 	}
 	
@@ -513,6 +517,7 @@ class eZUpgrade extends eZCopy
 	{
 		// fetch list of db accesses
 		$result = array();
+		
 		
 		foreach($this->getDBAccessList() as $dbAccess)
 		{
