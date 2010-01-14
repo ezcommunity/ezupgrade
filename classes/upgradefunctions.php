@@ -19,7 +19,7 @@ class upgradeFunctions
 	{
 		$this->upgrade->log("Running script $script ");
 		
-		exec("cd " . $this->upgrade->data['document_root'] . $this->upgrade->getNewDistroFolderName() . ";php " . $script);
+		exec("cd " . $this->upgrade->getNewDistroFolderName() . ";php " . $script);
 		
 		$this->upgrade->log("OK\n", 'ok');
 	}
@@ -34,7 +34,7 @@ class upgradeFunctions
 	{
 		if($useBasePath)
 		{
-			$sql = $this->upgrade->data['document_root'] . $this->upgrade->getNewDistroFolderName() . $sql;
+			$sql = $this->upgrade->getNewDistroFolderName() . $sql;
 		}
 		
 		// for each database
