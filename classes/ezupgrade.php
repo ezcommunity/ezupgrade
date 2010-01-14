@@ -351,11 +351,7 @@ class eZUpgrade extends eZCopy
 		
 		// fetch the list of unique databases being used
 		$dbList = $this->fetchDbList();
-		ob_start();
-		var_dump($dbList);
-		$buffer=ob_get_contents();
-		ob_end_clean();
-		$this->log( 'settings: ' . $buffer , 'critical' );
+
 		// for each database
 		foreach($dbList as $db)
 		{
@@ -512,26 +508,7 @@ class eZUpgrade extends eZCopy
 		}
 	}
 	
-	function fetchDbList()
-	{
-		// fetch list of db accesses
-		$result = array();
-		
-		
-		foreach($this->getDBAccessList() as $dbAccess)
-		{
-			$dbName = $dbAccess['Database'];
-			
-			// unless the database has already been added, and provided that the connection details are valid
-			if(!isset($result[$dbName]) AND $this->validDatabaseConnectionDetails($dbAccess))
-			{
-				$result[$dbName] = $dbAccess;
-				$this->log("- " . $dbAccess['Database'] . "\n");
-			}
-		}
-		
-		return $result;
-	}
+
 	
 	function copyFiles()
 	{
