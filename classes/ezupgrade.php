@@ -351,7 +351,11 @@ class eZUpgrade extends eZCopy
 		
 		// fetch the list of unique databases being used
 		$dbList = $this->fetchDbList();
-		
+		ob_start();
+		var_dump($dbList);
+		$buffer=ob_get_contents();
+		ob_end_clean();
+		$this->log( 'settings: ' . $buffer , 'critical' );
 		// for each database
 		foreach($dbList as $db)
 		{
@@ -479,11 +483,6 @@ class eZUpgrade extends eZCopy
 				$result[] = $parts[1];	
 			}
 		}
-		ob_start();
-		var_dump($result);
-		$buffer=ob_get_contents();
-		ob_end_clean();
-		$this->log( 'settings: ' . $buffer , 'critical' );
 		return $result;
 	}
 	
