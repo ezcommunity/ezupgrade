@@ -48,6 +48,30 @@ class upgradeFunctions
 		}
 	}
 	
+	function updateDB420u410()
+	{
+		$sql = 'sql/4.2/to-4.2.0-under-4.1.0.sql';
+		$this->upgrade->manualAttentionNotificationList[] = 'You need to activate the ezoe extension';
+		$this->upgrade->manualAttentionNotificationList[] = 'If you have custome made extensions, the setting ModuleList[] must be added in module.ini.append.php, with list of each module.';
+		$this->updateDB($sql, false);
+	}
+	function updateDB420u404()
+	{
+		$sql = 'sql/4.2/to-4.2.0-under-4.0.4.sql';
+		$this->updateDB($sql, false);
+	}
+	function updateDB407()
+	{
+		$sql = $this->dbBasePath . $this->dbType . '/4.1/dbupdate-4.0.6-to-4.0.7.sql';
+		$this->updateDB( $sql );	
+	}
+	function updateDB420()
+	{
+		$sql = 'sql/4.2/to-4.2.0.sql';
+		$this->updateDB($sql, false);
+	}
+	
+	
 	function updateDB411()
 	{
 		$sql = $this->dbBasePath . $this->dbType . '/4.1/dbupdate-4.1.0-to-4.1.1.sql';

@@ -13,6 +13,7 @@ class eZUpgrade extends eZCopy
 	var $upgradeFromVersion;
 	var $upgradeToVersion;
 	var $versionList;
+	var $manualAttentionNotificationList;
 	
 	// The full path to where the old installation is located.
 	var $oldInstallationPath;
@@ -22,7 +23,8 @@ class eZUpgrade extends eZCopy
 		// run constructor for parent class
 		$this->eZCopy();
 		
-		$this->versionList = false;
+		$this->versionList 		= false;
+		$this->manualAttentionNotificationList	= array();
 	}
 	
 	function run()
@@ -63,9 +65,6 @@ class eZUpgrade extends eZCopy
 		// perform upgrades
 		$this->performUpgrades();
 		
-		// print work which requires manual attention
-		$this->manualAttentionNotice();
-		
 		// grant db users access to the new database(s)
 		$this->grantAccessToNewDatabases();
 		
@@ -74,6 +73,9 @@ class eZUpgrade extends eZCopy
 		
 		// warn if we need to do more upgrades
 		$this->checkForFinalUpgrade();
+		
+		// print work which requires manual attention
+		$this->manualAttentionNotice();
 		
 		$this->log("Upgrade from v. " . $this->upgradeFromVersion . " to v. " . $this->upgradeToVersion . " complete\n\n", 'ok');
 	}
@@ -179,7 +181,7 @@ class eZUpgrade extends eZCopy
 	function grantAccessToNewDatabases()
 	{
 		// for each existing access
-		foreach($this->getDBAccessList() as $access)
+		foreach($this->fetchDbList() as $access)
 		{
 			/*
 			 *  TODO: A problem occurs here because we assume that all siteaccesses are
@@ -241,11 +243,15 @@ class eZUpgrade extends eZCopy
 	
 	function manualAttentionNotice()
 	{
-		// TODO
+		// looping through the notification list to make output with manual attenions notices.
+		foreach ( $this->manualAttentionNotificationList as $notification )
+		{
+			$this->log( $notification . "\n", 'warning' );
+		}
 	}
-	
 	function performUpgrades()
 	{
+		
 		// fetch upgrade steps 
 		$upgradeStepList = $this->fetchUpgradeSteps();
 		
@@ -267,6 +273,7 @@ class eZUpgrade extends eZCopy
 				// make sure that function should be run (depending on the version
 				// set in the INI file)
 				$runUpgrade = true;
+				
 				if($lowestVersionNotInNeedOfUpgrade AND version_compare($this->upgradeFromVersion, $lowestVersionNotInNeedOfUpgrade, '>'))
 				{
 					$runUpgrade = false;	
@@ -498,11 +505,11 @@ class eZUpgrade extends eZCopy
 			{
 				// set new database name
 				$ini->setVariable('DatabaseSettings', 'Database', $this->createNewDBName($oldDBName));
-				
+
 				// save changes in ini file
 				if(!$ini->save())
 				{
-					$this->log("Unable to store changes to INI file.\n", 'critical');
+					//$this->log("Unable to store changes to INI file.\n", 'critical');
 				}	
 			}
 		}
@@ -748,7 +755,6 @@ class eZUpgrade extends eZCopy
 					
 					// where in the order of versions is this version
 					$upgradeContainerVersionPosition = $this->getVersionPosition($upgradeContainerSinceVersion);
-					
 					if($upgradeContainerVersionPosition > $currentVersionPosition)
 					{
 						$this->log('Upgrading ' . $this->upgradeData['account_name'] . ' to version ' . $versionNo . "\n");
