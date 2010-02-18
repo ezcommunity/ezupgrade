@@ -185,18 +185,8 @@ class eZUpgrade extends eZCopy
 		// for each existing access
 		foreach($databaseList as $access)
 		{
-			/*
-			 *  TODO: A problem occurs here because we assume that all siteaccesses are
-			 *  active, and grant them priveliges according to the current settings.
-			 *  This means that if someone creates a fake or inactive siteaccess and uses
-			 *  "root" as username and "" as password, they will have a user created with
-			 *  these details.
-			 *  
-			 *  To temporarily fix this problem, we ensure that a password must be set, 
-			 *  and that the username is not "root"
-			 */
 			
-			if($this->validDatabaseConnectionDetails($access))
+			if(!$this->validDatabaseConnectionDetails($access))
 			{
 				ob_start();
 				var_dump( $databaseList);
