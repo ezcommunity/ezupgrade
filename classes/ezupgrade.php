@@ -180,8 +180,10 @@ class eZUpgrade extends eZCopy
 	
 	function grantAccessToNewDatabases()
 	{
+		$databaseList = $this->fetchDbList();
+		
 		// for each existing access
-		foreach($this->fetchDbList() as $access)
+		foreach($databaseList as $access)
 		{
 			/*
 			 *  TODO: A problem occurs here because we assume that all siteaccesses are
@@ -196,6 +198,11 @@ class eZUpgrade extends eZCopy
 			
 			if($this->validDatabaseConnectionDetails($access))
 			{
+				ob_start();
+				var_dump( $databaseList);
+				$buffer = ob_get_contents();
+				ob_end_clean();
+				$this->log( $buffer . "\n" );
 				$this->log("A DB user was not granted access because the password was empty, or the username was root.\n", 'critical');
 			}
 			else
