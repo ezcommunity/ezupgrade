@@ -1,15 +1,38 @@
-SUPPORTED VERSIONS
-
-
-
 ABOUT
 
 eZUpgrade is stand-alone application (not an eZ Publish extension) automating
 the process of upgrading an eZ Publish installation.
 
-eZUpgrade works by checking out on the server where the upgraded installation
-will reside, inputing some configuration settings, and running ezupgrade
-from the command line.
+Using eZUpgrade is as easy as checking it out on the server where the upgraded
+installation will reside, inputting some configuration settings, and running
+ezupgrade from the command line.
+
+
+DISCLAIMER
+
+eZUpgrade makes a point of doing as little as possible to the original (source)
+installation. Still, the application is delivered as-is without any warranties
+of any kind.
+
+You are strongly urged to backup your entire source installation (files and
+database(s)) before making use of this application. 
+
+
+SUPPORTED VERSIONS
+
+eZUpgrade is built to be flexible when it comes to adding support for new
+eZ Publish versions. Depending on the complexity of the change from one eZP
+version to another, adding support could be as easy as adding some
+configuration settings to settings/ezupgrade.ini. For more complex changes,
+one might need to create some custome upgrade functions.
+
+The matrix above describes which versions that are currently supported.
+
+
+REQUIREMENTS
+
+* eZUpgrade is dependent upon eZCopy (http://projects.ez.no/ezcopy) and its
+  requirements.
 
 
 HOW IT WORKS
@@ -35,13 +58,7 @@ eZUpgrade then performs the following steps:
    automatically. If there are any upgrade actions that need to be performed
    manually, you will be informed.
    
-5. Grant the database user access to the new database(s).
-
-
-REQUIREMENTS
-
-* eZUpgrade is dependent upon eZCopy (http://projects.ez.no/ezcopy) and its
-  requirements.
+5. Grants the database user access to the new database(s).
 
 
 INSTALLATION
@@ -56,14 +73,11 @@ INSTALLATION
   For each account you need to upgrade, create an Account block with the 
   proper settings.
 
-
-CONFIGURATION
-
 * chmod 777 ezupgrade
 
 
 USAGE
 
-Run
+From the shell prompt, where eZUpgrade is located, run:
 
 php ezupgrade [account_username]
