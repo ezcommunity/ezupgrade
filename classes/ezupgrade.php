@@ -124,10 +124,17 @@ class eZUpgrade extends eZCopy
 	{
 		return $this->oldInstallationPath;
 	}
-	
+	function oldDatabaseCleanup()
+	{
+		$this->log("Deleted database dump from the old site ");
+		$cmd = 'rm -rf ' . $this->upgradeData['existing_install']. $this->dbDumpDir;
+		exec($cmd);
+		$this->log("OK\n", 'ok');
+	}
 	function postUpgradeTasks()
 	{
 		$this->fixEzInstall($this->getNewDistroPathName());
+		$this->oldDatabaseCleanup();
 	}
 	
 	function getNewDistroPathName()
