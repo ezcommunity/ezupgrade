@@ -24,7 +24,7 @@ class eZUpgrade extends eZCopy
 		$this->eZCopy();
 		
 		$this->versionList 		= false;
-		$this->manualAttentionNotificationList	= array();
+		$this->manualAttentionNotificationList	= array( 'Remember to set up the cronjobs for the upgraded site.');
 	}
 	
 	function run()
