@@ -576,7 +576,7 @@ class eZUpgrade extends eZCopy
 			{
 				$elementExists = true;	
 			}
-			
+
 			$copyElement = true;
 			
 			// if the element exists in the new distro

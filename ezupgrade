@@ -17,11 +17,13 @@ $blockName = 'Account_'.$account;
 $toVersion		= $upgrade->cfg->getSetting( 'account', $blockName, 'ToVersion');
 $basePath		= $upgrade->cfg->getSetting( 'account', $blockName, 'BasePath');
 $instLoc		= $upgrade->cfg->getSetting( 'account', $blockName, 'ExistingInstallationLocation');
+$siteAccessList	= $upgrade->cfg->getSetting( 'account', $blockName, 'SiteaccessList' );
 
 $data = array(	'account_name'			=> $account,
 				'upgrade_to_version' 	=> $toVersion, 
 				'upgrade_base_path'		=> $basePath, 
-				'existing_install'		=> $instLoc);
+				'existing_install'		=> $instLoc,
+				'siteaccess_list'		=> $siteAccessList );
 
 if ( $upgrade->checkParamsBeforeRunning( $data ) )
 {
