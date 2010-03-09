@@ -18,9 +18,7 @@ class upgradeFunctions
 	function runScript($script)
 	{
 		$this->upgrade->log("Running script $script ");
-		$run = "cd " . $this->upgrade->getNewDistroFolderName() . ";php " . $script;
-		//exec("cd " . $this->upgrade->getNewDistroFolderName() . ";php " . $script);
-		$this->upgrade->log($run);
+		exec("cd " . $this->upgrade->getNewDistroFolderName() . ";php " . $script);
 		$this->upgrade->log("OK\n", 'ok');
 	}
 	
