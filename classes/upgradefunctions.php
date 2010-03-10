@@ -41,7 +41,7 @@ class upgradeFunctions
 	
 	function updateDB($sql, $useBasePath = true)
 	{
-		/*
+		
 		if($useBasePath)
 		{
 			$sql = $this->upgrade->getNewDistroFolderName() . $sql;
@@ -55,7 +55,7 @@ class upgradeFunctions
 			
 			// apply db dump
 			$this->upgrade->applyDatabaseSql($newDBName, $sql);
-		}*/
+		}
 	}
 	function updateDB3101()
 	{
