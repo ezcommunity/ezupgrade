@@ -184,6 +184,7 @@ class eZUpgrade extends eZCopy
 	
 	function validDatabaseConnectionDetails($access)
 	{
+		/*
 		if($access['User'] == 'root' OR $access['Password'] == '')
 		{
 			return false;
@@ -192,6 +193,8 @@ class eZUpgrade extends eZCopy
 		{
 			return true;
 		}
+		*/
+		return true;
 	}
 	
 	function grantAccessToNewDatabases()
