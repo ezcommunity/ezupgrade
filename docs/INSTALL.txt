@@ -73,7 +73,7 @@ INSTALLATION
   For each account you need to upgrade, create an Account block with the 
   proper settings.
 
-* chmod 777 ezupgrade logs/
+* chmod 777 ezupgrade
 
 
 USAGE
