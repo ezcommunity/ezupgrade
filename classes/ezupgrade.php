@@ -144,11 +144,20 @@ class eZUpgrade extends eZCopy
 	
 	function preUpgradeChecks()
 	{
-		$this->log('Performing pre-upgrade checks ', 'heading');
+		$this->log("Performing pre-upgrade checks\n", 'heading');
+		$this->checkUpgradeContainer();
 		$this->checkForDBDumps();
 		$this->log("OK\n", 'ok');
+	
 	}
-		
+	function checkUpgradeContainer()
+	{
+		$updateContainer = $this->cfg->getSetting('ezupgrade', 'Upgrade_' . $this->upgradeToVersion, 'UpgradeContainerSinceVersion');
+		if ( $this->upgradeFromVersion < $updateContainer )
+		{
+			$this->log("Can not upgrade from " . $this->upgradeFromVersion . " to " . $this->upgradeToVersion  . ". Version "  . $this->upgradeToVersion . " holds upgrade files only down to version " . $updateContainer, 'critical');
+		}
+	}
 	function checkForDBDumps()
 	{
 		if(!file_exists($this->getDBDumpLocation()))
