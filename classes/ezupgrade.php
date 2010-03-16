@@ -581,7 +581,7 @@ class eZUpgrade extends eZCopy
 			$elementExists = false;
 			// check if the element exists in the new distro
 			$target = $this->getNewDistroFolderName() . $dir . $element;
-			if(file_exists($this->data['document_root'] . $target))
+			if(file_exists($target))
 			{
 				$elementExists = true;	
 			}
