@@ -17,9 +17,16 @@ class upgradeFunctions
 	
 	function runScript($script)
 	{
-		$this->upgrade->log("Running script $script ");
-		exec("cd " . $this->upgrade->getNewDistroFolderName() . ";php " . $script);
-		$this->upgrade->log("OK\n", 'ok');
+		$siteAccessList = $this->upgrade->upgradeData['siteaccess_list'];
+		if ( is_array( $siteAccessList ) )
+		{
+			foreach( $siteAccessList as $siteaccess )
+			{
+				$this->upgrade->log("Running script $script ");
+				exec("cd " . $this->upgrade->getNewDistroFolderName() . ";php " . $script . " -s" . $siteaccess);
+				$this->upgrade->log("OK\n", 'ok');
+			}
+		}
 	}
 	
 	function updateCharsetDBu40()
