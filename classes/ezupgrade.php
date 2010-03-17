@@ -295,10 +295,14 @@ class eZUpgrade extends eZCopy
 				foreach($upgradeStep['UpgradeFunctions'] as $upgrade)
 				{
 					// fetch upgrade function and lowest version number which does not require the upgrade
-					$parts 			= explode(";", $upgrade);
-					$upgradeFunction = $parts[0];
+					$parts 				= explode(";", $upgrade);
+					$upgradeFunction 	= $parts[0];
 					
 					if(isset($parts[1]))
+					{
+						$lowestVersionNotInNeedOfUpgrade = $parts[1];
+					}
+					else
 					{
 						$lowestVersionNotInNeedOfUpgrade = false;
 					}
