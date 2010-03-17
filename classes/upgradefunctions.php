@@ -22,7 +22,7 @@ class upgradeFunctions
 		{
 			foreach( $siteAccessList as $siteaccess )
 			{
-				$this->upgrade->log("Running script $script \n");
+				$this->upgrade->log("Running script $script ");
 				
 				$this->upgrade->checkpoint( 'Running script: ' . $script );
 				
