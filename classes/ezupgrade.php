@@ -744,8 +744,8 @@ class eZUpgrade extends eZCopy
 		// exec($cmd, $output, $rc);
 		// if ( $rc ) print("WARNING: failed to chown $folder_name<br>");
 		
-		// remove the file
-		// unlink($filename);
+		// remove the distro file
+		unlink($this->upgradeData['upgrade_base_path'] . $filename);
 		
 		// change back to old dir
 		chdir($old_dir);
