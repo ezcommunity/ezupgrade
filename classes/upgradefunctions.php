@@ -23,7 +23,7 @@ class upgradeFunctions
 			foreach( $siteAccessList as $siteaccess )
 			{
 				$this->upgrade->log("Running script $script ");
-				exec("cd " . $this->upgrade->getNewDistroFolderName() . ";php " . $script . " -s" . $siteaccess);
+				exec("cd " . $this->upgrade->getNewDistroFolderName() . ";php " . $script . " -s" . $siteaccess . " -siteaccess " . $siteaccess);
 				$this->upgrade->log("OK\n", 'ok');
 			}
 		}
@@ -43,7 +43,7 @@ class upgradeFunctions
 	function manualAttention($msg)
 	{
 		$this->attention[] = $msg;
-		echo $msg . "\n";
+		$this->manualAttentionNotificationList[] = $msg;
 	}
 	
 	function updateDB($sql, $useBasePath = true)

@@ -47,6 +47,9 @@ class eZUpgrade extends eZCopy
 		// check requirements
 		$this->checkRequirements();
 		
+		// check if the version we are upgrading to have upgrade containers down to the version we are upgrading from 
+		$this->checkUpgradeContainer();
+		
 		// perform pre-upgrade checks
 		$this->preUpgradeChecks();
 		
@@ -145,7 +148,6 @@ class eZUpgrade extends eZCopy
 	function preUpgradeChecks()
 	{
 		$this->log("Performing pre-upgrade checks\n", 'heading');
-		$this->checkUpgradeContainer();
 		$this->checkForDBDumps();
 		$this->log("OK\n", 'ok');
 	
@@ -259,6 +261,7 @@ class eZUpgrade extends eZCopy
 	
 	function manualAttentionNotice()
 	{
+		$this->manualAttentionNotificationList[] = "The log file is locateded in lib/ezcopy/logs/";
 		// looping through the notification list to make output with manual attenions notices.
 		foreach ( $this->manualAttentionNotificationList as $notification )
 		{
@@ -278,32 +281,36 @@ class eZUpgrade extends eZCopy
 		{
 			$this->log("Running upgrades for v. $version\n", 'heading');
 			
-			// for each upgrade function
-			foreach($upgradeStep['UpgradeFunctions'] as $upgrade)
+			// check if the UpgradeFunctions key is in the UpgradeStep
+			if ( array_key_exists( 'UpgradeFunctions', $upgradeStep ) )
 			{
-				// fetch upgrade function and lowest version number which does not require the upgrade
-				list($upgradeFunction, $lowestVersionNotInNeedOfUpgrade) = explode(";", $upgrade);
-				
-				$this->log('Upgrade function ' . $upgradeFunction . " ");
-				
-				// make sure that function should be run (depending on the version
-				// set in the INI file)
-				$runUpgrade = true;
-				
-				if($lowestVersionNotInNeedOfUpgrade AND version_compare($this->upgradeFromVersion, $lowestVersionNotInNeedOfUpgrade, '>'))
+				// for each upgrade function			
+				foreach($upgradeStep['UpgradeFunctions'] as $upgrade)
 				{
-					$runUpgrade = false;	
-				}
-				
-				if($runUpgrade)
-				{
-					// run upgrade function
-					$this->log("run\n");
-					$upgradeFunctions->$upgradeFunction();
-				}
-				else
-				{
-					$this->log("not run\n");
+					// fetch upgrade function and lowest version number which does not require the upgrade
+					list($upgradeFunction, $lowestVersionNotInNeedOfUpgrade) = explode(";", $upgrade);
+					
+					$this->log('Upgrade function ' . $upgradeFunction . " ");
+					
+					// make sure that function should be run (depending on the version
+					// set in the INI file)
+					$runUpgrade = true;
+					
+					if($lowestVersionNotInNeedOfUpgrade AND version_compare($this->upgradeFromVersion, $lowestVersionNotInNeedOfUpgrade, '>'))
+					{
+						$runUpgrade = false;	
+					}
+					
+					if($runUpgrade)
+					{
+						// run upgrade function
+						$this->log("run\n");
+						$upgradeFunctions->$upgradeFunction();
+					}
+					else
+					{
+						$this->log("not run\n");
+					}
 				}
 			}
 		}
@@ -623,7 +630,7 @@ class eZUpgrade extends eZCopy
 		$this->output->formats->question->color = 'yellow';
 
 		$question = new ezcConsoleQuestionDialog( $this->output );
-		$question->options->text = "The element $target already exists. Do you want to override it?";
+		$question->options->text = "The element $target already exists on the new installation. Do you want to override it?";
 		$question->options->format = 'question';
 		$question->options->showResults = true;
 		$question->options->validator = new ezcConsoleQuestionDialogCollectionValidator(
