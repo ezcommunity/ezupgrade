@@ -745,7 +745,7 @@ class eZUpgrade extends eZCopy
 		// if ( $rc ) print("WARNING: failed to chown $folder_name<br>");
 		
 		// remove the file
-		//unlink($filename);
+		// unlink($filename);
 		
 		// change back to old dir
 		chdir($old_dir);
