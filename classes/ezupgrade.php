@@ -151,7 +151,7 @@ class eZUpgrade extends eZCopy
 	
 	function preUpgradeChecks()
 	{
-		$this->log("Performing pre-upgrade checks\n", 'heading');
+		$this->log("Performing pre-upgrade checks ", 'heading');
 		$this->checkForDBDumps();
 		$this->log("OK\n", 'ok');
 	
@@ -295,8 +295,14 @@ class eZUpgrade extends eZCopy
 				foreach($upgradeStep['UpgradeFunctions'] as $upgrade)
 				{
 					// fetch upgrade function and lowest version number which does not require the upgrade
-					list($upgradeFunction, $lowestVersionNotInNeedOfUpgrade) = explode(";", $upgrade);
+					$parts 			= explode(";", $upgrade);
+					$upgradeFunction = $parts[0];
 					
+					if(isset($parts[1]))
+					{
+						$lowestVersionNotInNeedOfUpgrade = false;
+					}
+								
 					$this->log('Upgrade function ' . $upgradeFunction . " ");
 					
 					// make sure that function should be run (depending on the version
@@ -710,6 +716,7 @@ class eZUpgrade extends eZCopy
 			// download the file
 			$command = "curl -s -o $filename " .  $this->upgradeVersionSettings['DownloadURL'] . " 2>&1";
 			exec($command, $output, $rc);
+		
 			if ( $rc ) die("Error downloading file:<br>" . implode("<br>", $output));
 			
 			$this->log("OK\n", 'ok');
