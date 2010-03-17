@@ -89,6 +89,7 @@ class eZUpgrade extends eZCopy
 		if($this->upgradeData['existing_install'] == 'remote')
 		{
 			$this->log("The existing installation is located remotely. We need to copy it to a local location.\n");
+			$this->checkpoint( 'Copy installation from remote location' );
 			
 			// copy existing distro from current location (use /ezcopy)
 			$this->ezcopy->actionDownloadAll($this->data['account_name']);
@@ -101,6 +102,9 @@ class eZUpgrade extends eZCopy
 		else
 		{
 			$this->log("The existing installation is located locally at " . $this->upgradeData['existing_install'] . "\n");
+			
+			// do a checkpoint
+			$this->checkpoint( 'Use existing installation: ' . $this->upgradeData['existing_install'] );
 			
 			// set the location of the old installation
 			$this->setOldInstallationPath($this->upgradeData['existing_install']);
@@ -280,6 +284,9 @@ class eZUpgrade extends eZCopy
 		foreach($upgradeStepList as $version => $upgradeStep)
 		{
 			$this->log("Running upgrades for v. $version\n", 'heading');
+			
+			// checkpoint
+			$this->checkpoint( 'Upgrades for v. ' . $version );
 			
 			// check if the UpgradeFunctions key is in the UpgradeStep
 			if ( array_key_exists( 'UpgradeFunctions', $upgradeStep ) )
@@ -649,7 +656,6 @@ class eZUpgrade extends eZCopy
 			return false;
 		}
 	}
-	
 	function downloadAndUnpackDistro()
 	{
 		// set distro file name
@@ -681,6 +687,9 @@ class eZUpgrade extends eZCopy
 			}
 			else
 			{
+				// do a checkpoint
+				$this->checkpoint( 'Copying distro', 'Distro to copy: ' . $distroFile );
+				
 				// copy distro from distro location
 				$cmd = 'cp \'' . $distroFile . '\' ' . $this->upgradeData['upgrade_base_path'] . $filename;
 								
@@ -693,7 +702,11 @@ class eZUpgrade extends eZCopy
 		// if no distro location is specified
 		else
 		{
-			$this->log("Downloading distro ($filename)");
+			$this->log("Downloading distro ($filename)\n");
+
+			// do a checkpoint
+			$this->checkpoint( 'Downloadind distro' );
+
 			// download the file
 			$command = "curl -s -o $filename " .  $this->upgradeVersionSettings['DownloadURL'] . " 2>&1";
 			exec($command, $output, $rc);
@@ -780,7 +793,11 @@ class eZUpgrade extends eZCopy
 					$upgradeContainerVersionPosition = $this->getVersionPosition($upgradeContainerSinceVersion);
 					if($upgradeContainerVersionPosition > $currentVersionPosition)
 					{
-						$this->log('Upgrading ' . $this->upgradeData['account_name'] . ' to version ' . $versionNo . "\n");
+						$this->log('Upgrading ' . $this->upgradeData['account_name'] . ' from version ' . $this->upgradeFromVersion . ' to version ' . $versionNo . "\n");
+						
+						// do a checkpoint
+						$this->checkpoint( 'Check on upgrade to version: ' . $versionNo );
+						
 						$this->upgradeToVersion = $versionNo;
 						return;
 					}

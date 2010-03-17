@@ -22,7 +22,10 @@ class upgradeFunctions
 		{
 			foreach( $siteAccessList as $siteaccess )
 			{
-				$this->upgrade->log("Running script $script ");
+				$this->upgrade->log("Running script $script \n");
+				
+				$this->upgrade->checkpoint( 'Running script: ' . $script );
+				
 				exec("cd " . $this->upgrade->getNewDistroFolderName() . ";php " . $script . " -s" . $siteaccess . " -siteaccess " . $siteaccess);
 				$this->upgrade->log("OK\n", 'ok');
 			}
