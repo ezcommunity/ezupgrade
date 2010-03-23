@@ -152,7 +152,10 @@ class upgradeFunctions
 	{
 		$this->manualAttention('If you have an eZP version which used to be older than 3.3, please run the updateimagesystem.php script manually.');
 	}
-	
+	function moduleListNotice()
+	{
+		$this->manualAttention('Please check your custom extensions with views. In module.ini.append.php, they should have the setting ModuleList[]' );
+	}
 	function generateAutoLoads()
 	{
 		$script = 'bin/php/ezpgenerateautoloads.php --extension';
