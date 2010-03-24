@@ -67,6 +67,36 @@ class upgradeFunctions
 			$this->upgrade->applyDatabaseSql($newDBName, $sql);
 		}
 	}
+	function updateDB391()
+	{
+		$sql = 'sql/3.9/3.9.1.sql';
+		$this->updateDB($sql, false);
+	}
+	function updateDB392()
+	{
+		$sql = 'sql/3.9/3.9.2.sql';
+		$this->updateDB($sql, false);
+	}
+	function updateDB393()
+	{
+		$sql = 'sql/3.9/3.9.3.sql';
+		$this->updateDB($sql, false);
+	}
+	function updateDB394()
+	{
+		$sql = 'sql/3.9/3.9.4.sql';
+		$this->updateDB($sql, false);
+	}
+	function updateDB395()
+	{
+		$sql = 'sql/3.9/3.9.5.sql';
+		$this->updateDB($sql, false);
+	}
+	function updateDB3100()
+	{
+		$sql = 'sql/3.10/3.10.0.sql';
+		$this->updateDB($sql, false);
+	}
 	function updateDB3101()
 	{
 		$sql = 'sql/3.10/3.10.1.sql';

@@ -149,9 +149,22 @@ class eZUpgrade extends eZCopy
 		return $this->getNewDistroFolderName();
 	}
 	
+	function checkRecommendedVersion()
+	{
+		$this->log($this->upgradeToVersion);
+		// check if the version we are upgrading to is not recommended.
+		if ( $this->cfg->hasSetting('ezupgrade', 'Upgrade_' . $this->upgradeToVersion, 'NotRecommendedVersion') )
+		{
+			if ( $this->cfg->getSetting('ezupgrade', 'Upgrade_' . $this->upgradeToVersion, 'NotRecommendedVersion') == 'true' )
+			{
+				$this->log( "This version is not recommende to upgrade to, please upgrade to the next version\n", 'critical' );
+			}
+		}
+	}
 	function preUpgradeChecks()
 	{
 		$this->log("Performing pre-upgrade checks ", 'heading');
+		$this->checkRecommendedVersion();
 		$this->checkForDBDumps();
 		$this->log("OK\n", 'ok');
 	
@@ -347,7 +360,8 @@ class eZUpgrade extends eZCopy
 		
 		// fetch the positions of the version we are upgrading from and to
 		$upgradeFromPosition 	= array_search($this->upgradeFromVersion, $eZversionsList);
-		$upgradeToPosition 		= array_search($this->upgradeToVersion, $eZversionsList);
+		$upgradeToPosition 		= array_search($this->upgradeToVersion, $eZversionsList);	
+		
 		
 		// if the version we are upgrading to is not specified
 		if(!$upgradeToPosition)
@@ -802,6 +816,7 @@ class eZUpgrade extends eZCopy
 					
 					// where in the order of versions is this version
 					$upgradeContainerVersionPosition = $this->getVersionPosition($upgradeContainerSinceVersion);
+										
 					if($upgradeContainerVersionPosition > $currentVersionPosition)
 					{
 						$this->log('Upgrading ' . $this->upgradeData['account_name'] . ' from version ' . $this->upgradeFromVersion . ' to version ' . $versionNo . "\n");
