@@ -644,6 +644,12 @@ class eZUpgrade extends eZCopy
 			{
 				$this->log("Copying " . $dir . $element ." ");
 				
+				// create the dir if it doesnt excist.
+				if ( !is_dir($this->getNewDistroFolderName() . $dir ) )
+				{
+					exec( "mkdir " . $this->getNewDistroFolderName() . $dir );
+				}
+				
 				// copy the element
 				$cmd = "cp -R " . $this->getOldInstallationPath() . $dir . $element . " " . $this->getNewDistroFolderName() . $dir;
 				
@@ -748,7 +754,17 @@ class eZUpgrade extends eZCopy
 		// Previously, we tried fetching the last created folder, but since the unpacked
 		// distro uses the date it was packed, this does not work
 		$this->data['new_distro_folder_name'] = $this->upgradeData['upgrade_base_path'] . $newDistroFolderName . '/';
-		
+		if ( !is_dir( $this->data['new_distro_folder_name'] ) )
+		{
+			if ( is_dir( $this->upgradeData['upgrade_base_path'] . $newDistroFolderName . '-gpl/' ) )
+			{
+				exec( 'mv ' . $this->upgradeData['upgrade_base_path'] . $newDistroFolderName . '-gpl/ ' . $this->data['new_distro_folder_name'] );
+			}
+			else
+			{
+				$this->log( 'Did not find ' . $this->data['new_distro_folder_name'], 'critical' );
+			}
+		}	
 		// $last_line = exec("cd " . $this->upgradeData['upgrade_base_path'] . ";ls -lrt | grep ^d");
 		// $this->data['new_distro_folder_name'] = rtrim(array_pop(preg_split("/[\s]+/", $last_line,-1,PREG_SPLIT_NO_EMPTY)), "\n");
 		
