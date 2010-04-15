@@ -31,7 +31,6 @@ class upgradeFunctions
 			}
 		}
 	}
-	
 	function updateCharsetDBu40()
 	{	
 		$siteAccessList = $this->upgrade->upgradeData['siteaccess_list'];
@@ -191,13 +190,48 @@ class upgradeFunctions
 		$script = 'bin/php/ezpgenerateautoloads.php --extension';
 		$this->runScript($script);
 	}
-	
+	function preUpgradeScripts310()
+	{
+		$this->runScript('update/common/scripts/3.10/fixobjectremoteid.php' );
+	}
+	function upgradeScripts310() 
+	{
+		$list = array(  'updateniceurls.php --import',
+						'ezimportdbafile.php --datatype=ezisbn' 
+					);
+		$siteAccessList = $this->upgrade->upgradeData['siteaccess_list'];
+		if ( is_array( $siteAccessList ) )
+		{
+			foreach( $siteAccessList as $siteaccess )
+			{
+				foreach ( $list as $bin )
+				{
+					exec("cd " . $this->upgrade->getNewDistroFolderName() . ";php bin/php/". $bin . " -s" . $siteaccess);
+				}
+			}
+		}
+		$scriptList = array('updatemultioption.php',
+							'updatevatcountries.php');
+		foreach( $scriptList as $script )
+		{
+			$this->runScript('update/common/scripts/3.10/' . $script );
+		}
+		
+	}
+	function upgradeScripts39()
+	{
+		$scriptList = array( 'fixobjectremoteid.php', 'updatevatcountries.php', 'updatebinaryfile.php' );
+		foreach( $scriptList as $script )
+		{
+			$this->runScript('update/common/scripts/3.9/' . $script );
+		}
+	}
 	function upgradeScripts41()
 	{
 		$scriptList = array('addlockstategroup.php', 
 							'fixclassremoteid.php', 
 							'fixezurlobjectlinks.php', 
-							'fixobjectremoteid.php', 
+							'fixobjectremoteid.php --mode=a', 
 							'initurlaliasmlid.php');
 
 		foreach($scriptList as $script)

@@ -151,7 +151,6 @@ class eZUpgrade extends eZCopy
 	
 	function checkRecommendedVersion()
 	{
-		$this->log($this->upgradeToVersion);
 		// check if the version we are upgrading to is not recommended.
 		if ( $this->cfg->hasSetting('ezupgrade', 'Upgrade_' . $this->upgradeToVersion, 'NotRecommendedVersion') )
 		{
