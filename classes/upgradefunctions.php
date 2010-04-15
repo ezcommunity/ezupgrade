@@ -45,7 +45,7 @@ class upgradeFunctions
 	function manualAttention($msg)
 	{
 		$this->attention[] = $msg;
-		$this->manualAttentionNotificationList[] = $msg;
+		$this->upgrade->manualAttentionNotificationList[] = $msg;
 	}
 	
 	function updateDB($sql, $useBasePath = true)
@@ -190,6 +190,12 @@ class upgradeFunctions
 	{
 		$this->manualAttention('Please check your custom extensions with views. In module.ini.append.php, they should have the setting ModuleList[]' );
 	}
+	function upgrade430Notice()
+	{
+		$this->manualAttention('Replace replacerules: RewriteRule ^/var/cache/texttoimage/.* - [L] and RewriteRule  ^/var/[^/]+/cache/(texttoimage|public)/.* - [L] with RewriteRule ^/var/([^/]+/)?cache/(texttoimage|public)/.* - [L]');
+		$this->manualAttention('In order to get new admin design to work add AdditionalSiteDesignList[]=admin2 in your admin siteaccess. Must be above the AdditionalSiteDesignList[]=admin');
+		$this->manualAttention('You need to add the access content/dashboard to usergroups that are not administrators, but should have this.');
+	}
 	function generateAutoLoads()
 	{
 		$script = 'bin/php/ezpgenerateautoloads.php --extension';
@@ -257,10 +263,6 @@ class upgradeFunctions
 		{
 			$this->runScript('update/common/scripts/4.3/' . $script);
 		}
-		
-		$this->manualAttention('Replace replacerules: RewriteRule ^/var/cache/texttoimage/.* - [L] and RewriteRule  ^/var/[^/]+/cache/(texttoimage|public)/.* - [L] with RewriteRule ^/var/([^/]+/)?cache/(texttoimage|public)/.* - [L]');
-		$this->manualAttention('In order to get new admin design to work add AdditionalSiteDesignList[]=admin2 in your admin siteaccess. Must be above the AdditionalSiteDesignList[]=admin');
-		$this->manualAttention('You need to add the access content/dashboard to usergroups that are not administrators, but should have this.');
 	}
 }
 
