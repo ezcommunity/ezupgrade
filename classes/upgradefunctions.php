@@ -260,7 +260,7 @@ class upgradeFunctions
 		
 		$this->manualAttention('Replace replacerules: RewriteRule ^/var/cache/texttoimage/.* - [L] and RewriteRule  ^/var/[^/]+/cache/(texttoimage|public)/.* - [L] with RewriteRule ^/var/([^/]+/)?cache/(texttoimage|public)/.* - [L]');
 		$this->manualAttention('In order to get new admin design to work add AdditionalSiteDesignList[]=admin2 in your admin siteaccess. Must be above the AdditionalSiteDesignList[]=admin');
-		$this->manualAttention('You need to add the access content/dashboard to usergroups that are not administrators, but should have this.')
+		$this->manualAttention('You need to add the access content/dashboard to usergroups that are not administrators, but should have this.');
 	}
 }
 
