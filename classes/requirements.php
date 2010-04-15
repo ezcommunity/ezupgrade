@@ -36,6 +36,11 @@ class requirements
 		// TODO: Create function for checking for eZ components 2008.2
 		return true;
 	}
+	function eZC200921()
+	{
+		// TODO: Create function for checking for eZ components 2009.2.1
+		return true;
+	}
 }
 
 ?>

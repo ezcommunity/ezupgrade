@@ -166,6 +166,11 @@ class upgradeFunctions
 		$sql = 'sql/4.2/4.2.0.sql';
 		$this->updateDB($sql, false);
 	}
+	function updateDB430()
+	{
+		$sql = 'sql/4.3/4.3.0.sql';
+		$this->updateDB($sql, false);
+	}
 	function updateDBOE501()
 	{
 		$sql = '/extension/ezoe/update/database/5.0/dbupdate-5.0.0-to-5.0.1.sql';
@@ -188,6 +193,11 @@ class upgradeFunctions
 	function generateAutoLoads()
 	{
 		$script = 'bin/php/ezpgenerateautoloads.php --extension';
+		$this->runScript($script);
+	}
+	function generateAutoLoadsKernel()
+	{
+		$script = 'bin/php/ezpgenerateautoloads.php --kernel';
 		$this->runScript($script);
 	}
 	function preUpgradeScripts310()
@@ -238,6 +248,19 @@ class upgradeFunctions
 		{
 			$this->runScript('update/common/scripts/4.1/' . $script);
 		}
+	}
+	function upgradeScripts43()
+	{
+		$scriptList = array('updatenodeassignment.php');
+
+		foreach($scriptList as $script)
+		{
+			$this->runScript('update/common/scripts/4.3/' . $script);
+		}
+		
+		$this->manualAttention('Replace replacerules: RewriteRule ^/var/cache/texttoimage/.* - [L] and RewriteRule  ^/var/[^/]+/cache/(texttoimage|public)/.* - [L] with RewriteRule ^/var/([^/]+/)?cache/(texttoimage|public)/.* - [L]');
+		$this->manualAttention('In order to get new admin design to work add AdditionalSiteDesignList[]=admin2 in your admin siteaccess. Must be above the AdditionalSiteDesignList[]=admin');
+		$this->manualAttention('You need to add the access content/dashboard to usergroups that are not administrators, but should have this.')
 	}
 }
 
