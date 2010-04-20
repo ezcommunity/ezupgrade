@@ -195,6 +195,7 @@ class upgradeFunctions
 		$this->manualAttention('Replace replacerules: RewriteRule ^/var/cache/texttoimage/.* - [L] and RewriteRule  ^/var/[^/]+/cache/(texttoimage|public)/.* - [L] with RewriteRule ^/var/([^/]+/)?cache/(texttoimage|public)/.* - [L]');
 		$this->manualAttention('In order to get new admin design to work add AdditionalSiteDesignList[]=admin2 in your admin siteaccess. Must be above the AdditionalSiteDesignList[]=admin');
 		$this->manualAttention('You need to add the access content/dashboard to usergroups that are not administrators, but should have this.');
+		$this->manualAttention('You need to activate the extension ezjscore to the the admin2 interface to work');
 	}
 	function generateAutoLoads()
 	{
@@ -254,6 +255,10 @@ class upgradeFunctions
 		{
 			$this->runScript('update/common/scripts/4.1/' . $script);
 		}
+				
+		$this->manualAttention('You need to deactivate the extension ezdhtml and activate the extension ezoe to get the new editor to work.');
+		$this->manualAttention('You also need to add the rewrite rule: RewriteRule ^/var/[^/]+/cache/public/.* - [L]' );
+		
 	}
 	function upgradeScripts43()
 	{
