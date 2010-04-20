@@ -199,11 +199,21 @@ class eZUpgrade extends eZCopy
 			return $this->data['new_distro_folder_name'];
 		}
 	}
-	
+	function isLocalInstallation()
+	{
+		$isLocal = $this->cfg->getSetting('account', 'Accounts', 'IsLocal');
+		if ( $isLocal == trim('true'))
+		{
+			return true;
+		}
+		return false;
+		
+	}
 	function validDatabaseConnectionDetails($access)
 	{
-		/*
-		if($access['User'] == 'root' OR $access['Password'] == '')
+		
+		
+		if( ( $access['User'] == 'root' OR $access['Password'] == '' ) and !$this->isLocalInstallation() )
 		{
 			return false;
 		}
@@ -211,8 +221,6 @@ class eZUpgrade extends eZCopy
 		{
 			return true;
 		}
-		*/
-		return true;
 	}
 	
 	function grantAccessToNewDatabases()
@@ -253,7 +261,6 @@ class eZUpgrade extends eZCopy
 	{
 		// find the position of the provided version number in the list of eZ versions
 		$position = array_search($versionNo, $this->fetchAllVersions());
-		
 		if(is_int($position))
 		{
 			return $position;	
@@ -830,6 +837,7 @@ class eZUpgrade extends eZCopy
 					$upgradeContainerSinceVersion = $this->cfg->getSetting('ezupgrade', 'Upgrade_' . $versionNo, 'UpgradeContainerSinceVersion');
 					
 					// where in the order of versions is this version
+					
 					$upgradeContainerVersionPosition = $this->getVersionPosition($upgradeContainerSinceVersion);
 										
 					if($upgradeContainerVersionPosition > $currentVersionPosition)
