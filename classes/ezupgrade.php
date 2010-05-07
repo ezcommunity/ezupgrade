@@ -298,12 +298,10 @@ class eZUpgrade extends eZCopy
 		$upgradeStepList = $this->fetchUpgradeSteps();
 		
 		$upgradeFunctions = new upgradeFunctions($this);
-		
 		// for each applicable version
 		foreach($upgradeStepList as $version => $upgradeStep)
 		{
 			$this->log("Running upgrades for v. $version\n", 'heading');
-			
 			// checkpoint
 			$this->checkpoint( 'Upgrades for v. ' . $version );
 			
@@ -541,7 +539,7 @@ class eZUpgrade extends eZCopy
 			$parts = explode($this->getNewDistroPathName(), $siteIniFilePath);
 			
 			// ignore the default site.ini and any temp INI files
-			if($parts[1] != '/settings/site.ini' AND !strstr($siteIniFilePath, '~'))
+			if($parts[1] != 'settings/site.ini' AND $parts[1] != '/settings/site.ini' AND !strstr($siteIniFilePath, '~') AND !strstr($siteIniFilePath, '.LCK'))
 			{
 				$result[] = $parts[1];	
 			}
@@ -551,28 +549,40 @@ class eZUpgrade extends eZCopy
 	
 	function updateDBConnections()
 	{
-		// for each site ini file
-		foreach($this->getSiteIniFiles() as $iniFile)
+		foreach( $this->getSiteIniFiles() as $iniFile )
 		{
-			// get instance of current ini file
-			$ini = $this->iniInstance($iniFile);
-			
-			// get current db name
-			$oldDBName = $ini->variable('DatabaseSettings', 'Database');
-			
-			// provided that the INI file has a database name set
-			if($oldDBName)
-			{
-				// set new database name
-				$ini->setVariable('DatabaseSettings', 'Database', $this->createNewDBName($oldDBName));
-
-				// save changes in ini file
-				if(!$ini->save())
+				// get instance of current ini file
+				$ini = $this->iniInstance($iniFile);
+				
+				$oldDBName = false;
+				// get current db name
+				
+				if ( $ini->hasVariable( 'DatabaseSettings', 'Database' ) )
 				{
-					//$this->log("Unable to store changes to INI file.\n", 'critical');
-				}	
-			}
+					$oldDBName = $ini->variable('DatabaseSettings', 'Database');
+				}
+				
+				// provided that the INI file has a database name set
+				if($oldDBName !== false )
+				{
+					if ( $this->fetchUpgradeFromVersion() > '3.10.1' AND $this->fetchUpgradeToVersion() > '3.10.1' )
+					{
+						// set new database name
+						$ini->setVariable('DatabaseSettings', 'Database', $this->createNewDBName($oldDBName));
+						// save changes in ini file
+						if(!$ini->save() )
+						{
+							//$this->log("Unable to store changes to INI file.\n", 'critical');
+						}
+					}
+					else
+					{
+						$this->manualAttentionNotificationList[] = "The file '" . $iniFile . "' need to be altered to use database '" . $this->createNewDBName($oldDBName) . "' and then clear the cache.";
+					}
+					
+				}
 		}
+		$this->log( "end of updateDBConnections()\n" );
 	}
 	
 
@@ -827,6 +837,7 @@ class eZUpgrade extends eZCopy
 		// for each version
 		foreach ($eZversionsList as $currentVersionPosition => $versionNo)
 		{
+			
 			// if the current version is less than or equal to the version the user wants to upgrade to
 			if(version_compare($versionNo, $this->upgradeData['upgrade_to_version'], '<='))
 			{
@@ -839,7 +850,6 @@ class eZUpgrade extends eZCopy
 					// where in the order of versions is this version
 					
 					$upgradeContainerVersionPosition = $this->getVersionPosition($upgradeContainerSinceVersion);
-										
 					if($upgradeContainerVersionPosition > $currentVersionPosition)
 					{
 						$this->log('Upgrading ' . $this->upgradeData['account_name'] . ' from version ' . $this->upgradeFromVersion . ' to version ' . $versionNo . "\n");

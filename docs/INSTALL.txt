@@ -81,3 +81,16 @@ USAGE
 From the shell prompt, where eZUpgrade is located, run:
 
 php ezupgrade [account_username]
+
+
+IMPORTANT NOTE ABOUT UPGRADING FROM VERSION 3.x TO 4.x
+
+Since 3-series of eZ Publish is run on php4 the upgrading process is a little more tricky than upgrading from 4.x.y.
+In order to fix this we have added paths to php4 and php5 in ezcopy.ini. This means that you need to upgrade on a server/machine that have both this or do it in cycles. 
+
+The way we have upgraded is doing it in cycles. Here is one of our example:
+
+FROM		TO		
+3.8.6		3.9.1
+3.10.1		4.0.1
+4.0.1		4.3.0

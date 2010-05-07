@@ -15,18 +15,19 @@ class upgradeFunctions
 		$this->upgrade		= $upgrade;
 	}
 	
-	function runScript($script)
+	function runScript($script, $version=5)
 	{
+		$phpCli = $this->upgrade->getPathToPHP( $version );
 		$siteAccessList = $this->upgrade->upgradeData['siteaccess_list'];
 		if ( is_array( $siteAccessList ) )
 		{
 			foreach( $siteAccessList as $siteaccess )
 			{
-				$this->upgrade->log("Running script $script ");
+				$this->upgrade->log("Running script $script  -s" . $siteaccess);
 				
 				$this->upgrade->checkpoint( 'Running script: ' . $script );
 				
-				exec("cd " . $this->upgrade->getNewDistroFolderName() . ";php " . $script . " -s" . $siteaccess . " -siteaccess " . $siteaccess);
+				exec("cd " . $this->upgrade->getNewDistroFolderName() . ";".$phpCli." " . $script . " -s" . $siteaccess);
 				$this->upgrade->log("OK\n", 'ok');
 			}
 		}
@@ -65,6 +66,16 @@ class upgradeFunctions
 			// apply db dump
 			$this->upgrade->applyDatabaseSql($newDBName, $sql);
 		}
+	}
+	function updateDB3810()
+	{
+		$sql = 'sql/3.8/3.8.10.sql';
+		$this->updateDB($sql, false);
+	}
+	function updateDB390()
+	{
+		$sql = 'sql/3.9/3.9.0.sql';
+		$this->updateDB($sql, false);
 	}
 	function updateDB391()
 	{
@@ -196,6 +207,10 @@ class upgradeFunctions
 		$this->manualAttention('In order to get new admin design to work add AdditionalSiteDesignList[]=admin2 in your admin siteaccess. Must be above the AdditionalSiteDesignList[]=admin');
 		$this->manualAttention('You need to add the access content/dashboard to usergroups that are not administrators, but should have this.');
 		$this->manualAttention('You need to activate the extension ezjscore to the the admin2 interface to work');
+		$this->manualAttention("The 'Webshop'-tab is by default hidden. If your webpages is a webshop, you might want to enable this tab in the menu.ini");
+		$this->manualAttention("A new settings in the right bar has been added in this version. To enable to get access to change viewsettings for placement and preview please add Tool[]=admin_preferences in toolbar.ini under [Toolbar_admin_right]");
+		$this->manualAttention('If you have custom made views/functions you need to check for this depracated functions:');
+		$this->manualAttention('ezi18n(), ezx18n(), imageInit(), templateInit(), removeAssignment()');
 	}
 	function generateAutoLoads()
 	{
@@ -207,40 +222,41 @@ class upgradeFunctions
 		$script = 'bin/php/ezpgenerateautoloads.php --kernel';
 		$this->runScript($script);
 	}
-	function preUpgradeScripts310()
-	{
-		$this->runScript('update/common/scripts/3.10/fixobjectremoteid.php' );
-	}
 	function upgradeScripts310() 
 	{
-		$list = array(  'updateniceurls.php --import',
-						'ezimportdbafile.php --datatype=ezisbn' 
-					);
-		$siteAccessList = $this->upgrade->upgradeData['siteaccess_list'];
-		if ( is_array( $siteAccessList ) )
-		{
-			foreach( $siteAccessList as $siteaccess )
-			{
-				foreach ( $list as $bin )
-				{
-					exec("cd " . $this->upgrade->getNewDistroFolderName() . ";php bin/php/". $bin . " -s" . $siteaccess);
-				}
-			}
-		}
-		$scriptList = array('updatemultioption.php',
+		$this->upgrade->checkpoint('preUpgradeScripts310()', 'Please change your database name in the given siteaccess in account.ini', true);
+		$scriptList = array(
+							'updatemultioption.php',
 							'updatevatcountries.php');
 		foreach( $scriptList as $script )
 		{
-			$this->runScript('update/common/scripts/3.10/' . $script );
+			$this->runScript('update/common/scripts/3.10/' . $script, 4 );
 		}
-		
+		$scriptListSecond = array( 'updateniceurls.php --import',
+									'ezimportdbafile.php --datatype=ezisbn');
+		foreach( $scriptListSecond as $script )
+		{
+			$this->runScript('bin/php/' . $script, 4 );
+		}	
 	}
-	function upgradeScripts39()
+	function upgradeScripts394()
 	{
+		$this->upgrade->checkpoint('upgradeScripts394()', 'Please change your database name in the given siteaccess in account.ini', true);
 		$scriptList = array( 'fixobjectremoteid.php', 'updatevatcountries.php', 'updatebinaryfile.php' );
 		foreach( $scriptList as $script )
 		{
-			$this->runScript('update/common/scripts/3.9/' . $script );
+			$this->runScript('update/common/scripts/3.9/' . $script, 4 );
+		}
+	}
+
+	function upgradeScripts391()
+	{
+
+		$this->upgrade->checkpoint('upgradeScripts391()', 'Please change your database name in the given siteaccess in account.ini', true);
+		$scriptList = array( 'correctxmltext.php', 'updateclasstranslations.php --language=eng-GB', 'updatetypedrelation.php' );
+		foreach( $scriptList as $script )
+		{
+			$this->runScript('update/common/scripts/3.9/' . $script, 4 );
 		}
 	}
 	function upgradeScripts41()
