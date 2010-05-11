@@ -339,7 +339,14 @@ class eZUpgrade extends eZCopy
 					{
 						// run upgrade function
 						$this->log("run\n");
-						$upgradeFunctions->$upgradeFunction();
+						if ( $upgradeFunction == 'updateDB' )
+						{
+							$upgradeFunctions->updateDB( $version );	
+						}
+						else
+						{
+							$upgradeFunctions->$upgradeFunction();
+						}
 					}
 					else
 					{

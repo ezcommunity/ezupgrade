@@ -67,120 +67,11 @@ class upgradeFunctions
 			$this->upgrade->applyDatabaseSql($newDBName, $sql);
 		}
 	}
-	function updateDB3810()
+	function updateDB( $version )
 	{
-		$sql = 'sql/3.8/3.8.10.sql';
-		$this->updateDB($sql, false);
-	}
-	function updateDB390()
-	{
-		$sql = 'sql/3.9/3.9.0.sql';
-		$this->updateDB($sql, false);
-	}
-	function updateDB391()
-	{
-		$sql = 'sql/3.9/3.9.1.sql';
-		$this->updateDB($sql, false);
-	}
-	function updateDB392()
-	{
-		$sql = 'sql/3.9/3.9.2.sql';
-		$this->updateDB($sql, false);
-	}
-	function updateDB393()
-	{
-		$sql = 'sql/3.9/3.9.3.sql';
-		$this->updateDB($sql, false);
-	}
-	function updateDB394()
-	{
-		$sql = 'sql/3.9/3.9.4.sql';
-		$this->updateDB($sql, false);
-	}
-	function updateDB395()
-	{
-		$sql = 'sql/3.9/3.9.5.sql';
-		$this->updateDB($sql, false);
-	}
-	function updateDB3100()
-	{
-		$sql = 'sql/3.10/3.10.0.sql';
-		$this->updateDB($sql, false);
-	}
-	function updateDB3101()
-	{
-		$sql = 'sql/3.10/3.10.1.sql';
-		$this->updateDB($sql, false);
-	}
-	function updateDB401()
-	{
-		$sql = 'sql/4.0/4.0.1.sql';
-		$this->updateDB($sql, false);
-	}
-	function updateDB402()
-	{
-		$sql = 'sql/4.0/4.0.2.sql';
-		$this->updateDB($sql, false);
-	}
-	function updateDB403()
-	{
-		$sql = 'sql/4.0/4.0.3.sql';
-		$this->updateDB($sql, false);
-	}
-	function updateDB404()
-	{
-		$sql = 'sql/4.0/4.0.4.sql';
-		$this->updateDB($sql, false);
-	}
-	function updateDB405()
-	{
-		$sql = 'sql/4.0/4.0.5.sql';
-		$this->updateDB($sql, false);
-	}
-	function updateDB406()
-	{
-		$sql = 'sql/4.0/4.0.6.sql';
-		$this->updateDB($sql, false);
-	}
-	function updateDB407()
-	{
-		$sql = 'sql/4.0/4.0.7.sql';
-		$this->updateDB($sql, false);
-	}
-	function updateDB410()
-	{
-		$sql = 'sql/4.1/4.1.0.sql';
-		$this->updateDB($sql, false);
-	}
-	function updateDB411()
-	{
-		$sql = 'sql/4.1/4.1.1.sql';
-		$this->updateDB($sql, false);
-	}
-	function updateDB412()
-	{
-		$sql = 'sql/4.1/4.1.2.sql';
-		$this->updateDB($sql, false);
-	}	
-	function updateDB413()
-	{
-		$sql = 'sql/4.1/4.1.3.sql';
-		$this->updateDB($sql, false);
-	}	
-	function updateDB414()
-	{
-		$sql = 'sql/4.1/4.1.4.sql';
-		$this->updateDB($sql, false);
-	}
-	function updateDB420()
-	{
-		$sql = 'sql/4.2/4.2.0.sql';
-		$this->updateDB($sql, false);
-	}
-	function updateDB430()
-	{
-		$sql = 'sql/4.3/4.3.0.sql';
-		$this->updateDB($sql, false);
+		$versionStep 	= explode('.', $version );
+		$sqlFile		= 'sql/' . $versionStep[0] . '.' . $versionStep[1] . '/' . $version;
+		$this->updateDB( $sqlFile, false );
 	}
 	function updateDBOE501()
 	{
@@ -222,6 +113,32 @@ class upgradeFunctions
 		$script = 'bin/php/ezpgenerateautoloads.php --kernel';
 		$this->runScript($script);
 	}
+	function upgradeScripts41()
+	{
+		$scriptList = array('addlockstategroup.php', 
+							'fixclassremoteid.php', 
+							'fixezurlobjectlinks.php', 
+							'fixobjectremoteid.php --mode=a', 
+							'initurlaliasmlid.php');
+
+		foreach($scriptList as $script)
+		{
+			$this->runScript('update/common/scripts/4.1/' . $script);
+		}
+				
+		$this->manualAttention('You need to deactivate the extension ezdhtml and activate the extension ezoe to get the new editor to work.');
+		$this->manualAttention('You also need to add the rewrite rule: RewriteRule ^/var/[^/]+/cache/public/.* - [L]' );
+		
+	}
+	function upgradeScripts43()
+	{
+		$scriptList = array('updatenodeassignment.php');
+
+		foreach($scriptList as $script)
+		{
+			$this->runScript('update/common/scripts/4.3/' . $script);
+		}
+	}
 	function upgradeScripts310() 
 	{
 		$this->upgrade->checkpoint('preUpgradeScripts310()', 'Please change your database name in the given siteaccess in account.ini', true);
@@ -259,31 +176,44 @@ class upgradeFunctions
 			$this->runScript('update/common/scripts/3.9/' . $script, 4 );
 		}
 	}
-	function upgradeScripts41()
+	function upgradeScripts360()
 	{
-		$scriptList = array('addlockstategroup.php', 
-							'fixclassremoteid.php', 
-							'fixezurlobjectlinks.php', 
-							'fixobjectremoteid.php --mode=a', 
-							'initurlaliasmlid.php');
-
-		foreach($scriptList as $script)
+		$this->upgrade->checkpoint('upgradeScripts360()', 'Please change your database name in the given siteaccess in account.ini', true);
+		$scriptList = array( 'convertxmllinks.php', 'convertxmllinks.php', 'updaterelatedobjectslinks.php', 'updateeztimetype.php' );
+		foreach( $scriptList as $script )
 		{
-			$this->runScript('update/common/scripts/4.1/' . $script);
+			$this->runScript('update/common/scripts/' . $script, 4 );
 		}
-				
-		$this->manualAttention('You need to deactivate the extension ezdhtml and activate the extension ezoe to get the new editor to work.');
-		$this->manualAttention('You also need to add the rewrite rule: RewriteRule ^/var/[^/]+/cache/public/.* - [L]' );
-		
+		$this->manualAttention('In 3.6.0 its possible to clear the cache from right column. Take a look at this page for how to activate the toolbar. (Step 4): http://ez.no/doc/ez_publish/upgrading/upgrading_to_3_6/from_3_5_2_to_3_6_0');
 	}
-	function upgradeScripts43()
+	function upgradeScripts380()
 	{
-		$scriptList = array('updatenodeassignment.php');
-
-		foreach($scriptList as $script)
+		$this->upgrade->checkpoint('upgradeScripts380', "In version 3.8.0 it have been introduced multilanguage. In order to make this to work you need to change your site.ini.append.php files\n
+		\n
+		Frontend site.ini:\n
+		SiteLanguageList[]\n
+		SiteLanguageList[]=<my-first-language>\n
+		SiteLanguageList[]=<my-second-language>\n
+		ShowUntranslatedObjects=disabled\n
+		\n
+		Backend site.ini:\n
+		SiteLanguageList[]\n
+		SiteLanguageList[]=<my-first-language>\n
+		SiteLanguageList[]=<my-second-language>\n
+		ShowUntranslatedObjects=enabled\n
+		\n
+		Please do this changes before you proceed.", true );
+		
+		$this->upgrade->checkpoint('upgradeScripts380()', 'Please change your database name in the given siteaccess in account.ini', true);
+		$scriptList = array( 'updatemultilingual.php', 'updaterssimport.php' );
+		foreach( $scriptList as $script )
 		{
-			$this->runScript('update/common/scripts/4.3/' . $script);
+			$this->runScript('update/common/scripts/' . $script, 4 );
 		}
+		$this->manualAttention('In 3.8.0 settings for controlling classes shown in TreeMenu was added. You can control this in contentstructuremenu.ini under [TreeMenu]ShowClasses[]');
+		$this->manualAttention('The binaryfile.ini`s standard values has been changed in 3.8.0. If you have an override of this, you should check the content of it.')
+		
+		
 	}
 }
 
