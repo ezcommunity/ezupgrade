@@ -24,7 +24,6 @@ $data = array(	'account_name'			=> $account,
 				'upgrade_base_path'		=> $basePath, 
 				'existing_install'		=> $instLoc,
 				'siteaccess_list'		=> $siteAccessList );
-
 if ( $upgrade->checkParamsBeforeRunning( $data ) )
 {
 	$upgrade->setUpgradeData($data);

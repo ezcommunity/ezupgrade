@@ -171,6 +171,7 @@ class eZUpgrade extends eZCopy
 	function checkUpgradeContainer()
 	{
 		$updateContainer = $this->cfg->getSetting('ezupgrade', 'Upgrade_' . $this->upgradeToVersion, 'UpgradeContainerSinceVersion');
+		
 		if ( $this->upgradeFromVersion < $updateContainer )
 		{
 			$this->log("Can not upgrade from " . $this->upgradeFromVersion . " to " . $this->upgradeToVersion  . ". Version "  . $this->upgradeToVersion . " holds upgrade files only down to version " . $updateContainer, 'critical');
@@ -339,9 +340,9 @@ class eZUpgrade extends eZCopy
 					{
 						// run upgrade function
 						$this->log("run\n");
-						if ( $upgradeFunction == 'updateDB' )
+						if ( $upgradeFunction == 'updateDBForVersion' )
 						{
-							$upgradeFunctions->updateDB( $version );	
+							$upgradeFunctions->updateDBForVersion( $version );	
 						}
 						else
 						{
@@ -844,7 +845,6 @@ class eZUpgrade extends eZCopy
 		// for each version
 		foreach ($eZversionsList as $currentVersionPosition => $versionNo)
 		{
-			
 			// if the current version is less than or equal to the version the user wants to upgrade to
 			if(version_compare($versionNo, $this->upgradeData['upgrade_to_version'], '<='))
 			{

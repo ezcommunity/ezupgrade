@@ -48,7 +48,11 @@ class upgradeFunctions
 		$this->attention[] = $msg;
 		$this->upgrade->manualAttentionNotificationList[] = $msg;
 	}
-	
+	function updateDB3100()
+	{
+		$sqlFile		= 'sql/3.10/3.10.0.sql';
+		$this->updateDB( $sqlFile, false );
+	}
 	function updateDB($sql, $useBasePath = true)
 	{
 		
@@ -67,10 +71,10 @@ class upgradeFunctions
 			$this->upgrade->applyDatabaseSql($newDBName, $sql);
 		}
 	}
-	function updateDB( $version )
+	function updateDBForVersion( $version )
 	{
 		$versionStep 	= explode('.', $version );
-		$sqlFile		= 'sql/' . $versionStep[0] . '.' . $versionStep[1] . '/' . $version;
+		$sqlFile		= 'sql/' . $versionStep[0] . '.' . $versionStep[1] . '/' . $version .'.sql';
 		$this->updateDB( $sqlFile, false );
 	}
 	function updateDBOE501()
@@ -159,18 +163,17 @@ class upgradeFunctions
 	function upgradeScripts394()
 	{
 		$this->upgrade->checkpoint('upgradeScripts394()', 'Please change your database name in the given siteaccess in account.ini', true);
-		$scriptList = array( 'fixobjectremoteid.php', 'updatevatcountries.php', 'updatebinaryfile.php' );
+		$scriptList = array( 'updatevatcountries.php' );
 		foreach( $scriptList as $script )
 		{
 			$this->runScript('update/common/scripts/3.9/' . $script, 4 );
 		}
 	}
-
 	function upgradeScripts391()
 	{
 
 		$this->upgrade->checkpoint('upgradeScripts391()', 'Please change your database name in the given siteaccess in account.ini', true);
-		$scriptList = array( 'correctxmltext.php', 'updateclasstranslations.php --language=eng-GB', 'updatetypedrelation.php' );
+		$scriptList = array( 'correctxmltext.php', 'updateclasstranslations.php --language=nor-NO', 'updatetypedrelation.php' );
 		foreach( $scriptList as $script )
 		{
 			$this->runScript('update/common/scripts/3.9/' . $script, 4 );
@@ -179,7 +182,7 @@ class upgradeFunctions
 	function upgradeScripts360()
 	{
 		$this->upgrade->checkpoint('upgradeScripts360()', 'Please change your database name in the given siteaccess in account.ini', true);
-		$scriptList = array( 'convertxmllinks.php', 'convertxmllinks.php', 'updaterelatedobjectslinks.php', 'updateeztimetype.php' );
+		$scriptList = array( 'convertxmllinks.php', 'updaterelatedobjectslinks.php', 'updateeztimetype.php' );
 		foreach( $scriptList as $script )
 		{
 			$this->runScript('update/common/scripts/' . $script, 4 );
@@ -205,15 +208,48 @@ class upgradeFunctions
 		Please do this changes before you proceed.", true );
 		
 		$this->upgrade->checkpoint('upgradeScripts380()', 'Please change your database name in the given siteaccess in account.ini', true);
-		$scriptList = array( 'updatemultilingual.php', 'updaterssimport.php' );
+		
+		$siteAccessList = $this->upgrade->upgradeData['siteaccess_list'];
+		if ( is_array( $siteAccessList ) )
+		{
+			foreach( $siteAccessList as $siteaccess )
+			{
+				$runScript = $this->upgrade->getPathToPHP(4) . " update/common/scripts/updatemultilingual.php -s " . $siteaccess . "\n";
+			}
+		}
+		$this->upgrade->checkpoint('upgradeScripts380()', "You need to run the following command(s) from shell in the ezroot on the new ezpublish installatio before you continue.\n\n " . $runScript ."\n", true );
+		$scriptList = array( 'updaterssimport.php' );
 		foreach( $scriptList as $script )
 		{
 			$this->runScript('update/common/scripts/' . $script, 4 );
 		}
 		$this->manualAttention('In 3.8.0 settings for controlling classes shown in TreeMenu was added. You can control this in contentstructuremenu.ini under [TreeMenu]ShowClasses[]');
-		$this->manualAttention('The binaryfile.ini`s standard values has been changed in 3.8.0. If you have an override of this, you should check the content of it.')
-		
-		
+		$this->manualAttention('The binaryfile.ini`s standard values has been changed in 3.8.0. If you have an override of this, you should check the content of it.');
+	}
+	function upgradeScripts386()
+	{
+		$this->upgrade->checkPoint( 'upgradeScripts386', "In version 3.8.6 you need to specify custome class names to the online editor. This is done in content.ini.append.php under AvailableClasses[] for the element. Please check that your class names are added here before you go futher");
+		$scriptList = array( 'correctxmltextclasses.php' );
+		foreach( $scriptList as $script )
+		{
+			$this->runScript('update/common/scripts/' . $script, 4 );
+		}
+	}
+	function upgradeScripts351()
+	{
+		$scriptList = array( 'updatetoplevel.php', 'updateeztimetype.php' );
+		foreach( $scriptList as $script )
+		{
+			$this->runScript('update/common/scripts/' . $script, 4 );
+		}
+	}
+	function upgradeScripts358()
+	{
+		$scriptList = array( 'updatecrc32.php' );
+		foreach( $scriptList as $script )
+		{
+			$this->runScript('update/common/scripts/' . $script, 4 );
+		}
 	}
 }
 
