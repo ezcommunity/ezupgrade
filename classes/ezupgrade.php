@@ -636,8 +636,14 @@ class eZUpgrade extends eZCopy
 	
 	function promptFileOverride($dir)
 	{
+		
 		$elementList = $this->fetchFolderContents($dir);
-
+		$alwaysSay = 'ask';
+		if ( $this->cfg->getSetting('account', 'Accounts', 'DefaultPromptAnswear') )
+		{
+			$alwaysSay	 = $this->cfg->getSetting('account', 'Accounts', 'DefaultPromptAnswear');
+		}
+		
 		// for each element
 		foreach($elementList as $element)
 		{
@@ -654,12 +660,26 @@ class eZUpgrade extends eZCopy
 			// if the element exists in the new distro
 			if($elementExists)
 			{
-				// prompt the user for whether the element shuold be overriden
-				if(!$this->userWantsToOverrideElement($dir . $element))
+				switch ( $alwaysSay )
 				{
-					// if the user does not want to override the element
-					$copyElement = false;
+					case 'ask':
+						// prompt the user for whether the element shuold be overriden
+						if(!$this->userWantsToOverrideElement($dir . $element))
+						{
+							// if the user does not want to override the element
+							$copyElement = false;
+						}
+						break;
+					case 'yes':
+						$copyElement = true;
+						break;
+					case 'no':
+						$copyElement = false;
+						break;
+					default:
+						break;
 				}
+				
 			}
 			
 			// if the design should be copied
