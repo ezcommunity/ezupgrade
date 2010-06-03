@@ -638,11 +638,6 @@ class eZUpgrade extends eZCopy
 	{
 		
 		$elementList = $this->fetchFolderContents($dir);
-		$alwaysSay = 'ask';
-		if ( $this->cfg->getSetting('account', 'Accounts', 'DefaultPromptAnswear') )
-		{
-			$alwaysSay	 = $this->cfg->getSetting('account', 'Accounts', 'DefaultPromptAnswear');
-		}
 		
 		// for each element
 		foreach($elementList as $element)
@@ -660,26 +655,12 @@ class eZUpgrade extends eZCopy
 			// if the element exists in the new distro
 			if($elementExists)
 			{
-				switch ( $alwaysSay )
+				// prompt the user for whether the element shuold be overriden
+				if(!$this->userWantsToOverrideElement($dir . $element))
 				{
-					case 'ask':
-						// prompt the user for whether the element shuold be overriden
-						if(!$this->userWantsToOverrideElement($dir . $element))
-						{
-							// if the user does not want to override the element
-							$copyElement = false;
-						}
-						break;
-					case 'yes':
-						$copyElement = true;
-						break;
-					case 'no':
-						$copyElement = false;
-						break;
-					default:
-						break;
+					// if the user does not want to override the element
+					$copyElement = false;
 				}
-				
 			}
 			
 			// if the design should be copied
@@ -706,6 +687,21 @@ class eZUpgrade extends eZCopy
 	
 	function userWantsToOverrideElement($target)
 	{
+		// setting default action
+		$option = 'prompt';
+		
+		// check if there is set any default prompt option, and set this to the option
+		if ( $this->cfg->getSetting('account', 'Accounts', 'DefaultPromptOption') )
+		{
+			$option	 = $this->cfg->getSetting('account', 'Accounts', 'DefaultPromptOption');
+		}
+		
+		// if the ini file say that we alway should answear the prompt with the default answer we return false
+		if ( $option == 'use_default' )
+		{
+			return false;
+		}
+		
 		$this->output->formats->question->color = 'yellow';
 
 		$question = new ezcConsoleQuestionDialog( $this->output );
