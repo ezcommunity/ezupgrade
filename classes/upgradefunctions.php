@@ -106,6 +106,7 @@ class upgradeFunctions
 		$this->manualAttention("A new settings in the right bar has been added in this version. To enable to get access to change viewsettings for placement and preview please add Tool[]=admin_preferences in toolbar.ini under [Toolbar_admin_right]");
 		$this->manualAttention('If you have custom made views/functions you need to check for this depracated functions:');
 		$this->manualAttention('ezi18n(), ezx18n(), imageInit(), templateInit(), removeAssignment()');
+		$this->manualAttention('Make sure that the patch http://issues.ez.no/IssueView.php?Id=16814&activeItem=5 is appended to the version' );
 	}
 	function generateAutoLoads()
 	{
