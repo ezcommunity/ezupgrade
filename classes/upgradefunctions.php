@@ -121,7 +121,7 @@ class upgradeFunctions
 	function upgradeScripts41()
 	{
 		$scriptList = array('addlockstategroup.php', 
-							'fixclassremoteid.php', 
+							'fixclassremoteid.php --mode=a', 
 							'fixezurlobjectlinks.php', 
 							'fixobjectremoteid.php --mode=a', 
 							'initurlaliasmlid.php');
