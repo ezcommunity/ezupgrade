@@ -1,6 +1,6 @@
 <?php
 
-class upgradeFunctions  
+class upgradeFunctions
 {
 	var $attention;
 	var $dbBasePath;
@@ -33,13 +33,13 @@ class upgradeFunctions
 		}
 	}
 	function updateCharsetDBu40()
-	{	
+	{
 		$siteAccessList = $this->upgrade->upgradeData['siteaccess_list'];
 		if ( is_array( $siteAccessList ) )
 		{
 			foreach( $siteAccessList as $siteaccess )
 			{
-				$this->runScript('bin/php/ezconvertdbcharset.php -s ' . $siteaccess);		
+				$this->runScript('bin/php/ezconvertdbcharset.php -s ' . $siteaccess);
 			}
 		}
 	}
@@ -98,16 +98,30 @@ class upgradeFunctions
 	}
 	function upgrade430Notice()
 	{
-		$this->manualAttention('Replace replacerules: RewriteRule ^/var/cache/texttoimage/.* - [L] and RewriteRule  ^/var/[^/]+/cache/(texttoimage|public)/.* - [L] with RewriteRule ^/var/([^/]+/)?cache/(texttoimage|public)/.* - [L]');
+		$this->manualAttention('Replace rewriterules: RewriteRule ^/var/cache/texttoimage/.* - [L] and RewriteRule  ^/var/[^/]+/cache/(texttoimage|public)/.* - [L] with RewriteRule ^/var/([^/]+/)?cache/(texttoimage|public)/.* - [L]');
 		$this->manualAttention('In order to get new admin design to work add AdditionalSiteDesignList[]=admin2 in your admin siteaccess. Must be above the AdditionalSiteDesignList[]=admin');
 		$this->manualAttention('You need to add the access content/dashboard to usergroups that are not administrators, but should have this.');
 		$this->manualAttention('You need to activate the extension ezjscore to the the admin2 interface to work');
 		$this->manualAttention("The 'Webshop'-tab is by default hidden. If your webpages is a webshop, you might want to enable this tab in the menu.ini");
 		$this->manualAttention("A new settings in the right bar has been added in this version. To enable to get access to change viewsettings for placement and preview please add Tool[]=admin_preferences in toolbar.ini under [Toolbar_admin_right]");
-		$this->manualAttention('If you have custom made views/functions you need to check for this depracated functions:');
+		$this->manualAttention('If you have custom made views/functions you need to check for this deprecated functions:');
 		$this->manualAttention('ezi18n(), ezx18n(), imageInit(), templateInit(), removeAssignment()');
 		$this->manualAttention('Make sure that the patch http://issues.ez.no/IssueView.php?Id=16814&activeItem=5 is appended to the version' );
 	}
+	
+    public function upgrade440Notice()
+	{
+		$this->manualAttention('Replace rewriterules: RewriteRule ^/var/cache/texttoimage/.* - [L] and RewriteRule  ^/var/[^/]+/cache/(texttoimage|public)/.* - [L] with RewriteRule ^/var/([^/]+/)?cache/(texttoimage|public)/.* - [L]');
+		$this->manualAttention('In order to get new admin design to work add AdditionalSiteDesignList[]=admin2 in your admin siteaccess. Must be above the AdditionalSiteDesignList[]=admin');
+		$this->manualAttention('You need to add the access content/dashboard to usergroups that are not administrators, but should have this.');
+		$this->manualAttention('You need to activate the extension ezjscore to the the admin2 interface to work');
+		$this->manualAttention("The 'Webshop'-tab is by default hidden. If your webpages is a webshop, you might want to enable this tab in the menu.ini");
+		$this->manualAttention("A new settings in the right bar has been added in this version. To enable to get access to change viewsettings for placement and preview please add Tool[]=admin_preferences in toolbar.ini under [Toolbar_admin_right]");
+		$this->manualAttention('If you have custom made views/functions you need to check for this deprecated functions:');
+		$this->manualAttention('ezi18n(), ezx18n(), imageInit(), templateInit(), removeAssignment()');
+		$this->manualAttention('Please check Backward compatibility docs in doc/bc/4.4');
+	}
+	
 	function generateAutoLoads()
 	{
 		$script = 'bin/php/ezpgenerateautoloads.php --extension';
@@ -120,10 +134,10 @@ class upgradeFunctions
 	}
 	function upgradeScripts41()
 	{
-		$scriptList = array('addlockstategroup.php', 
-							'fixclassremoteid.php --mode=a', 
-							'fixezurlobjectlinks.php', 
-							'fixobjectremoteid.php --mode=a', 
+		$scriptList = array('addlockstategroup.php',
+							'fixclassremoteid.php',
+							'fixezurlobjectlinks.php',
+							'fixobjectremoteid.php --mode=a',
 							'initurlaliasmlid.php');
 
 		foreach($scriptList as $script)
@@ -135,6 +149,17 @@ class upgradeFunctions
 		$this->manualAttention('You also need to add the rewrite rule: RewriteRule ^/var/[^/]+/cache/public/.* - [L]' );
 		
 	}
+	
+	public function upgradeScripts44()
+	{
+	    $scriptList = array('updatesectionidentifier.php');
+
+		foreach($scriptList as $script)
+		{
+			$this->runScript('update/common/scripts/4.4/' . $script);
+		}
+	}
+	
 	function upgradeScripts43()
 	{
 		$scriptList = array('updatenodeassignment.php');
@@ -144,7 +169,7 @@ class upgradeFunctions
 			$this->runScript('update/common/scripts/4.3/' . $script);
 		}
 	}
-	function upgradeScripts310() 
+	function upgradeScripts310()
 	{
 		$this->upgrade->checkpoint('preUpgradeScripts310()', 'Please change your database name in the given siteaccess in account.ini', true);
 		$scriptList = array(
@@ -159,7 +184,7 @@ class upgradeFunctions
 		foreach( $scriptListSecond as $script )
 		{
 			$this->runScript('bin/php/' . $script, 4 );
-		}	
+		}
 	}
 	function upgradeScripts394()
 	{

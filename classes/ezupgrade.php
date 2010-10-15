@@ -28,7 +28,7 @@ class eZUpgrade extends eZCopy
 	}
 	
 	function run()
-	{	
+	{
 		$this->log("\nINITIATING UPGRADE\n", 'heading');
 		
 		// prepare existing installation
@@ -47,7 +47,7 @@ class eZUpgrade extends eZCopy
 		// check requirements
 		$this->checkRequirements();
 		
-		// check if the version we are upgrading to have upgrade containers down to the version we are upgrading from 
+		// check if the version we are upgrading to have upgrade containers down to the version we are upgrading from
 		$this->checkUpgradeContainer();
 		
 		// perform pre-upgrade checks
@@ -94,7 +94,7 @@ class eZUpgrade extends eZCopy
 			// copy existing distro from current location (use /ezcopy)
 			$this->ezcopy->actionDownloadAll($this->data['account_name']);
 			
-			// set the location of the locally downloaded copy 
+			// set the location of the locally downloaded copy
 			$this->setOldInstallationPath($this->getCopyLocation());
 		}
 		
@@ -243,7 +243,7 @@ class eZUpgrade extends eZCopy
 			else
 			{
 				// grant access to the user for the new database
-				$this->grantDBUserAccess($access['User'], $access['Password'], $this->createNewDBName($access['Database']));	
+				$this->grantDBUserAccess($access['User'], $access['Password'], $this->createNewDBName($access['Database']));
 			}
 		}
 	}
@@ -263,11 +263,11 @@ class eZUpgrade extends eZCopy
 		$position = array_search($versionNo, $this->fetchAllVersions());
 		if(is_int($position))
 		{
-			return $position;	
+			return $position;
 		}
 		else
 		{
-			$this->log("Unable to get version position for version $versionNo. The version is not specified in the INI files.\n", 'critical');	
+			$this->log("Unable to get version position for version $versionNo. The version is not specified in the INI files.\n", 'critical');
 		}
 	}
 	
@@ -294,7 +294,7 @@ class eZUpgrade extends eZCopy
 	function performUpgrades()
 	{
 		
-		// fetch upgrade steps 
+		// fetch upgrade steps
 		$upgradeStepList = $this->fetchUpgradeSteps();
 		
 		$upgradeFunctions = new upgradeFunctions($this);
@@ -308,7 +308,7 @@ class eZUpgrade extends eZCopy
 			// check if the UpgradeFunctions key is in the UpgradeStep
 			if ( array_key_exists( 'UpgradeFunctions', $upgradeStep ) )
 			{
-				// for each upgrade function			
+				// for each upgrade function
 				foreach($upgradeStep['UpgradeFunctions'] as $upgrade)
 				{
 					// fetch upgrade function and lowest version number which does not require the upgrade
@@ -332,7 +332,7 @@ class eZUpgrade extends eZCopy
 					
 					if($lowestVersionNotInNeedOfUpgrade AND version_compare($this->upgradeFromVersion, $lowestVersionNotInNeedOfUpgrade, '>'))
 					{
-						$runUpgrade = false;	
+						$runUpgrade = false;
 					}
 					
 					if($runUpgrade)
@@ -341,7 +341,7 @@ class eZUpgrade extends eZCopy
 						$this->log("run\n");
 						if ( $upgradeFunction == 'updateDBForVersion' )
 						{
-							$upgradeFunctions->updateDBForVersion( $version );	
+							$upgradeFunctions->updateDBForVersion( $version );
 						}
 						else
 						{
@@ -371,7 +371,7 @@ class eZUpgrade extends eZCopy
 		
 		// fetch the positions of the version we are upgrading from and to
 		$upgradeFromPosition 	= array_search($this->upgradeFromVersion, $eZversionsList);
-		$upgradeToPosition 		= array_search($this->upgradeToVersion, $eZversionsList);	
+		$upgradeToPosition 		= array_search($this->upgradeToVersion, $eZversionsList);
 		
 		
 		// if the version we are upgrading to is not specified
@@ -404,9 +404,9 @@ class eZUpgrade extends eZCopy
 							// add it to applicable versions
 							$upgradeStepList[$versionNo] = $currentVersionSettings;
 						}
-					}	
+					}
 				}
-			}	
+			}
 		}
 		
 		return $upgradeStepList;
@@ -498,19 +498,19 @@ class eZUpgrade extends eZCopy
 			if($dbDetails)
 			{
 				// unless these connection details have already been stored
-				$key = $dbDetails['Server'] . '_' . $dbDetails['User'] . '_' . $dbDetails['Database']; 
+				$key = $dbDetails['Server'] . '_' . $dbDetails['User'] . '_' . $dbDetails['Database'];
 				if(!isset($result[$key]))
 				{
 					$result[$key] = $dbDetails;
-				}	
-			}			
+				}
+			}
 		}
 		
 		return $result;
 	}
 	
 	function getDBDetailsFromINI($siteIniFile)
-	{	
+	{
 		$ini = $this->iniInstance($siteIniFile);
 
 		// the database fields we require
@@ -528,7 +528,7 @@ class eZUpgrade extends eZCopy
 		// if all the required database fields exist in the INI file
 		if(count($dbFields) == count($dbDetails))
 		{
-			return array_merge(array('ini' => $siteIniFile), $dbDetails);	
+			return array_merge(array('ini' => $siteIniFile), $dbDetails);
 		}
 		else
 		{
@@ -548,7 +548,7 @@ class eZUpgrade extends eZCopy
 			// ignore the default site.ini and any temp INI files
 			if($parts[1] != 'settings/site.ini' AND $parts[1] != '/settings/site.ini' AND !strstr($siteIniFilePath, '~') AND !strstr($siteIniFilePath, '.LCK'))
 			{
-				$result[] = $parts[1];	
+				$result[] = $parts[1];
 			}
 		}
 		return $result;
@@ -602,8 +602,8 @@ class eZUpgrade extends eZCopy
 		
 		// list of folder names to copy
 		$folderCopyList = array('extension/',
-								'settings/override/', 
-								'settings/siteaccess/', 
+								'settings/override/',
+								'settings/siteaccess/',
 								'design/');
 		
 		// for each folder to copy
@@ -647,7 +647,7 @@ class eZUpgrade extends eZCopy
 			$target = $this->getNewDistroFolderName() . $dir . $element;
 			if(file_exists($target))
 			{
-				$elementExists = true;	
+				$elementExists = true;
 			}
 
 			$copyElement = true;
@@ -799,11 +799,15 @@ class eZUpgrade extends eZCopy
 			{
 				exec( 'mv ' . $this->upgradeData['upgrade_base_path'] . $newDistroFolderName . '-gpl/ ' . $this->data['new_distro_folder_name'] );
 			}
+		    else if ( is_dir( $this->upgradeData['upgrade_base_path'] . $newDistroFolderName . '-with_ezc-gpl/' ) )
+			{
+				exec( 'mv ' . $this->upgradeData['upgrade_base_path'] . $newDistroFolderName . '-with_ezc-gpl/ ' . $this->data['new_distro_folder_name'] );
+			}
 			else
 			{
 				$this->log( 'Did not find ' . $this->data['new_distro_folder_name'], 'critical' );
 			}
-		}	
+		}
 		// $last_line = exec("cd " . $this->upgradeData['upgrade_base_path'] . ";ls -lrt | grep ^d");
 		// $this->data['new_distro_folder_name'] = rtrim(array_pop(preg_split("/[\s]+/", $last_line,-1,PREG_SPLIT_NO_EMPTY)), "\n");
 		
@@ -882,7 +886,7 @@ class eZUpgrade extends eZCopy
 						$this->upgradeToVersion = $versionNo;
 						return;
 					}
-				}				
+				}
 			}
 		}
 		
