@@ -120,6 +120,7 @@ class upgradeFunctions
 		$this->manualAttention('If you have custom made views/functions you need to check for this deprecated functions:');
 		$this->manualAttention('ezi18n(), ezx18n(), imageInit(), templateInit(), removeAssignment()');
 		$this->manualAttention('Please check Backward compatibility docs in doc/bc/4.4');
+		$this->manualAttention('Add rewriterule RewriteRule ^/extension/[^/]+/design/[^/]+/(stylesheets|images|javascripts?|lib|flash)/.* - [L]')
 	}
 	
 	function generateAutoLoads()
