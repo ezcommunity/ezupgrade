@@ -121,6 +121,7 @@ class upgradeFunctions
 		$this->manualAttention('ezi18n(), ezx18n(), imageInit(), templateInit(), removeAssignment()');
 		$this->manualAttention('Please check Backward compatibility docs in doc/bc/4.4');
 		$this->manualAttention('Add rewriterule RewriteRule ^/extension/[^/]+/design/[^/]+/(stylesheets|images|javascripts?|lib|flash)/.* - [L]');
+		$this->manualAttention('Remember to activate the ezie extension for the new image editor');
 	}
 	
 	function generateAutoLoads()
