@@ -111,14 +111,6 @@ class upgradeFunctions
 	
     public function upgrade440Notice()
 	{
-		$this->manualAttention('Replace rewriterules: RewriteRule ^/var/cache/texttoimage/.* - [L] and RewriteRule  ^/var/[^/]+/cache/(texttoimage|public)/.* - [L] with RewriteRule ^/var/([^/]+/)?cache/(texttoimage|public)/.* - [L]');
-		$this->manualAttention('In order to get new admin design to work add AdditionalSiteDesignList[]=admin2 in your admin siteaccess. Must be above the AdditionalSiteDesignList[]=admin');
-		$this->manualAttention('You need to add the access content/dashboard to usergroups that are not administrators, but should have this.');
-		$this->manualAttention('You need to activate the extension ezjscore to the the admin2 interface to work');
-		$this->manualAttention("The 'Webshop'-tab is by default hidden. If your webpages is a webshop, you might want to enable this tab in the menu.ini");
-		$this->manualAttention("A new settings in the right bar has been added in this version. To enable to get access to change viewsettings for placement and preview please add Tool[]=admin_preferences in toolbar.ini under [Toolbar_admin_right]");
-		$this->manualAttention('If you have custom made views/functions you need to check for this deprecated functions:');
-		$this->manualAttention('ezi18n(), ezx18n(), imageInit(), templateInit(), removeAssignment()');
 		$this->manualAttention('Please check Backward compatibility docs in doc/bc/4.4');
 		$this->manualAttention('Add rewriterule RewriteRule ^/extension/[^/]+/design/[^/]+/(stylesheets|images|javascripts?|lib|flash)/.* - [L]');
 		$this->manualAttention('Remember to activate the ezie extension for the new image editor');
