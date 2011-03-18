@@ -95,7 +95,7 @@ FROM		TO
 3.8.7		3.9.1
 3.9.1		3.10.1
 3.10.1		4.0.1
-4.0.1		4.3.0
+4.0.1		4.4.0
 
 Tips! Instead of upgrading on the server, you could upgrade on your computer (if its unix based). Download a webserver that have both php4 and php5 set the paths and run the upgrade.
 After upgradring copy the last folder to the webserver and add the database.
