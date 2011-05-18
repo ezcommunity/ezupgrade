@@ -84,8 +84,6 @@ php ezupgrade [account_username]
 
 NOTE ON UPGRADING FROM 3.6.7 TO 3.8.X
 
-It seems that eZupgrade does not support upgrading from version 3.6.7 and that it will try to upgrade to some mix of 3.8.X and 4.0.1...
-
 IMPORTANT NOTE ABOUT UPGRADING FROM VERSION 3.x TO 4.x
 
 Since 3-series of eZ Publish is run on php4 the upgrading process is a little more tricky than upgrading from 4.x.y.

@@ -31,6 +31,7 @@ class eZUpgrade extends eZCopy
 	{
 		$this->log("\nINITIATING UPGRADE\n", 'heading');
 		
+		
 		// prepare existing installation
 		$this->prepareExistingInstallation();
 		
@@ -40,7 +41,7 @@ class eZUpgrade extends eZCopy
 		// fetch the most recent version which holds upgrades further back than the version
 		// we are upgrading from, and set it as the version we are upgrading to
 		$this->fetchUpgradeToVersion();
-				
+		
 		// fetch the settings of the version we are upgrading to
 		$this->upgradeVersionSettings = $this->fetchVersionSettings($this->upgradeToVersion);
 		
@@ -52,7 +53,7 @@ class eZUpgrade extends eZCopy
 		
 		// perform pre-upgrade checks
 		$this->preUpgradeChecks();
-		
+
 		// download and unpack distro
 		$this->downloadAndUnpackDistro();
 		
@@ -860,31 +861,36 @@ class eZUpgrade extends eZCopy
 		// fetch all eZ versions in descending order
 		$eZversionsList = $this->fetchAllVersions();
 		
-		// for each version
-		foreach ($eZversionsList as $currentVersionPosition => $versionNo)
-		{
+		$passes_array = array('==', '<=');
+		
+		foreach($passes_array as $operator) {
 			
-			// if the current version is less than or equal to the version the user wants to upgrade to
-			if(version_compare($versionNo, $this->upgradeData['upgrade_to_version'], '<='))
+			// for each version
+			foreach ($eZversionsList as $currentVersionPosition => $versionNo)
 			{
-				// if we can upgrade to this version
-				if($this->canUpgradeTo($versionNo))
+				
+				// if the current version is less than or equal to the version the user wants to upgrade to
+				if(version_compare($versionNo, $this->upgradeData['upgrade_to_version'], $operator))
 				{
-					// fetch how far back the this distro can be used for upgrades
-					$upgradeContainerSinceVersion = $this->cfg->getSetting('ezupgrade', 'Upgrade_' . $versionNo, 'UpgradeContainerSinceVersion');
-					
-					// where in the order of versions is this version
-					
-					$upgradeContainerVersionPosition = $this->getVersionPosition($upgradeContainerSinceVersion);
-					if($upgradeContainerVersionPosition > $currentVersionPosition)
+					// if we can upgrade to this version
+					if($this->canUpgradeTo($versionNo))
 					{
-						$this->log('Upgrading ' . $this->upgradeData['account_name'] . ' from version ' . $this->upgradeFromVersion . ' to version ' . $versionNo . "\n");
+						// fetch how far back the this distro can be used for upgrades
+						$upgradeContainerSinceVersion = $this->cfg->getSetting('ezupgrade', 'Upgrade_' . $versionNo, 'UpgradeContainerSinceVersion');
 						
-						// do a checkpoint
-						$this->checkpoint( 'Check on upgrade to version: ' . $versionNo );
+						// where in the order of versions is this version
 						
-						$this->upgradeToVersion = $versionNo;
-						return;
+						$upgradeContainerVersionPosition = $this->getVersionPosition($upgradeContainerSinceVersion);
+						if($upgradeContainerVersionPosition > $currentVersionPosition)
+						{
+							$this->log('Upgrading ' . $this->upgradeData['account_name'] . ' from version ' . $this->upgradeFromVersion . ' to version ' . $versionNo . "\n");
+							
+							// do a checkpoint
+							$this->checkpoint( 'Check on upgrade to version: ' . $versionNo );
+							
+							$this->upgradeToVersion = $versionNo;
+							return;
+						}
 					}
 				}
 			}
