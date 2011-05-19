@@ -1,0 +1,4 @@
+lib/ezcopy
+*.DS_Store
+settings/account.ini
+settings/ezcopy.ini
