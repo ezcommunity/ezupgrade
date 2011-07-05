@@ -1,4 +1,6 @@
 lib/ezcopy
 *.DS_Store
+*.project
+*.buildpath
 settings/account.ini
 settings/ezcopy.ini

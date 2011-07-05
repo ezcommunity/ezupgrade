@@ -1,5 +1,13 @@
 <?php
 
+/**
+* File containing the eZUpgrade class
+*
+* @copyright Copyright (C) 2009-2011 Netmaking AS. All rights reserved.
+* @license //autogentag//
+* @version //autogentag//
+*/
+
 define('EZCOPY_APP_PATH', 'lib/ezcopy/');
 
 include_once( "classes/upgradefunctions.php" );
@@ -31,7 +39,6 @@ class eZUpgrade extends eZCopy
 	{
 		$this->log("\nINITIATING UPGRADE\n", 'heading');
 		
-		
 		// prepare existing installation
 		$this->prepareExistingInstallation();
 		
@@ -53,9 +60,11 @@ class eZUpgrade extends eZCopy
 		
 		// perform pre-upgrade checks
 		$this->preUpgradeChecks();
-
+		
 		// download and unpack distro
-		$this->downloadAndUnpackDistro();
+		//$this->downloadAndUnpackDistro();
+		
+		$this->prepareAndUnpackDistro();
 		
 		// copy files from old installation to new distro
 		$this->copyFiles();
@@ -725,16 +734,44 @@ class eZUpgrade extends eZCopy
 			return false;
 		}
 	}
-	function downloadAndUnpackDistro()
+	function prepareAndUnpackDistro()
 	{
-		// set distro file name
-		$filename = 'ezpublish.tar.gz';
+		$basePath = getcwd();
 		
-		// keep old dir
-		$old_dir = getcwd();
 		
-		// fetch distro location
-		$distroLocation = $this->cfg->getSetting('ezupgrade', 'General', 'DistroLocation');
+		// search distros/ for a matching version
+		chdir('distros') or die("can't chdir!\n");
+		
+		$distroLocation = getcwd() . '/';
+		
+		$this->log("Checking for local distro..\n");
+		
+		$files = glob('*' . $this->upgradeToVersion . '*');
+		
+		$localDistro = true;
+		
+		// if we have local files
+		if(count($files) > 0)
+		{
+			$this->log("Match found.\n");
+			
+			$filename = $files[0];
+		}
+		else
+		{
+			$localDistro = false;
+			$this->log("Local distro not found. Checking for remote distro..\n");
+			
+			if(isset($this->upgradeVersionSettings['DownloadURL']))
+			{
+				$this->log("Remote distro found.\n");
+			}
+			else
+			{
+				$this->log("No distro available for version " . $this->upgradeToVersion . ". Aborting\n");
+				exit();
+			}
+		}
 		
 		// change to install folder
 		chdir($this->upgradeData['upgrade_base_path']) or die("can't chdir!\n");
@@ -742,72 +779,93 @@ class eZUpgrade extends eZCopy
 		$newDistroFolderName = 'ezpublish-' . $this->upgradeToVersion;
 		
 		// if a distro location is specified
-		if($distroLocation != false)
+		if($localDistro)
 		{
 			$this->log('Copying distro from specified location ');
 			
 			// build distro file name and path
-			$distroFile = $distroLocation . $newDistroFolderName . '-gpl.tar.gz';
+			$distroFile = $distroLocation . $filename;
+
+			// do a checkpoint
+			$this->checkpoint( 'Copying distro', 'Distro to copy: ' . $distroFile );
 			
-			// make sure the diso file exists at the specified location
-			if(!file_exists($distroFile))
-			{
-				$this->log('The distro file ' . $distroFile  . ' does not exist.', 'critical');
-			}
-			else
-			{
-				// do a checkpoint
-				$this->checkpoint( 'Copying distro', 'Distro to copy: ' . $distroFile );
-				
-				// copy distro from distro location
-				$cmd = 'cp \'' . $distroFile . '\' ' . $this->upgradeData['upgrade_base_path'] . $filename;
-								
-				exec($cmd);
-				
-				$this->log("OK\n", 'ok');
-			}
+			// copy distro from distro location
+			$cmd = 'cp \'' . $distroFile . '\' ' . $this->upgradeData['upgrade_base_path'] . $filename;
+							
+			exec($cmd);
+			
+			$this->log("OK\n", 'ok');
 		}
-		
 		// if no distro location is specified
 		else
 		{
-			$this->log("Downloading distro ($filename)\n");
-
+			$this->log("Downloading distro\n");
+			
 			// do a checkpoint
-			$this->checkpoint( 'Downloadind distro' );
+			$this->checkpoint( 'Downloading distro' );
 
+			// set a temporary filename
+			$filename = 'archive';
+			
 			// download the file
-			$command = "curl -s -o $filename " .  $this->upgradeVersionSettings['DownloadURL'] . " 2>&1";
+			$command = "curl -s -o $filename " . $this->upgradeVersionSettings['DownloadURL'] . " 2>&1";
 			exec($command, $output, $rc);
-		
+			
 			if ( $rc ) die("Error downloading file:<br>" . implode("<br>", $output));
+			
+			// check the file mime type, rename and add the correct file extension
+			$fi = new finfo(FILEINFO_MIME);
+			
+			switch($fi->buffer(file_get_contents($filename)))
+			{
+				case 'application/x-gzip; charset=binary':
+					exec("mv $filename ezpublish.tar.gz");
+					$filename = "ezpublish.tar.gz";
+					break;
+				case 'application/x-tar; charset=binary':
+					exec("mv $filename ezpublish.tar");
+					$filename = "ezpublish.tar";
+					break;
+				case 'application/zip; charset=binary':
+					exec("mv $filename ezpublish.zip");
+					$filename = "ezpublish.zip";
+					break;
+				default:
+					$this->log("File MIME type not recognized. Aborting\n");
+					exit();
+			}
 			
 			$this->log("OK\n", 'ok');
 		}
 		
-		// unpacking tarball
-		$this->unPackTar($filename, $this->upgradeData['upgrade_base_path']);
+		// unpacking archice
+		$this->unpackArchive($filename, $this->upgradeData['upgrade_base_path']);
 		
-		// get the folder name
-		// TODO: this is not entirely accurate, because eZ systems might change the way
-		// they package their distros, but we use this for now
-		// Previously, we tried fetching the last created folder, but since the unpacked
-		// distro uses the date it was packed, this does not work
+		// set the correct installation path
 		$this->data['new_distro_folder_name'] = $this->upgradeData['upgrade_base_path'] . $newDistroFolderName . '/';
+		
+		// if the correct directory does not exist
 		if ( !is_dir( $this->data['new_distro_folder_name'] ) )
 		{
-			if ( is_dir( $this->upgradeData['upgrade_base_path'] . $newDistroFolderName . '-gpl/' ) )
+			$error = true;
+			$dirs = scandir($this->upgradeData['upgrade_base_path']);
+			
+			// if we find a directory name containing the correct eZ Publish version, rename the directory
+			foreach($dirs as $dir)
 			{
-				exec( 'mv ' . $this->upgradeData['upgrade_base_path'] . $newDistroFolderName . '-gpl/ ' . $this->data['new_distro_folder_name'] );
+				if (strpos($dir,$this->upgradeToVersion))
+				{
+					exec('mv ' . $dir . ' ' . $this->data['new_distro_folder_name']);
+					$error = false;
+				}
 			}
-		    else if ( is_dir( $this->upgradeData['upgrade_base_path'] . $newDistroFolderName . '-with_ezc-gpl/' ) )
-			{
-				exec( 'mv ' . $this->upgradeData['upgrade_base_path'] . $newDistroFolderName . '-with_ezc-gpl/ ' . $this->data['new_distro_folder_name'] );
-			}
-			else
+			
+			if($error)
 			{
 				$this->log( 'Did not find ' . $this->data['new_distro_folder_name'], 'critical' );
 			}
+			
+			
 		}
 		// $last_line = exec("cd " . $this->upgradeData['upgrade_base_path'] . ";ls -lrt | grep ^d");
 		// $this->data['new_distro_folder_name'] = rtrim(array_pop(preg_split("/[\s]+/", $last_line,-1,PREG_SPLIT_NO_EMPTY)), "\n");
@@ -818,10 +876,13 @@ class eZUpgrade extends eZCopy
 		// if ( $rc ) print("WARNING: failed to chown $folder_name<br>");
 		
 		// remove the distro file
-		unlink($this->upgradeData['upgrade_base_path'] . $filename);
+		if(file_exists($this->upgradeData['upgrade_base_path'] . $filename))
+		{
+			unlink($this->upgradeData['upgrade_base_path'] . $filename);
+		}
 		
 		// change back to old dir
-		chdir($old_dir);
+		chdir($basePath);
 	}
 	
 	function checkRequirements()
@@ -919,6 +980,28 @@ class eZUpgrade extends eZCopy
 	{
 		// TODO: Make som checks and return some errors!
 		return true;
+	}
+	
+	function unpackArchive($sourceFile, $destinationPath)
+	{
+		$fi = new finfo(FILEINFO_MIME);
+		
+		switch($fi->buffer(file_get_contents($sourceFile)))
+		{
+			case 'application/x-gzip; charset=binary':
+				$cmd = 'tar xfvz';
+				break;
+			case 'application/x-tar; charset=binary':
+				$cmd = 'tar xfv';
+				break;
+			case 'application/zip; charset=binary':
+				$cmd = 'unzip';
+				break;
+		}
+		
+		exec("cd " . $destinationPath . "/;" . $cmd . ' '. $sourceFile);
+		
+		$this->log("OK\n", 'ok');
 	}
 }
 

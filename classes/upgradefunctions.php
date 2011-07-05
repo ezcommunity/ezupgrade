@@ -1,4 +1,11 @@
 <?php
+/**
+* File containing the upgradeFunctions class
+*
+* @copyright Copyright (C) 2009-2011 Netmaking AS. All rights reserved.
+* @license //autogentag//
+* @version //autogentag//
+*/
 
 class upgradeFunctions
 {

@@ -1,5 +1,12 @@
 #!/usr/bin/php
 <?php
+/**
+* eZ Upgrade
+*
+* @copyright Copyright (C) 2009-2011 Netmaking AS. All rights reserved.
+* @license //autogentag//
+* @version //autogentag//
+*/
 
 include_once( "classes/ezupgrade.php" );
 $upgrade = new eZUpgrade;
@@ -33,6 +40,5 @@ else
 {
 	echo 'error';
 }
-
 
 ?>
