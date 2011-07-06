@@ -127,8 +127,12 @@
             </then>
         </if>
 
+        <!-- Rename ini files -->
+        <move file="${build.dir}/${extension.name}/settings/account_default.ini" tofile="${build.dir}/${extension.name}/settings/account.ini"/>
+        <move file="${build.dir}/${extension.name}/lib/settings/ezcopy_template.ini" tofile="${build.dir}/${extension.name}/lib/settings/ezcopy.ini"/>
+
         <!-- Symlinks ezcopy.ini -->
-        <symlink link="${build.dir}/${extension.name}/settings/ezcopy.ini" resource="../lib/settings/ezcopy_template.ini"/>
+        <symlink link="${build.dir}/${extension.name}/settings/ezcopy.ini" resource="../lib/settings/ezcopy.ini"/>
     </target>
 
     <!-- private target               -->
