@@ -4,3 +4,5 @@ lib/ezcopy
 *.buildpath
 settings/account.ini
 settings/ezcopy.ini
+dist/
+build/

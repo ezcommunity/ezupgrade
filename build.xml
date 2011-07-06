@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--                                                             -->
+<!-- This script is a copy and paste of eZ Extension builder     -->
+<!-- Compiled by CPG                                             -->
+<!--                                                             -->
+<!-- Source:                                                     -->
+<!-- eZ Extension Builder                                        -->
+<!-- an Ant build file for eZ Publish extensions                 -->
+<!--                                                             -->
+<!-- @author J. Renard                                           -->
+<!-- @author O. M. Smestad                                       -->
+<!-- @author G. Giunta                                           -->
+<!-- @copyright Copyright (C) 2010 eZ Systems AS                 -->
+<!--                                                             -->
+<project name="eZUpgradeBuilder" default="help">
+
+    <description>eZUpgradeBuilder build file</description>
+
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+
+    <!-- ================== -->
+    <!-- Build properties   -->
+    <!-- ================== -->
+
+    <tstamp>
+        <format property="date.now"          pattern="yyyy-mm-dd_hh:mm:ss"/>
+        <format property="date.current.year" pattern="yyyy"/>
+    </tstamp>
+
+    <property name="build.dir" value="build"/>
+
+    <property file="./ant/build.properties"/>
+
+    <patternset id="php.sources">
+        <include name="**/*.php"/>
+    </patternset>
+
+    <patternset id="all.sources">
+        <include name="**/*.php"/>
+        <include name="**/*.css"/>
+        <include name="**/*.js"/>
+    </patternset>
+
+    <patternset id="package.xml">
+        <include name="**/*package.xml"/>
+    </patternset>
+
+    <!-- http://ant-contrib.sourceforge.net/tasks/tasks/propertycopy.html -->
+    <propertycopy name="version.major"   from="${extension.name}.version.major"/>
+    <propertycopy name="version.minor"   from="${extension.name}.version.minor"/>
+    <propertycopy name="version.release" from="${extension.name}.version.release"/>
+    <propertycopy name="git.repository"  from="${extension.name}.git.repository" />
+    <propertycopy name="copyright"       from="${extension.name}.copyright"/>
+    <!-- the following properties are not mandatory -->
+    <propertycopy name="git.branch"      from="${extension.name}.git.branch" silent="true"/>
+    <property     name="git.branch"      value="master"/>
+    <propertycopy name="create.tarball"  from="${extension.name}.create.tarball" silent="true"/>
+    <property     name="create.tarball"  value="no"/>
+    <propertycopy name="create.zip"      from="${extension.name}.create.zip" silent="true"/>
+    <property     name="create.zip"      value="no"/>
+    <propertycopy name="version.license" from="${extension.name}.version.license" silent="true"/>
+    <property     name="version.license" value="http://www.gnu.org/licenses/gpl-3.0.txt GNU General Public License v3"/>
+    <propertycopy name="version.alias"   from="${extension.name}.version.alias" silent="true"/>
+    <property     name="version.alias"   value="${version.major}.${version.minor}"/>
+    <propertycopy name="license.shorttext" from="${extension.name}.license.shorttext"/>
+    <!-- the following properties are normally not overridden -->
+    <property     name="releasenr.separator" value="-"/>
+
+    <!-- =================== -->
+    <!-- /Build properties   -->
+    <!-- =================== -->
+
+    <!-- Shows the help message   -->
+    <!-- This is default target   -->
+    <!-- nothing will be built    -->
+    <!-- unless clearly specified -->
+    <target name="help" description="Shows this help">
+        <echo message="Please run : ant -p to learn more about available targets"/>
+        <antcall target="show-properties"/>
+    </target>
+
+    <!-- Shows available properties for this build file -->
+    <target name="show-properties" description="Shows the properties for this build file">
+        <echo message="build.dir        : ${build.dir}"/>
+
+        <!-- extension.name should be defined as a script argument -->
+        <!-- ant -Dextension.name=<extensionname>                  -->
+        <echo message="extension name   : ${extension.name}"/>
+    </target>
+
+    <!-- Prepares the build directory    -->
+    <!-- Creates the build/ directory if -->
+    <!-- does not already exists         -->
+    <target name="init" description="Prepares the extension to be built">
+        <mkdir dir="${build.dir}"/>
+
+        <!-- git clone repository -->
+        <exec executable="git" failonerror="true">
+            <arg value="clone"/>
+            <arg value="-b"/>
+            <arg value="${git.branch}"/>
+            <arg value="-q"/>
+            <arg value="${git.repository}"/>
+            <arg value="${build.dir}/${extension.name}"/>
+        </exec>
+
+        <!-- svn co ezcopy repository -->
+        <exec executable="svn" failonerror="true">
+            <arg value="-q"/> 
+            <arg value="export"/>
+            <arg value="${ezcopy.svn.repository}"/>
+            <arg value="${build.dir}/${extension.name}/lib"/>
+        </exec>
+
+        <available file="ant/files.to.exclude.txt" property="files.to.exclude.exists"/>
+        <if>
+            <equals arg1="${files.to.exclude.exists}" arg2="true"/>
+            <then>
+                <!-- removes all files specified in the "files.to.exclude" -->
+                <loadfile srcFile="ant/files.to.exclude.txt" property="files.to.exclude"/>
+
+                <!-- in order to get directory removed they must be appended with a '/' -->
+                <!-- for example -->
+                <!-- ezinfo.php  -->
+                <!-- tests/      -->
+                <foreach list="${files.to.exclude}" delimiter="${line.separator}" target="-purge-file" param="file.to.purge"/>
+            </then>
+        </if>
+
+        <!-- Symlinks ezcopy.ini -->
+        <symlink link="${build.dir}/${extension.name}/settings/ezcopy.ini" resource="../lib/settings/ezcopy_template.ini"/>
+    </target>
+
+    <!-- private target               -->
+    <!-- Purges a file or a directory -->
+    <target name="-purge-file">
+        <echo message="${build.dir}/${extension.name}/${file.to.purge}"/>
+        <delete includeemptydirs="true" verbose="false">
+            <fileset dir="${build.dir}/${extension.name}" includes="${file.to.purge}"/>
+        </delete>
+    </target>
+
+    <!-- Builds the extension -->
+    <target name="build" depends="init" description="Builds the extension">
+        <delete dir="${build.dir}/${extension.name}/ant"/>
+        <delete file="${build.dir}/${extension.name}/build.xml"/>
+        <delete dir="${build.dir}/${extension.name}/tests"/>
+
+        <antcall target="update-headers"/>
+    </target>
+
+    <!-- Removes the entire build/ directory -->
+    <target name="clean" description="Removes the entire build directory">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <!-- Removes build/ and dist/ -->
+    <target name="clean-all" description="Removes the build/ and the dist/ directory">
+        <antcall target="clean"/>
+        <antcall target="dist-clean"/>
+    </target>
+
+    <!-- Creates deliverables of the latest build -->
+    <target name="dist" description="Creates a tarball/zipfile of the build">
+        <if>
+            <equals arg1="${create.tarball}" arg2="yes"/>
+        <then>
+            <mkdir dir="dist"/>
+            <tar destfile="dist/${extension.name}-${version.alias}.${version.release}.tar.gz"
+                compression="gzip"
+                longfile="gnu">
+                <tarfileset dir="${build.dir}/${extension.name}"
+                    prefix="${extension.name}"
+                            preserveLeadingSlashes="true">
+                        <include name="**/*"/>
+                </tarfileset>
+            </tar>
+        </then>
+        </if>
+        <if>
+            <equals arg1="${create.zip}" arg2="yes"/>
+        <then>
+            <mkdir dir="dist"/>
+            <zip destfile="dist/${extension.name}-${version.alias}.${version.release}.zip">
+                <zipfileset dir="${build.dir}/${extension.name}"
+                    prefix="${extension.name}"
+                    includes="**/*"/>
+            </zip>
+        </then>
+        </if>
+    </target>
+
+    <!-- Build the extension and generate the tarball -->
+    <target name="all" description="Build the extension and generate the deliverables">
+        <antcall target="build"/>
+        <antcall target="dist"/>
+    </target>
+
+    <!-- Removes the generated tarball -->
+    <target name="dist-clean" description="Removes the dist directory with zips and tarballs">
+        <delete dir="dist"/>
+    </target>
+
+    <!-- header in each source code file -->
+    <target name="update-headers" description="Update headers in source code files">
+        <echo message="Updating headers"/>
+
+        <!-- @version //autogentag// -->
+        <replaceregexp byline="true">
+            <regexp pattern="@version\s*//autogentag//"/>
+            <substitution expression="@version ${version.alias}${releasenr.separator}${version.release}"/>
+            <fileset dir="${build.dir}">
+                <patternset refid="all.sources"/>
+            </fileset>
+        </replaceregexp>
+
+        <!-- @license //autogentag// -->
+        <replaceregexp byline="true">
+            <regexp pattern="@license\s*//autogentag//"/>
+            <substitution expression="@license ${license.shorttext}"/>
+            <fileset dir="${build.dir}">
+                <patternset refid="all.sources"/>
+            </fileset>
+        </replaceregexp>
+
+        <!-- @copyright //autogentag// -->
+        <replaceregexp byline="true">
+            <regexp pattern="@copyright\s*//autogentag//"/>
+            <substitution expression="@copyright ${copyright}"/>
+            <fileset dir="${build.dir}">
+                <patternset refid="all.sources"/>
+            </fileset>
+        </replaceregexp>
+    </target>
+
+</project>
