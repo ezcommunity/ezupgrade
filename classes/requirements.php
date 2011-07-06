@@ -2,7 +2,7 @@
 /**
 * File containing the requirements class
 *
-* @copyright Copyright (C) 2009-2011 Netmaking AS. All rights reserved.
+* @copyright //autogentag//
 * @license //autogentag//
 * @version //autogentag//
 */
