@@ -109,7 +109,7 @@
             <arg value="-q"/> 
             <arg value="export"/>
             <arg value="${ezcopy.svn.repository}"/>
-            <arg value="${build.dir}/${extension.name}/lib"/>
+            <arg value="${build.dir}/${extension.name}/lib/ezcopy"/>
         </exec>
 
         <available file="ant/files.to.exclude.txt" property="files.to.exclude.exists"/>
@@ -129,10 +129,10 @@
 
         <!-- Rename ini files -->
         <move file="${build.dir}/${extension.name}/settings/account_default.ini" tofile="${build.dir}/${extension.name}/settings/account.ini"/>
-        <move file="${build.dir}/${extension.name}/lib/settings/ezcopy_template.ini" tofile="${build.dir}/${extension.name}/lib/settings/ezcopy.ini"/>
+        <move file="${build.dir}/${extension.name}/lib/ezcopy/settings/ezcopy_template.ini" tofile="${build.dir}/${extension.name}/lib/ezcopy/settings/ezcopy.ini"/>
 
         <!-- Symlinks ezcopy.ini -->
-        <symlink link="${build.dir}/${extension.name}/settings/ezcopy.ini" resource="../lib/settings/ezcopy.ini"/>
+        <symlink link="${build.dir}/${extension.name}/settings/ezcopy.ini" resource="../lib/ezcopy/settings/ezcopy.ini"/>
     </target>
 
     <!-- private target               -->
@@ -151,6 +151,7 @@
         <delete dir="${build.dir}/${extension.name}/tests"/>
 
         <antcall target="update-headers"/>
+        <antcall target="update-phpenv"/>
     </target>
 
     <!-- Removes the entire build/ directory -->
@@ -233,6 +234,18 @@
             <substitution expression="@copyright ${copyright}"/>
             <fileset dir="${build.dir}">
                 <patternset refid="all.sources"/>
+            </fileset>
+        </replaceregexp>
+    </target>
+
+    <!-- php environment -->
+    <target name="update-phpenv" description="Updating php environments">
+        <echo message="Updating php environments"/>
+        <replaceregexp byline="true">
+            <regexp pattern="#!/usr/bin/php"/>
+            <substitution expression="#!/usr/bin/env php"/>
+            <fileset dir="${build.dir}">
+                <include name="**/*"/>
             </fileset>
         </replaceregexp>
     </target>
