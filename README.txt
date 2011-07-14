@@ -26,8 +26,6 @@ version to another, adding support could be as easy as adding some
 configuration settings to settings/ezupgrade.ini. For more complex changes,
 one might need to create some custome upgrade functions.
 
-The matrix above describes which versions that are currently supported.
-
 
 REQUIREMENTS
 
@@ -60,13 +58,14 @@ eZUpgrade then performs the following steps:
    
 5. Grants the database user access to the new database(s).
 
+
 USAGE
 
 From the shell prompt, where eZUpgrade is located, run:
 
 php ezupgrade [account_username]
 
-NOTE ON UPGRADING FROM 3.6.7 TO 3.8.X
+
 
 IMPORTANT NOTE ABOUT UPGRADING FROM VERSION 3.x TO 4.x
 
