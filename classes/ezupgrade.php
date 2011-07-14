@@ -839,7 +839,7 @@ class eZUpgrade extends eZCopy
 		}
 		
 		// unpacking archice
-		$this->unpackArchive($filename, $this->upgradeData['upgrade_base_path']);
+		$this->extractArchive($filename, $this->upgradeData['upgrade_base_path']);
 		
 		// set the correct installation path
 		$this->data['new_distro_folder_name'] = $this->upgradeData['upgrade_base_path'] . $newDistroFolderName . '/';
@@ -982,7 +982,7 @@ class eZUpgrade extends eZCopy
 		return true;
 	}
 	
-	function unpackArchive($sourceFile, $destinationPath)
+	function extractArchive($sourceFile, $destinationPath)
 	{
 		$fi = new finfo(FILEINFO_MIME);
 		
