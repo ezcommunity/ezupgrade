@@ -1,6 +1,7 @@
 TODO
 BUILD
 ant/
+docs/INSTALL.txt
 tests/
 .git/
 .gitignore
