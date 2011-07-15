@@ -26,11 +26,36 @@ $basePath		= $upgrade->cfg->getSetting( 'account', $blockName, 'BasePath');
 $instLoc		= $upgrade->cfg->getSetting( 'account', $blockName, 'ExistingInstallationLocation');
 $siteAccessList	= $upgrade->cfg->getSetting( 'account', $blockName, 'SiteaccessList' );
 
+// Ensure trailing slash on valid paths
+if ( is_dir( $basePath ) )
+{
+	$basePath = realpath( $basePath ) . DIRECTORY_SEPARATOR;
+}
+else
+{
+	printf( $basePath . " does not exist. Check BasePath in account.ini \n" );
+	exit();
+}
+
+if ( $instLoc != 'remote' )
+{
+	if ( is_dir( $instLoc ) )
+	{
+		$instLoc = realpath( $instLoc ) . DIRECTORY_SEPARATOR;
+	}
+	else
+	{
+		printf( $instLoc . " does not exist. Check ExistingInstallationLocation in account.ini \n" );
+		exit();
+	}
+}
+
 $data = array(	'account_name'			=> $account,
 				'upgrade_to_version' 	=> $toVersion, 
 				'upgrade_base_path'		=> $basePath, 
 				'existing_install'		=> $instLoc,
 				'siteaccess_list'		=> $siteAccessList );
+
 if ( $upgrade->checkParamsBeforeRunning( $data ) )
 {
 	$upgrade->setUpgradeData($data);
