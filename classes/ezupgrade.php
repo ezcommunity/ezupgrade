@@ -665,7 +665,7 @@ class eZUpgrade extends eZCopy
 			// if the element exists in the new distro
 			if($elementExists)
 			{
-				// prompt the user for whether the element shuold be overriden
+				// prompt the user for whether the element should be overriden
 				if(!$this->userWantsToOverrideElement($dir . $element))
 				{
 					// if the user does not want to override the element
@@ -678,7 +678,7 @@ class eZUpgrade extends eZCopy
 			{
 				$this->log("Copying " . $dir . $element ." ");
 				
-				// create the dir if it doesnt excist.
+				// create the dir if it doesn't exist.
 				if ( !is_dir($this->getNewDistroFolderName() . $dir ) )
 				{
 					exec( "mkdir " . $this->getNewDistroFolderName() . $dir );
@@ -744,7 +744,7 @@ class eZUpgrade extends eZCopy
 		
 		$distroLocation = getcwd() . '/';
 		
-		$this->log("Checking for local distro..\n");
+		$this->log("Checking for local distro\n");
 		
 		$files = glob('*' . $this->upgradeToVersion . '*');
 		
@@ -753,14 +753,13 @@ class eZUpgrade extends eZCopy
 		// if we have local files
 		if(count($files) > 0)
 		{
-			$this->log("Match found.\n");
-			
 			$filename = $files[0];
+			$this->log("Match found: " . $filename . " \n");
 		}
 		else
 		{
 			$localDistro = false;
-			$this->log("Local distro not found. Checking for remote distro..\n");
+			$this->log("Local distro not found. Checking for remote distro\n");
 			
 			if(isset($this->upgradeVersionSettings['DownloadURL']))
 			{
@@ -799,7 +798,7 @@ class eZUpgrade extends eZCopy
 		// if no distro location is specified
 		else
 		{
-			$this->log("Downloading distro\n");
+			$this->log("Downloading distro ");
 			
 			// do a checkpoint
 			$this->checkpoint( 'Downloading distro' );
