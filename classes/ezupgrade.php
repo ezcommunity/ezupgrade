@@ -665,7 +665,7 @@ class eZUpgrade extends eZCopy
 			// if the element exists in the new distro
 			if($elementExists)
 			{
-				// prompt the user for whether the element shuold be overriden
+				// prompt the user for whether the element should be overriden
 				if(!$this->userWantsToOverrideElement($dir . $element))
 				{
 					// if the user does not want to override the element
@@ -678,7 +678,7 @@ class eZUpgrade extends eZCopy
 			{
 				$this->log("Copying " . $dir . $element ." ");
 				
-				// create the dir if it doesnt excist.
+				// create the dir if it doesn't exist.
 				if ( !is_dir($this->getNewDistroFolderName() . $dir ) )
 				{
 					exec( "mkdir " . $this->getNewDistroFolderName() . $dir );
@@ -744,7 +744,7 @@ class eZUpgrade extends eZCopy
 		
 		$distroLocation = getcwd() . '/';
 		
-		$this->log("Checking for local distro..\n");
+		$this->log("Checking for local distro\n");
 		
 		$files = glob('*' . $this->upgradeToVersion . '*');
 		
@@ -753,14 +753,13 @@ class eZUpgrade extends eZCopy
 		// if we have local files
 		if(count($files) > 0)
 		{
-			$this->log("Match found.\n");
-			
 			$filename = $files[0];
+			$this->log("Match found: " . $filename . " \n");
 		}
 		else
 		{
 			$localDistro = false;
-			$this->log("Local distro not found. Checking for remote distro..\n");
+			$this->log("Local distro not found. Checking for remote distro\n");
 			
 			if(isset($this->upgradeVersionSettings['DownloadURL']))
 			{
@@ -799,7 +798,7 @@ class eZUpgrade extends eZCopy
 		// if no distro location is specified
 		else
 		{
-			$this->log("Downloading distro\n");
+			$this->log("Downloading distro ");
 			
 			// do a checkpoint
 			$this->checkpoint( 'Downloading distro' );
@@ -814,24 +813,23 @@ class eZUpgrade extends eZCopy
 			if ( $rc ) die("Error downloading file:<br>" . implode("<br>", $output));
 			
 			// check the file mime type, rename and add the correct file extension
-			$fi = new finfo(FILEINFO_MIME);
 			
-			switch($fi->buffer(file_get_contents($filename)))
+			switch( $this->get_mime_type($filename) )
 			{
-				case 'application/x-gzip; charset=binary':
+				case 'application/x-gzip':
 					exec("mv $filename ezpublish.tar.gz");
 					$filename = "ezpublish.tar.gz";
 					break;
-				case 'application/x-tar; charset=binary':
+				case 'application/x-tar':
 					exec("mv $filename ezpublish.tar");
 					$filename = "ezpublish.tar";
 					break;
-				case 'application/zip; charset=binary':
+				case 'application/zip':
 					exec("mv $filename ezpublish.zip");
 					$filename = "ezpublish.zip";
 					break;
 				default:
-					$this->log("File MIME type not recognized. Aborting\n");
+					$this->log("File MIME type of " . $filename . " not recognized. Aborting\n", 'critical');
 					exit();
 			}
 			
@@ -984,24 +982,40 @@ class eZUpgrade extends eZCopy
 	
 	function extractArchive($sourceFile, $destinationPath)
 	{
-		$fi = new finfo(FILEINFO_MIME);
-		
-		switch($fi->buffer(file_get_contents($sourceFile)))
+		switch( $this->get_mime_type($sourceFile) )
 		{
-			case 'application/x-gzip; charset=binary':
+			case 'application/x-gzip':
 				$cmd = 'tar xfvz';
 				break;
-			case 'application/x-tar; charset=binary':
+			case 'application/x-tar':
 				$cmd = 'tar xfv';
 				break;
-			case 'application/zip; charset=binary':
+			case 'application/zip':
 				$cmd = 'unzip';
 				break;
+			default:
+				$this->log("File MIME type of " . $sourceFile . " not recognized. Aborting\n", 'critical');
+				exit();
 		}
+
+		$this->log("Extracting " . $sourceFile . " to " . $destinationPath . "\n");
 		
 		exec("cd " . $destinationPath . "/;" . $cmd . ' '. $sourceFile);
 		
 		$this->log("OK\n", 'ok');
+	}
+
+	function get_mime_type($filepath)
+	{
+		ob_start();
+		system( "file -i -b {$filepath}" );
+		$output = ob_get_clean();
+		$output = explode( "; ",$output );
+		if ( is_array( $output ) )
+		{
+			$output = $output[0];
+		}
+		return $output;
 	}
 }
 
