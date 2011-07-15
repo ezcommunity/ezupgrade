@@ -814,24 +814,23 @@ class eZUpgrade extends eZCopy
 			if ( $rc ) die("Error downloading file:<br>" . implode("<br>", $output));
 			
 			// check the file mime type, rename and add the correct file extension
-			$fi = new finfo(FILEINFO_MIME);
 			
-			switch($fi->buffer(file_get_contents($filename)))
+			switch( $this->get_mime_type($filename) )
 			{
-				case 'application/x-gzip; charset=binary':
+				case 'application/x-gzip':
 					exec("mv $filename ezpublish.tar.gz");
 					$filename = "ezpublish.tar.gz";
 					break;
-				case 'application/x-tar; charset=binary':
+				case 'application/x-tar':
 					exec("mv $filename ezpublish.tar");
 					$filename = "ezpublish.tar";
 					break;
-				case 'application/zip; charset=binary':
+				case 'application/zip':
 					exec("mv $filename ezpublish.zip");
 					$filename = "ezpublish.zip";
 					break;
 				default:
-					$this->log("File MIME type not recognized. Aborting\n");
+					$this->log("File MIME type of " . $filename . " not recognized. Aborting\n", 'critical');
 					exit();
 			}
 			
@@ -984,24 +983,40 @@ class eZUpgrade extends eZCopy
 	
 	function extractArchive($sourceFile, $destinationPath)
 	{
-		$fi = new finfo(FILEINFO_MIME);
-		
-		switch($fi->buffer(file_get_contents($sourceFile)))
+		switch( $this->get_mime_type($sourceFile) )
 		{
-			case 'application/x-gzip; charset=binary':
+			case 'application/x-gzip':
 				$cmd = 'tar xfvz';
 				break;
-			case 'application/x-tar; charset=binary':
+			case 'application/x-tar':
 				$cmd = 'tar xfv';
 				break;
-			case 'application/zip; charset=binary':
+			case 'application/zip':
 				$cmd = 'unzip';
 				break;
+			default:
+				$this->log("File MIME type of " . $sourceFile . " not recognized. Aborting\n", 'critical');
+				exit();
 		}
+
+		$this->log("Extracting " . $sourceFile . " to " . $destinationPath . "\n");
 		
 		exec("cd " . $destinationPath . "/;" . $cmd . ' '. $sourceFile);
 		
 		$this->log("OK\n", 'ok');
+	}
+
+	function get_mime_type($filepath)
+	{
+		ob_start();
+		system( "file -i -b {$filepath}" );
+		$output = ob_get_clean();
+		$output = explode( "; ",$output );
+		if ( is_array( $output ) )
+		{
+			$output = $output[0];
+		}
+		return $output;
 	}
 }
 
