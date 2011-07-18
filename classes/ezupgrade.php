@@ -1013,7 +1013,7 @@ class eZUpgrade extends eZCopy
 		$output = explode( "; ",$output );
 		if ( is_array( $output ) )
 		{
-			$output = $output[0];
+			$output = trim( $output[0] );
 		}
 		return $output;
 	}
