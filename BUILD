@@ -10,5 +10,5 @@ ant -p help
 Results are found in the build directory.
 
 Dependencies:
-ant, ant-contrib
+ant, ant-contrib, svn, zip, tar
  
