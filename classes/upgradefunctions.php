@@ -281,6 +281,12 @@ class upgradeFunctions
 	
 	public function upgradeScripts450()
 	{
+		// set mysqli driver in the ini settings if mysqli driver is installed
+		if(function_exists('mysqli_connect'))
+		{
+		  $this->upgrade->setMysqliDriver();
+		}
+		
 		// IF 4.4 installation is upgraded from 4.3 previously 
 		$scriptList = array('updatesectionidentifier.php');
 		
@@ -300,22 +306,6 @@ class upgradeFunctions
 		$this->manualAttention('RewriteRule ^/var/[^/]+/cache/(texttoimage|public)/.* - [L]');
 		$this->manualAttention('with:');
 		$this->manualAttention('RewriteRule ^/var/([^/]+/)?cache/(texttoimage|public)/.* - [L]');
-		$this->manualAttention(' ');
-		$this->manualAttention("The 'ezmysql' database driver has been deprecated in 4.5 and it is recommended to use the 'ezmysqli' driver instead.\n" .
-									"This requires that the 'mysqli' extension in PHP is enabled and can be archived by changing the driver in your\n" .
-									"override or siteaccesses 'site.ini.append.php' settings to:");
-		$this->manualAttention('[DatabaseSettings]/DatabaseImplementation=ezmysqli');
-		
-		// CLUSTER
-		
-		/*$this->manualAttention("The 'Mysql DB/DFS Cluster' database back-end has not yet been deprecated, but it is recommended to use\n" .
-								"the same driver as the main database driver, so change your file.ini.append.php settings in\n" .
-								"override or siteaccesses to use 'eZDFSFileHandlerMySQLiBackend' for DFS Cluster\n" .
-								"or 'eZDBFileHandlerMysqliBackend' for DB Cluster.\n\n" .
-								"Note: The 'index_cluster.php' file should be updated to\n" .
-								"define( 'STORAGE_BACKEND', 'dfsmysqli' )\n" .
-								"If you use DB cluster, remove 'dfs' from the string.");*/
-		
 	}
 }
 

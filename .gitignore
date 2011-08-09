@@ -6,3 +6,5 @@ settings/account.ini
 settings/ezcopy.ini
 dist/
 build/
+distros/*.zip
+distros/*.tar*

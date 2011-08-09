@@ -556,7 +556,7 @@ class eZUpgrade extends eZCopy
 			$parts = explode($this->getNewDistroPathName(), $siteIniFilePath);
 			
 			// ignore the default site.ini and any temp INI files
-			if($parts[1] != 'settings/site.ini' AND $parts[1] != '/settings/site.ini' AND !strstr($siteIniFilePath, '~') AND !strstr($siteIniFilePath, '.LCK'))
+			if($parts[1] != 'settings/site.ini' AND $parts[1] != '/settings/site.ini' AND !strstr($siteIniFilePath, '~') AND !strstr($siteIniFilePath, '.LCK') AND !strpos($parts[1], '.svn'))
 			{
 				$result[] = $parts[1];
 			}
@@ -571,8 +571,8 @@ class eZUpgrade extends eZCopy
 			$ini = $this->iniInstance($iniFile);
 			
 			$oldDBName = false;
-			// get current db name
 			
+			// get current db name
 			if ( $ini->hasVariable( 'DatabaseSettings', 'Database' ) )
 			{
 				$oldDBName = $ini->variable('DatabaseSettings', 'Database');
@@ -581,10 +581,13 @@ class eZUpgrade extends eZCopy
 			// provided that the INI file has a database name set
 			if($oldDBName !== false )
 			{
-				if ( $this->fetchUpgradeToVersion() > '3.10.1' )
+				// if the version we are upgrading to is greater than 3.10.1, 
+				// save the new DB name directly to the site.ini files
+				if(version_compare($this->upgradeToVersion, '3.10.1') > 0)
 				{
 					// set new database name
 					$ini->setVariable('DatabaseSettings', 'Database', $this->createNewDBName($oldDBName));
+					
 					// save changes in ini file
 					if(!$ini->save() )
 					{
@@ -1007,15 +1010,62 @@ class eZUpgrade extends eZCopy
 
 	function get_mime_type($filepath)
 	{
-		ob_start();
-		system( "file -i -b {$filepath}" );
-		$output = ob_get_clean();
+		// use finfo if the class exists (PHP 5.3)
+		if(class_exists('finfo'))
+		{
+			$fi = new finfo(FILEINFO_MIME);
+			$output = $fi->buffer(file_get_contents($filepath));
+		}
+		else
+		{
+			ob_start();
+			system( "file -i -b {$filepath}" );
+			$output = ob_get_clean();
+		}
+		
+		// ensure we're only getting the mime type
 		$output = explode( "; ",$output );
 		if ( is_array( $output ) )
 		{
 			$output = trim( $output[0] );
 		}
 		return $output;
+	}
+	/* 
+	 * Changes the INI setting for database implementation - if the installation is using ezmysql
+	 * (ezmysql is deprecated from eZ Publish 4.5)
+	*/
+	function setMysqliDriver()
+	{
+		foreach( $this->getSiteIniFiles() as $iniFile )
+		{
+			// get instance of current ini file
+			$ini = $this->iniInstance($iniFile);
+			
+			// get current db driver
+			if ( $ini->hasVariable('DatabaseSettings', 'DatabaseImplementation') )
+			{
+				// if the installation uses MySQL
+				if($ini->variable('DatabaseSettings', 'DatabaseImplementation') == 'ezmysql')
+				{
+					$ini->setVariable('DatabaseSettings', 'DatabaseImplementation', 'ezmysqli');
+					
+					// save changes in ini file
+					if($ini->save())
+					{
+						$this->log("ezupgrade changed DatabaseImplementation from ezmysql to ezmysqli ({$iniFile})\n");
+					}
+					else
+					{
+						$this->checkpoint('setMysqliDriver()', "Please change DatabaseImplementation from ezmysql to ezmysqli in {$iniFile}. (ezmysql is deprecated since 4.5.0)", true);
+					}
+				}
+				else
+				{
+					//not using MySQL
+				}
+			}
+		}
 	}
 }
 
