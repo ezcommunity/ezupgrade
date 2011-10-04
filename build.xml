@@ -31,14 +31,11 @@
 
     <property file="./ant/build.properties"/>
 
-    <patternset id="php.sources">
-        <include name="**/*.php"/>
-    </patternset>
-
     <patternset id="all.sources">
         <include name="**/*.php"/>
         <include name="**/*.css"/>
         <include name="**/*.js"/>
+        <include name="**/*ezupgrade"/>
     </patternset>
 
     <patternset id="package.xml">
