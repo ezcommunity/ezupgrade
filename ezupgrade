@@ -10,13 +10,16 @@
 
 include_once( "classes/ezupgrade.php" );
 $upgrade = new eZUpgrade;
-$account = $argv[1];
+
+if(isset($argv[1]))
+{
+	$account = $argv[1];
+}
 
 // if no account name is specified
-if ( $account == '' )
+if ( !isset($argv[1]) )
 {
-	$upgrade->describeUsage();
-	exit();
+	$account = $upgrade->config();
 }
 
 $blockName = 'Account_'.$account;

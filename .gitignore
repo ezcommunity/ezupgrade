@@ -4,6 +4,7 @@ lib/ezcopy
 *.buildpath
 settings/account.ini
 settings/ezcopy.ini
+settings/backup/
 dist/
 build/
 distros/*.zip

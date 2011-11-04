@@ -22,6 +22,10 @@ class eZUpgrade extends eZCopy
 	var $upgradeToVersion;
 	var $versionList;
 	var $manualAttentionNotificationList;
+
+	var $setup;
+	var $setupAccountName;
+	var $isRemote;
 	
 	// The full path to where the old installation is located.
 	var $oldInstallationPath;
@@ -101,8 +105,10 @@ class eZUpgrade extends eZCopy
 			$this->log("The existing installation is located remotely. We need to copy it to a local location.\n");
 			$this->checkpoint( 'Copy installation from remote location' );
 			
+			$this->selectAccount($this->upgradeData['account_name']);
+			
 			// copy existing distro from current location (use /ezcopy)
-			$this->ezcopy->actionDownloadAll($this->data['account_name']);
+			$this->actionDownloadAll($this->data['identifier']);
 			
 			// set the location of the locally downloaded copy
 			$this->setOldInstallationPath($this->getCopyLocation());
@@ -1065,6 +1071,472 @@ class eZUpgrade extends eZCopy
 					//not using MySQL
 				}
 			}
+		}
+	}
+	
+	function config()
+	{
+		$output = new ezcConsoleOutput();
+		$output->formats->info->style = array('bold');
+
+		// Welcome message
+		$output->outputLine("\nWelcome to the ezupgrade configuration.\n", "info");
+
+		$output->outputLine("You are running ezupgrade in setup mode.");
+		$output->outputText("If you want to perform an upgrade and have already configured an account,\nexit this session (Ctrl+C) and run ");
+		$output->outputLine("php ezupgrade <account_name>", 'info');
+		// Menu
+		$menu = new ezcConsoleMenuDialog( $output );
+		$menu->options = new ezcConsoleMenuDialogOptions();
+		$menu->options->text = "What would you like to do?\n";
+		$menu->options->validator = new ezcConsoleMenuDialogDefaultValidator(
+			array(
+				"1" => "Configure a new account",
+				"0" => "Quit",
+			),
+			"1"
+		);
+		
+		$choice = ezcConsoleDialogViewer::displayDialog( $menu );
+		
+		// if the user selects "Quit"
+		if($choice == 0)
+		{
+			exit();
+		}
+		
+		// name the account
+		$accountName = $this->getUserInput("Provide a name for the account:");
+		$this->setupAccountName = $accountName;
+
+		$this->setup = array(
+			"ezcopy" => array(
+				"Account_{$accountName}" => array()
+			),
+			
+			'account' => array(
+				"Account_{$accountName}" => array()
+			)
+		);
+		
+		// Remote server?
+		$remote = ezcConsoleQuestionDialog::YesNoQuestion(
+			$output,
+			"Is the installation you want to upgrade currently located on a remote server?",
+			"n"
+		);
+		
+		$this->isRemote = false;
+		
+		if(ezcConsoleDialogViewer::displayDialog( $remote ) !== "n" )
+		{
+			$this->isRemote = true;
+			do
+			{
+				$this->setup['ezcopy']["Account_{$accountName}"]["ssh_host"] = $this->getUserInput("SSH host");
+				$this->setup['ezcopy']["Account_{$accountName}"]["ssh_user"] = $this->getUserInput("SSH username");
+				$this->setup['ezcopy']["Account_{$accountName}"]["ssh_pass"] = $this->getUserInput("SSH password");
+			}
+			while(!$this->validateSSH());
+		}
+		
+		// existing installation path
+		do
+		{
+			$input = $this->getUserInput("Where is your installation currently residing? (Provide an absoulute path with trailing forwardslash):");
+		}
+		while(!$this->validatePathInput($input));
+		
+		if($this->isRemote)
+		{
+			$isLocal = 'false';
+			$this->setup['account']["Account_{$accountName}"]["ExistingInstallationLocation"] = "remote";
+			$this->setup['ezcopy']["Account_{$accountName}"]["path_to_ez"] = $input;
+		}
+		else
+		{
+			$isLocal = 'true';
+			$this->setup['account']["Account_{$accountName}"]["ExistingInstallationLocation"] = $input;
+		}
+		
+		$this->setup['account']["Accounts"]['IsLocal'] = $isLocal;
+		
+		
+		// existing installation version
+		do
+		{
+			$this->setup['ezcopy']["Account_{$accountName}"]["ez_version"] = $this->getUserInput("Which version is your current eZ Publish installation?");
+		}
+		while(!$this->validateFromVersion());
+
+
+		
+		// siteaccess list
+		$siteaccessList = $this->getUserInput("Enter a comma separated list of siteaccesses with a unique database:");
+		
+		// split the string
+		$siteaccessList = explode(',', $siteaccessList);
+		
+		$main_siteaccess = array_shift($siteaccessList);
+		$this->setup['account']["Account_{$accountName}"]["SiteaccessList"][] = $main_siteaccess;
+		
+		// MySQL settings for the main DB
+		do
+		{
+			$this->setup['ezcopy']["Account_{$accountName}"]["mysql_db"] = $this->getUserInput("Enter the name of the MySQL database for siteaccess {$main_siteaccess}:");
+			$this->setup['ezcopy']["Account_{$accountName}"]["mysql_user"] = $this->getUserInput("Enter the name of the MySQL username for siteaccess {$main_siteaccess}:");
+			$this->setup['ezcopy']["Account_{$accountName}"]["mysql_pass"] = $this->getUserInput("Enter the name of the MySQL password for siteaccess {$main_siteaccess}:");
+		}
+		while(!$this->validateMySQL());
+		
+		// if there are remaining siteaccesses
+		if(count($siteaccessList) > 0)
+		{
+			// get connection information for these as well
+			foreach($siteaccessList as $key => $siteaccess)
+			{
+				$this->setup['account']["Account_{$accountName}"]["SiteaccessList"][] = $siteaccess;
+				
+				do
+				{
+					$this->setup['ezcopy']["Account_{$accountName}"]["additional_mysql[{$key}][host]"] = "localhost";
+					$this->setup['ezcopy']["Account_{$accountName}"]["additional_mysql[{$key}][db]"] = $this->getUserInput("Enter the name of the MySQL database for siteaccess {$siteaccess}:");
+					$this->setup['ezcopy']["Account_{$accountName}"]["additional_mysql[{$key}][user]"] = $this->getUserInput("Enter the name of the MySQL username for siteaccess {$siteaccess}:");
+					$this->setup['ezcopy']["Account_{$accountName}"]["additional_mysql[{$key}][pass]"] = $this->getUserInput("Enter the name of the MySQL password for siteaccess {$siteaccess}:");
+				}
+				while(!$this->validateAdditionalMySQL($key));
+			}
+		}
+
+
+		
+		// Upgraded installation
+		
+		// db root
+		do
+		{
+			$this->setup['ezcopy']["DBRoot"]["username"] = $this->getUserInput("Enter the database root username:");
+			$this->setup['ezcopy']["DBRoot"]["password"] = $this->getUserInput("Enter the database root password:");
+		}
+		while(!$this->validateMySQLRoot());
+		
+		// Upgrade to
+		do
+		{
+			$this->setup['account']["Account_{$accountName}"]["ToVersion"] = $this->getUserInput("Which version do you want to upgrade to?");
+		}
+		while(!$this->validateToVersion());
+
+		// Base path
+		do
+		{
+			$this->setup['account']["Account_{$accountName}"]["BasePath"] = $this->getUserInput("Where do you want to place the upgraded installation? (Provide an absoulute path with trailing forwardslash):");
+		}
+		while(
+			!$this->validatePathInput(
+				$this->setup['account']["Account_{$accountName}"]["BasePath"],
+				$this->setup['account']["Account_{$accountName}"]["ExistingInstallationLocation"]
+			)
+		);
+		
+		
+		foreach($this->setup as $iniFileName => $settingsArray)
+		{
+
+			$reader = new ezcConfigurationIniReader();
+			$reader->init(dirname( __FILE__ )."/../settings", $iniFileName);
+
+			// validate the settings file, and loop over all the validation errors and
+			// warnings
+			$result = $reader->validate();
+
+			// load the settings into an ezcConfiguration object
+			$iniObject = $reader->load();
+
+			foreach($settingsArray as $blockName => $variableList)
+			{
+				foreach($variableList as $variable => $value)
+				{
+					$iniObject->setSetting($blockName, $variable, $value);
+				}
+			}
+
+			switch($iniFileName)
+			{
+				case 'ezcopy':
+					$accountList = $iniObject->getSetting('General', 'account_list');
+					array_push($accountList, $accountName);
+					$iniObject->setSetting('General', 'account_list', $accountList);
+					break;
+				case 'account':
+					$accountList = $iniObject->getSetting('Accounts', 'AccountList');
+					array_push($accountList, $accountName);
+					$iniObject->setSetting('Accounts', 'AccountList', $accountList);
+					break;
+				default:
+					break;
+			}
+
+
+			$writer = new ezcConfigurationIniWriter();
+			$writer->init(dirname( __FILE__ )."/../settings", $iniFileName, $iniObject);
+			@$writer->save();
+		}
+
+		if($this->isRemote)
+		{
+			$this->ssh->disconnect();
+		}
+
+		$output->outputLine("\nYou have completed the setup wizard!", 'info');
+		$output->outputLine("To perform an upgrade of this account, run this command:");
+		$output->outputLine("php ezupgrade {$accountName}\n");
+		exit();
+	}
+	
+	function getUserInput($text)
+	{
+		$output = new ezcConsoleOutput();
+		$question = new ezcConsoleQuestionDialog( $output );
+		$question->options->text = $text;
+		
+		do
+		{
+			$input = ezcConsoleDialogViewer::displayDialog( $question );
+		}
+		while($input == "");
+		
+		$question->reset();
+		
+		return $input;
+	}
+	
+	function validateSSH()
+	{
+		$this->log("Checking SSH details..");
+		
+		if(count($hostPart=explode(':', $this->setup['ezcopy']["Account_{$this->setupAccountName}"]['ssh_host']))>1)
+		{
+			$this->ssh 		= new Net_SSH2($hostPart[0], $hostPart[1]);
+		}
+		else
+		{
+			$this->ssh 		= new Net_SSH2($this->setup['ezcopy']["Account_{$this->setupAccountName}"]['ssh_host']);
+		}
+		echo "Username: " . $this->setup['ezcopy']["Account_{$this->setupAccountName}"]['ssh_user'];
+		echo "\nPassword: ". $this->setup['ezcopy']["Account_{$this->setupAccountName}"]['ssh_pass'];
+		if ($this->ssh->login($this->setup['ezcopy']["Account_{$this->setupAccountName}"]['ssh_user'], $this->setup['ezcopy']["Account_{$this->setupAccountName}"]['ssh_pass']))
+		{
+			$this->log("OK\n", 'ok');
+			return true;
+		}
+		else
+		{
+			$this->log("Unable to log in, please try again\n", "warning");
+			return false;
+		}
+	}
+
+	function validatePathInput($path, $shouldNotMatch = false)
+	{
+		if($shouldNotMatch)
+		{
+			if($path == $shouldNotMatch)
+			{
+				$this->log("You can't place the upgraded installation in the same directory as the current installation!\n", "warning");
+				return false;
+			}
+		}
+
+		$this->log("Validating format.. ");
+		
+		if(substr($path,-1) !== DIRECTORY_SEPARATOR)
+		{
+			$this->log("The path must end with trailing slash\n", "warning");
+			return false;
+		}
+
+		$this->log("OK\n", 'ok');
+
+		$this->log('Validating existence.. ');
+
+		if($this->isRemote)
+		{
+			$this->log("Site isn't local, can't validate existence.\n");
+			return true;
+		}
+
+		if(is_dir($path))
+		{
+			$this->log("OK\n", "ok");
+			return true;
+		}
+		else
+		{
+			$this->log("{$path} does not exist\n", "warning");
+			return false;
+		}
+	}
+
+	function validateFromVersion()
+	{
+		$fromVersion = $this->setup['ezcopy']["Account_{$this->setupAccountName}"]["ez_version"];
+
+		return true;
+	}
+
+	function validateToVersion()
+	{
+		$fromVersion = $this->setup['ezcopy']["Account_{$this->setupAccountName}"]["ez_version"];
+		$toVersion = $this->setup['account']["Account_{$this->setupAccountName}"]["ToVersion"];
+
+		//$reader = new ezcConfigurationIniReader();
+		//$reader->init(dirname( __FILE__ )."/../settings", 'ezupgrade');
+
+		// validate the settings file, and loop over all the validation errors and
+		// warnings
+		//$result = $reader->validate();
+
+		// load the settings into an ezcConfiguration object
+		//$iniObject = $reader->load();
+
+		//$validVersionList = $iniObject->getSetting('General', 'Versions');
+
+		$this->log("Checking version.. ");
+
+		if(($this->cfg->hasGroup('ezupgrade', 'Upgrade_' . $toVersion)) && (version_compare($toVersion, $fromVersion) == 1))
+		{
+			$this->log("Valid\n", "ok");
+			return true;
+		}
+		else
+		{
+			$this->log("Upgrading to version {$toVersion} is not supported or you've entered a version older or equal to the current version\n", "warning");
+			return false;
+		}
+	}
+
+	function validateMySQL()
+	{
+		if($this->isRemote)
+		{
+			return true;
+		}
+
+		$db 	= $this->setup['ezcopy']["Account_{$this->setupAccountName}"]["mysql_db"];
+		$user 	= $this->setup['ezcopy']["Account_{$this->setupAccountName}"]["mysql_user"];
+		$pass 	= $this->setup['ezcopy']["Account_{$this->setupAccountName}"]["mysql_pass"];
+
+		$this->log('Logging in.. ');
+
+		$connection = mysql_connect('localhost', $user, $pass);
+
+		if($connection && mysql_select_db($db, $connection))
+		{
+			mysql_close();
+			$this->log("OK\n", "ok");
+			return true;
+		}
+		else
+		{
+			mysql_close();
+			$this->log("Connection could not be established\n", "warning");
+			return false;
+		}
+	}
+
+	function validateMySQLRoot()
+	{
+		if($this->isRemote)
+		{
+			return true;
+		}
+
+		$user 	= $this->setup['ezcopy']["Account_{$this->setupAccountName}"]["mysql_user"];
+		$pass 	= $this->setup['ezcopy']["Account_{$this->setupAccountName}"]["mysql_pass"];
+
+		$rootuser = $this->setup['ezcopy']["DBRoot"]["username"];
+		$rootpass = $this->setup['ezcopy']["DBRoot"]["password"];
+
+		$connection = @mysql_connect('localhost', $rootuser, $rootpass);
+
+		if($connection)
+		{
+			$dbName = md5(time());
+
+			$this->log("Logged in successfully\n", "ok");
+
+			$this->log("Creating database {$dbName}.. ");
+			$sql = "CREATE DATABASE IF NOT EXISTS {$dbName}";
+
+			if(!mysql_query($sql, $connection))
+			{
+				$this->log("Can't create database\n", "warning");
+				return false;
+			}
+
+			$this->log("OK\n", 'ok');
+
+			$this->log("Granting privileges.. ");
+			$sql = "GRANT ALL PRIVILEGES ON {$dbName}.* TO {$user}@localhost IDENTIFIED BY '{$pass}'";
+
+			if(!mysql_query($sql, $connection))
+			{
+				$this->log("Can't grant database privileges\n", "warning");
+				return false;
+			}
+
+			$this->log("OK\n", 'ok');
+
+			$this->log("Deleting database {$dbName}.. ");
+			$sql = "DROP DATABASE {$dbName}";
+			if(!mysql_query($sql, $connection))
+			{
+				$this->log("Couldn't delete database {$dbName}!\n", "warning");
+			}
+			else
+			{
+				$this->log("OK\n", 'ok');
+			}
+			
+			mysql_close();
+
+			return true;
+
+		}
+		else
+		{
+			$this->log("Connection could not be established\n", "warning");
+			return false;
+		}
+	}
+
+	function validateAdditionalMySQL($arrayKey)
+	{
+		if($this->isRemote)
+		{
+			return true;
+		}
+
+		$db 	= $this->setup['ezcopy']["Account_{$this->setupAccountName}"]["additional_mysql[{$arrayKey}][db]"];
+		$user 	= $this->setup['ezcopy']["Account_{$this->setupAccountName}"]["additional_mysql[{$arrayKey}][user]"];
+		$pass 	= $this->setup['ezcopy']["Account_{$this->setupAccountName}"]["additional_mysql[{$arrayKey}][pass]"];
+
+		$this->log('Validating.. ');
+		
+		$connection = mysql_connect('localhost', $user, $pass);
+
+		if($connection && mysql_select_db($db, $connection))
+		{
+			mysql_close();
+			$this->log("OK\n", "ok");
+			return true;
+		}
+		else
+		{
+			mysql_close();
+			$this->log("Connection could not be established\n", "warning");
+			return false;
 		}
 	}
 }

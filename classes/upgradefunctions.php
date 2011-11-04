@@ -279,7 +279,7 @@ class upgradeFunctions
 			$this->runScript('update/common/scripts/' . $script, 4 );
 		}
 	}
-	
+
 	public function upgradeScripts450()
 	{
 		// set mysqli driver in the ini settings if mysqli driver is installed
@@ -307,6 +307,33 @@ class upgradeFunctions
 		$this->manualAttention('RewriteRule ^/var/[^/]+/cache/(texttoimage|public)/.* - [L]');
 		$this->manualAttention('with:');
 		$this->manualAttention('RewriteRule ^/var/([^/]+/)?cache/(texttoimage|public)/.* - [L]');
+	}
+
+	public function upgradeScripts460()
+	{
+		if(function_exists('mysqli_connect'))
+		{
+		  $this->upgrade->setMysqliDriver();
+		}
+
+		$scriptList = array(
+			//'removetrashedimages.php',
+			'updateordernumber.php'
+		);
+		
+		foreach($scriptList as $script)
+		{
+			$this->runScript('update/common/scripts/4.6/' . $script);
+		}
+	}
+
+	public function upgrade460Notice()
+	{
+		$this->manualAttention('Please check Backward compatibility docs in doc/bc/4.6');
+		$this->manualAttention('To clean up any recursive trashed images (see http://issues.ez.no/17781 for more information)');
+		$this->manualAttention("it's recommended that you run this command from the eZ Publish root folder:");
+		$this->manualAttention("php update/common/scripts/4.6/removetrashedimages.php");
+		$this->manualAttention("Make sure you have emptied your trash from the administration panel before you run this script!");		
 	}
 }
 
