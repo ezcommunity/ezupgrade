@@ -32,6 +32,12 @@ REQUIREMENTS
 * eZUpgrade is dependent upon eZCopy (http://projects.ez.no/ezcopy) and its
   requirements.
 
+* eZ Components:
+  eZUpgrade requires the latest stable release of eZ Components.
+  To install this, you also need PEAR
+  See http://ez.no/ezcomponents for more information
+
+
 
 HOW IT WORKS
 
