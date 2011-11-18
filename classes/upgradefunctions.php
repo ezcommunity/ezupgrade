@@ -330,6 +330,18 @@ class upgradeFunctions
 	public function upgrade460Notice()
 	{
 		$this->manualAttention('Please check Backward compatibility docs in doc/bc/4.6');
+		$this->manualAttention(' ');
+		$this->manualAttention('For eZ OE 5.x and eZ JS Core you will need to replace the following rewrite rules when using Virtual Hosts:');
+		$this->manualAttention('RewriteRule ^/var/cache/texttoimage/.* - [L]');
+		$this->manualAttention('RewriteRule ^/var/[^/]+/cache/(texttoimage|public)/.* - [L]');
+		$this->manualAttention('with:');
+		$this->manualAttention('RewriteRule ^/var/([^/]+/)?cache/(texttoimage|public)/.* - [L]');
+		$this->manualAttention('Content panes are not visible on the "User accounts" tab in the back-end. To fix it on an already-installed eZPublish,');
+		$this->manualAttention('remove the following blocks and their rules from your "override.ini.append.php" for your admin siteaccess:');
+		$this->manualAttention('[window_controls] and [windows]');
+		$this->manualAttention(' ');
+		$this->manualAttention(' ');
+		
 		$this->manualAttention('To clean up any recursive trashed images (see http://issues.ez.no/17781 for more information)');
 		$this->manualAttention("it's recommended that you run this command from the eZ Publish root folder:");
 		$this->manualAttention("php update/common/scripts/4.6/removetrashedimages.php");
