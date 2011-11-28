@@ -71,12 +71,16 @@ From the shell prompt, where eZUpgrade is located, run:
 
 php ezupgrade [account_username]
 
+If you haven't set up any accounts, run `php ezupgrade` to initialize the
+configuration wizard.
 
 
 IMPORTANT NOTE ABOUT UPGRADING FROM VERSION 3.x TO 4.x
 
-Since 3-series of eZ Publish is run on php4 the upgrading process is a little more tricky than upgrading from 4.x.y.
-In order to fix this we have added paths to php4 and php5 in ezcopy.ini. This means that you need to upgrade on a server/machine that have both this or do it in cycles. 
+Since 3-series of eZ Publish is run on php4 the upgrading process is a little
+more tricky than upgrading from 4.x.y. In order to fix this we have added paths
+to php4 and php5 in ezcopy.ini. This means that you need to upgrade on a
+server/machine that have both this or do it in cycles. 
 
 The way we have upgraded is doing it in cycles. Here is one of our example:
 
@@ -87,5 +91,7 @@ FROM		TO
 3.10.1		4.0.3
 4.0.3		4.5.0
 
-Tip! Instead of upgrading on the server, you could upgrade on your computer (if its unix based). Download a webserver that have both php4 and php5 set the paths and run the upgrade.
-After upgradring copy the last folder to the webserver and add the database.
+Tip! Instead of upgrading on the server, you could upgrade on your computer
+(if its unix based). Download a webserver that have both php4 and php5 set the
+paths and run the upgrade. After upgradring copy the last folder to the
+webserver and add the database.

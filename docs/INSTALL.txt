@@ -5,9 +5,15 @@ INSTALLATION
 * Check out ezcopy (http://projects.ez.no/ezcopy) to the /lib folder of ezupgrade
   (making the directory /lib/ezcopy) and and follow its installation instructions.
   Finally, copy the ezcopy.ini file from lib/ezcopy/settings/ to settings/  
-  
+
 * Copy settings/account_default.ini and rename the copy settings/account.ini
-  For each account you need to upgrade, create an Account block with the 
-  proper settings.
 
 * chmod 777 ezupgrade
+
+* For each account you need to upgrade, create an Account block with the 
+  proper settings.
+
+  OR
+
+  Run `php ezupgrade` to initialize the configuration wizard.
+  The wizard will prompt the user for the required fields.
