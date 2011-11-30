@@ -120,7 +120,7 @@ class AccountConfiguration {
 		// existing installation path
 		do
 		{
-			$input = $this->getUserInput("Where is your installation currently residing? (Provide an absoulute path with trailing forwardslash):");
+			$input = $this->getUserInput("Where is your installation currently residing? (Provide an absolute path with trailing forward slash):");
 		}
 		while(!$this->validatePathInput($input));
 		
@@ -218,7 +218,7 @@ class AccountConfiguration {
 		// Base path
 		do
 		{
-			$this->iniParams['account']["Account_{$this->accountName}"]["BasePath"] = $this->getUserInput("Where do you want to place the upgraded installation? (Provide an absoulute path with trailing forwardslash):");
+			$this->iniParams['account']["Account_{$this->accountName}"]["BasePath"] = $this->getUserInput("Where do you want to place the upgraded installation? (Provide an absolute path with trailing forward slash):");
 		}
 		while(
 			!$this->validatePathInput(
