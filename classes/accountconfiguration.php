@@ -120,7 +120,7 @@ class AccountConfiguration {
 		// existing installation path
 		do
 		{
-			$input = $this->getUserInput("Where is your installation currently residing? (Provide an absoulute path with trailing forwardslash):");
+			$input = $this->addSlash($this->getUserInput("Where is your installation currently residing? (Provide an absolute path)"));
 		}
 		while(!$this->validatePathInput($input));
 		
@@ -218,7 +218,8 @@ class AccountConfiguration {
 		// Base path
 		do
 		{
-			$this->iniParams['account']["Account_{$this->accountName}"]["BasePath"] = $this->getUserInput("Where do you want to place the upgraded installation? (Provide an absoulute path with trailing forwardslash):");
+			$input = $this->addSlash($this->getUserInput("Where do you want to place the upgraded installation? (Provide an absolute path)"));
+			$this->iniParams['account']["Account_{$this->accountName}"]["BasePath"] = $input;
 		}
 		while(
 			!$this->validatePathInput(
@@ -516,5 +517,19 @@ class AccountConfiguration {
 			$this->output->outputText("Connection could not be established\n", "warning");
 			return false;
 		}
+	}
+
+	function addSlash($path)
+	{
+		$path = trim($path);
+		if(substr($path,-1) !== DIRECTORY_SEPARATOR)
+		{
+			$path = $path . DIRECTORY_SEPARATOR;
+		}
+		if($path[0] !== DIRECTORY_SEPARATOR)
+		{
+			$path = DIRECTORY_SEPARATOR . $path;
+		}
+		return $path;
 	}
 }
