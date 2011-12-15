@@ -357,8 +357,30 @@ class AccountConfiguration {
 	function validateFromVersion()
 	{
 		$fromVersion = $this->iniParams['ezcopy']["Account_{$this->accountName}"]["ez_version"];
+		$this->output->outputText("Checking version.. ");
 
-		return true;
+		$checker = ezcConfigurationManager::getInstance();
+		$checker->init('ezcConfigurationIniReader', 'settings');
+		$versionList = $checker->getSetting('ezupgrade', 'General', 'Versions');
+
+		if(in_array($fromVersion, $versionList))
+		{
+			$this->output->outputText("Valid\n", "ok");
+			return true;
+		}
+		else
+		{
+			$suggestions = implode( ", ", preg_grep("/{$fromVersion}/", $versionList) );
+			if ($suggestions)
+			{
+				$this->output->outputText("\nSuitable supported versions: {$suggestions}\n", "warning");
+			}
+			else
+			{
+				$this->output->outputText("Upgrading from version {$fromVersion} is not supported\n", "warning");
+			}
+			return false;
+		}
 	}
 
 	function validateToVersion()
