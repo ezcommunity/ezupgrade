@@ -176,9 +176,9 @@ class AccountConfiguration {
 		if(count($this->siteaccessList) > 0)
 		{
 			// get connection information for these as well
-			foreach($siteaccessList as $key => $siteaccess)
+			foreach($this->siteaccessList as $key => $siteaccess)
 			{
-				$this->setup['account']["Account_{$accountName}"]["SiteaccessList"][] = $siteaccess;
+				$this->setup['account']["Account_{$this->accountName}"]["SiteaccessList"][] = $siteaccess;
 				
 				do
 				{
