@@ -36,8 +36,17 @@ if ( is_dir( $basePath ) )
 }
 else
 {
-	printf( $basePath . " does not exist. Check BasePath in account.ini \n" );
-	exit();
+	try
+	{
+		printf( $basePath . " does not exist. Creating directory..\n" );
+		mkdir($basePath, 0777);
+	}
+	catch(Exception $e)
+	{
+		printf( "Could not create {$basePath}\n" );
+		exit();
+	}
+
 }
 
 if ( $instLoc != 'remote' )
