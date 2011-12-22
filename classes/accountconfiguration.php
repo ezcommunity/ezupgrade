@@ -30,17 +30,24 @@ class AccountConfiguration {
 		exit();
 	}
 
-	function getUserInput($text)
+	function getUserInput($text, $allowBlank=false)
 	{
 		$this->output = new ezcConsoleOutput();
 		$question = new ezcConsoleQuestionDialog( $this->output );
 		$question->options->text = $text;
-		
+		$question->options->validator->default = "";
+		$isValid = false;
+
 		do
 		{
 			$input = ezcConsoleDialogViewer::displayDialog( $question );
+
+			if(($input == '' && $allowBlank) || ($input !== ''))
+			{
+				$isValid = true;
+			}
 		}
-		while($input == "");
+		while(!$isValid);
 		
 		$question->reset();
 		
@@ -198,7 +205,7 @@ class AccountConfiguration {
 		do
 		{
 			$this->iniParams['ezcopy']["DBRoot"]["username"] = $this->getUserInput("Enter the database root username:");
-			$this->iniParams['ezcopy']["DBRoot"]["password"] = $this->getUserInput("Enter the database root password:");
+			$this->iniParams['ezcopy']["DBRoot"]["password"] = $this->getUserInput("Enter the database root password:", true);
 		}
 		while(!$this->validateMySQLRoot());
 	}
