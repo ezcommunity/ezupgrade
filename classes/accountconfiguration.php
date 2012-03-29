@@ -1,4 +1,5 @@
 <?php
+include_once('lib/ezcopy/classes/dbhandler.php');
 
 class AccountConfiguration {
 	
@@ -8,20 +9,23 @@ class AccountConfiguration {
 	var $isRemote = false;
 	var $mainSiteaccess;
 
+	var $dbhandler;
+
 	function __construct()
 	{
 		$this->output = new ezcConsoleOutput();
 		$this->output->formats->info->style = array('bold');
 
-		$this->showMenu();
+		/*$this->showMenu();
 
 		$this->setAccountName();
 		$this->setIsRemote();
 		$this->setExistingInstallationPath();
 		$this->setExistingInstallationVersion();
 		$this->getSiteaccessInfo();
+		$this->getDBMSInfo();
 		$this->getDBInfo();
-		$this->getDBRootInfo();
+		$this->getDBRootInfo();*/
 
 		$this->getUpgradeToVersion();
 		$this->getBasePath();
@@ -168,16 +172,45 @@ class AccountConfiguration {
 		$this->iniParams['account']["Account_{$this->accountName}"]["SiteaccessList"][] = $this->mainSiteaccess;
 	}
 
+	function getDBMSInfo()
+	{
+
+		// Menu
+		$menu = new ezcConsoleMenuDialog( $this->output );
+		$menu->options = new ezcConsoleMenuDialogOptions();
+		$menu->options->text = "What database system is your installation running?\n";
+		$menu->options->validator = new ezcConsoleMenuDialogDefaultValidator(
+			array(
+				"1" => "MySQL"
+			),
+			"1"
+		);
+		
+		$choice = ezcConsoleDialogViewer::displayDialog( $menu );
+
+		switch($choice)
+		{
+			case '1':
+			default:
+				$this->iniParams['ezcopy']["Account_{$this->accountName}"]["dbms"] = 'mysql';
+				$this->dbhandler = new dbhandler('', $this);
+				break;
+		}
+
+
+
+	}
+
 	function getDBInfo()
 	{
-		// MySQL settings for the main DB
+		// Database settings for the main DB
 		do
 		{
-			$this->iniParams['ezcopy']["Account_{$this->accountName}"]["mysql_db"] = $this->getUserInput("Enter the name of the MySQL database for siteaccess {$this->mainSiteaccess}:");
-			$this->iniParams['ezcopy']["Account_{$this->accountName}"]["mysql_user"] = $this->getUserInput("Enter the name of the MySQL username for siteaccess {$this->mainSiteaccess}:");
-			$this->iniParams['ezcopy']["Account_{$this->accountName}"]["mysql_pass"] = $this->getUserInput("Enter the name of the MySQL password for siteaccess {$this->mainSiteaccess}:");
+			$this->iniParams['ezcopy']["Account_{$this->accountName}"]["db"] = $this->getUserInput("Enter the name of the database for siteaccess {$this->mainSiteaccess}:");
+			$this->iniParams['ezcopy']["Account_{$this->accountName}"]["db_user"] = $this->getUserInput("Enter the database username for siteaccess {$this->mainSiteaccess}:");
+			$this->iniParams['ezcopy']["Account_{$this->accountName}"]["db_pass"] = $this->getUserInput("Enter the database password for siteaccess {$this->mainSiteaccess}:");
 		}
-		while(!$this->validateMySQL());
+		while(!$this->validateDatabaseInfo());
 		
 		// if there are remaining siteaccesses
 		if(count($this->siteaccessList) > 0)
@@ -189,12 +222,12 @@ class AccountConfiguration {
 				
 				do
 				{
-					$this->iniParams['ezcopy']["Account_{$this->accountName}"]["additional_mysql[{$key}][host]"] = "localhost";
-					$this->iniParams['ezcopy']["Account_{$this->accountName}"]["additional_mysql[{$key}][db]"] = $this->getUserInput("Enter the name of the MySQL database for siteaccess {$siteaccess}:");
-					$this->iniParams['ezcopy']["Account_{$this->accountName}"]["additional_mysql[{$key}][user]"] = $this->getUserInput("Enter the name of the MySQL username for siteaccess {$siteaccess}:");
-					$this->iniParams['ezcopy']["Account_{$this->accountName}"]["additional_mysql[{$key}][pass]"] = $this->getUserInput("Enter the name of the MySQL password for siteaccess {$siteaccess}:");
+					$this->iniParams['ezcopy']["Account_{$this->accountName}"]["additional_db[{$key}][host]"] = "localhost";
+					$this->iniParams['ezcopy']["Account_{$this->accountName}"]["additional_db[{$key}][db]"] = $this->getUserInput("Enter the name of the database for siteaccess {$siteaccess}:");
+					$this->iniParams['ezcopy']["Account_{$this->accountName}"]["additional_db[{$key}][user]"] = $this->getUserInput("Enter the database username for siteaccess {$siteaccess}:");
+					$this->iniParams['ezcopy']["Account_{$this->accountName}"]["additional_db[{$key}][pass]"] = $this->getUserInput("Enter the database password for siteaccess {$siteaccess}:");
 				}
-				while(!$this->validateAdditionalMySQL($key));
+				while(!$this->validateAddionalDatabaseInfo($key));
 			}
 		}
 	}
@@ -207,15 +240,18 @@ class AccountConfiguration {
 			$this->iniParams['ezcopy']["DBRoot"]["username"] = $this->getUserInput("Enter the database root username:");
 			$this->iniParams['ezcopy']["DBRoot"]["password"] = $this->getUserInput("Enter the database root password:", true);
 		}
-		while(!$this->validateMySQLRoot());
+		while(!$this->validateDatabaseRoot());
 	}
 
 	function getUpgradeToVersion()
 	{
+		$latestVersion = $this->getLatestVersion();
+		
 		// Upgrade to
 		do
 		{
-			$this->iniParams['account']["Account_{$this->accountName}"]["ToVersion"] = $this->getUserInput("Which version do you want to upgrade to?");
+			$toVersion = $this->getUserInput("Which version do you want to upgrade to? [{$latestVersion}]", true);
+			$this->iniParams['account']["Account_{$this->accountName}"]["ToVersion"] = ($toVersion == '') ? $latestVersion : $toVersion;
 		}
 		while(!$this->validateToVersion());
 	}
@@ -395,22 +431,12 @@ class AccountConfiguration {
 		$fromVersion = $this->iniParams['ezcopy']["Account_{$this->accountName}"]["ez_version"];
 		$toVersion = $this->iniParams['account']["Account_{$this->accountName}"]["ToVersion"];
 
-		//$reader = new ezcConfigurationIniReader();
-		//$reader->init(dirname( __FILE__ )."/../settings", 'ezupgrade');
-
-		// validate the settings file, and loop over all the validation errors and
-		// warnings
-		//$result = $reader->validate();
-
-		// load the settings into an ezcConfiguration object
-		//$iniObject = $reader->load();
-
-		//$validVersionList = $iniObject->getSetting('General', 'Versions');
-
 		$this->output->outputText("Checking version.. ");
 
 		$checker = ezcConfigurationManager::getInstance();
 		$checker->init( 'ezcConfigurationIniReader', 'settings' );
+
+		$showError = true;
 
 		if(($checker->hasGroup('ezupgrade', 'Upgrade_' . $toVersion)) && (version_compare($toVersion, $fromVersion) == 1))
 		{
@@ -419,65 +445,80 @@ class AccountConfiguration {
 		}
 		else
 		{
-			$this->output->outputText("Upgrading to version {$toVersion} is not supported or you've entered a version older or equal to the current version\n", "warning");
-			return false;
+			$guessedVersion = $this->guessVersion($toVersion);
+			
+			if($guessedVersion < 0)
+			{
+				$this->output->outputText("Upgrading to version {$toVersion} is not supported or you've entered a version older or equal to the current version\n", "warning");
+				return false;
+			}
+			else
+			{
+				$remote = ezcConsoleQuestionDialog::YesNoQuestion(
+				$this->output,
+					"Unknown version. Did you mean {$guessedVersion}?",
+					"y"
+				);
+
+							
+				if(ezcConsoleDialogViewer::displayDialog( $remote ) == "y" )
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
 		}
+
+
 	}
 
-	function validateMySQL()
+	function validateDatabaseInfo()
 	{
 		if($this->isRemote)
 		{
 			return true;
 		}
 
-		$db 	= $this->iniParams['ezcopy']["Account_{$this->accountName}"]["mysql_db"];
-		$user 	= $this->iniParams['ezcopy']["Account_{$this->accountName}"]["mysql_user"];
-		$pass 	= $this->iniParams['ezcopy']["Account_{$this->accountName}"]["mysql_pass"];
+		$db 	= $this->iniParams['ezcopy']["Account_{$this->accountName}"]["db"];
+		$user 	= $this->iniParams['ezcopy']["Account_{$this->accountName}"]["db_user"];
+		$pass 	= $this->iniParams['ezcopy']["Account_{$this->accountName}"]["db_pass"];
 
 		$this->output->outputText('Logging in.. ');
 
-		$connection = mysql_connect('localhost', $user, $pass);
-
-		if($connection && mysql_select_db($db, $connection))
+		if($this->dbhandler->canConnect($db, $user, $pass))
 		{
-			mysql_close();
 			$this->output->outputText("OK\n", "ok");
 			return true;
 		}
-		else
-		{
-			mysql_close();
-			$this->output->outputText("Connection could not be established\n", "warning");
-			return false;
-		}
+		$this->output->outputText("Connection could not be established\n", "warning");
+		return false;
 	}
 
-	function validateMySQLRoot()
+	function validateDatabaseRoot()
 	{
 		if($this->isRemote)
 		{
 			return true;
 		}
 
-		$user 	= $this->iniParams['ezcopy']["Account_{$this->accountName}"]["mysql_user"];
-		$pass 	= $this->iniParams['ezcopy']["Account_{$this->accountName}"]["mysql_pass"];
+		$user 	= $this->iniParams['ezcopy']["Account_{$this->accountName}"]["db_user"];
+		$pass 	= $this->iniParams['ezcopy']["Account_{$this->accountName}"]["db_pass"];
 
 		$rootuser = $this->iniParams['ezcopy']["DBRoot"]["username"];
 		$rootpass = $this->iniParams['ezcopy']["DBRoot"]["password"];
 
-		$connection = @mysql_connect('localhost', $rootuser, $rootpass);
-
-		if($connection)
+		if($this->dbhandler->canConnectAsRoot($rootuser, $rootpass))
 		{
-			$dbName = md5(time());
-
 			$this->output->outputText("Logged in successfully\n", "ok");
 
-			$this->output->outputText("Creating database {$dbName}.. ");
-			$sql = "CREATE DATABASE IF NOT EXISTS {$dbName}";
+			$dbName = md5(time());
 
-			if(!mysql_query($sql, $connection))
+			$this->output->outputText("Creating database {$dbName}.. ");
+			
+			if(!$this->dbhandler->rootUserCanCreate($dbName))
 			{
 				$this->output->outputText("Can't create database\n", "warning");
 				return false;
@@ -486,9 +527,9 @@ class AccountConfiguration {
 			$this->output->outputText("OK\n", 'ok');
 
 			$this->output->outputText("Granting privileges.. ");
-			$sql = "GRANT ALL PRIVILEGES ON {$dbName}.* TO {$user}@localhost IDENTIFIED BY '{$pass}'";
+			
 
-			if(!mysql_query($sql, $connection))
+			if(!$this->dbhandler->rootUserCanGrantPrivileges($user, $pass, $dbName))
 			{
 				$this->output->outputText("Can't grant database privileges\n", "warning");
 				return false;
@@ -497,8 +538,8 @@ class AccountConfiguration {
 			$this->output->outputText("OK\n", 'ok');
 
 			$this->output->outputText("Deleting database {$dbName}.. ");
-			$sql = "DROP DATABASE {$dbName}";
-			if(!mysql_query($sql, $connection))
+			
+			if(!$this->dbhandler->rootUserCanDelete($dbName))
 			{
 				$this->output->outputText("Couldn't delete database {$dbName}!\n", "warning");
 			}
@@ -506,8 +547,6 @@ class AccountConfiguration {
 			{
 				$this->output->outputText("OK\n", 'ok');
 			}
-			
-			mysql_close();
 
 			return true;
 
@@ -516,36 +555,29 @@ class AccountConfiguration {
 		{
 			$this->output->outputText("Connection could not be established\n", "warning");
 			return false;
-		}
+		}					
 	}
 
-	function validateAdditionalMySQL($arrayKey)
+	function validateAdditionalDatabaseInfo($arrayKey)
 	{
 		if($this->isRemote)
 		{
 			return true;
 		}
 
-		$db 	= $this->iniParams['ezcopy']["Account_{$this->accountName}"]["additional_mysql[{$arrayKey}][db]"];
-		$user 	= $this->iniParams['ezcopy']["Account_{$this->accountName}"]["additional_mysql[{$arrayKey}][user]"];
-		$pass 	= $this->iniParams['ezcopy']["Account_{$this->accountName}"]["additional_mysql[{$arrayKey}][pass]"];
+		$db 	= $this->iniParams['ezcopy']["Account_{$this->accountName}"]["additional_db[{$arrayKey}][db]"];
+		$user 	= $this->iniParams['ezcopy']["Account_{$this->accountName}"]["additional_db[{$arrayKey}][user]"];
+		$pass 	= $this->iniParams['ezcopy']["Account_{$this->accountName}"]["additional_db[{$arrayKey}][pass]"];
 
 		$this->output->outputText('Validating.. ');
 		
-		$connection = mysql_connect('localhost', $user, $pass);
-
-		if($connection && mysql_select_db($db, $connection))
+		if($this->dbhandler->canConnect($db, $user, $pass))
 		{
-			mysql_close();
 			$this->output->outputText("OK\n", "ok");
 			return true;
 		}
-		else
-		{
-			mysql_close();
-			$this->output->outputText("Connection could not be established\n", "warning");
-			return false;
-		}
+		$this->output->outputText("Connection could not be established\n", "warning");
+		return false;
 	}
 
 	function addSlash($path)
@@ -560,5 +592,43 @@ class AccountConfiguration {
 			$path = DIRECTORY_SEPARATOR . $path;
 		}
 		return $path;
+	}
+
+	function guessVersion($versionInput)
+	{
+		$checker = ezcConfigurationManager::getInstance();
+		$checker->init('ezcConfigurationIniReader', 'settings');
+		$versionList = $checker->getSetting('ezupgrade', 'General', 'Versions');
+		
+		$suggestions = preg_grep("/{$versionInput}/", $versionList);
+		if(count($suggestions) > 0)
+		{
+			return $this->getLatestVersion($suggestions);
+			
+		}
+		return -1;
+	}
+
+	function getLatestVersion($versionList=false)
+	{
+		if(!$versionList)
+		{
+			$checker = ezcConfigurationManager::getInstance();
+			$checker->init('ezcConfigurationIniReader', 'settings');
+			$versionList = $checker->getSetting('ezupgrade', 'General', 'Versions');
+		}
+		
+
+		$latestVersion = '0.0.1';
+
+		foreach($versionList as $version)
+		{
+			if(version_compare($latestVersion, $version, '<'))
+			{
+				$latestVersion = $version;
+			}
+		}
+
+		return $latestVersion;
 	}
 }

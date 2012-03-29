@@ -70,6 +70,7 @@ $data = array(	'account_name'			=> $account,
 
 if ( $upgrade->checkParamsBeforeRunning( $data ) )
 {
+	$upgrade->initializeDBHandler($account);
 	$upgrade->setUpgradeData($data);
 	$upgrade->run();
 }

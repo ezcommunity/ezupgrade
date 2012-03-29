@@ -26,6 +26,8 @@ class eZUpgrade extends eZCopy
 	var $setup;
 	var $setupAccountName;
 	var $isRemote;
+
+	var $varDirIsCopied;
 	
 	// The full path to where the old installation is located.
 	var $oldInstallationPath;
@@ -69,12 +71,12 @@ class eZUpgrade extends eZCopy
 		//$this->downloadAndUnpackDistro();
 		
 		$this->prepareAndUnpackDistro();
-		
+
 		// copy files from old installation to new distro
 		$this->copyFiles();
 		
 		// copy the database(s) of the old distro
-		$this->copyDatabases();
+		$this->dbhandler->copyDatabases();
 		
 		// alter db settings in new distro to point to the db copies
 		$this->updateDBConnections();
@@ -90,7 +92,7 @@ class eZUpgrade extends eZCopy
 		
 		// warn if we need to do more upgrades
 		$this->checkForFinalUpgrade();
-		
+
 		// print work which requires manual attention
 		$this->manualAttentionNotice();
 		
@@ -134,7 +136,7 @@ class eZUpgrade extends eZCopy
 			$this->setIsLocal(true, $this->upgradeData['existing_install']);
 			
 			// dump the database of the existing installation
-			$this->dumpDatabase();
+			$this->dbhandler->dumpDatabase();
 		}
 	}
 	
@@ -259,7 +261,7 @@ class eZUpgrade extends eZCopy
 			else
 			{
 				// grant access to the user for the new database
-				$this->grantDBUserAccess($access['User'], $access['Password'], $this->createNewDBName($access['Database']));
+				$this->dbhandler->grantDBUserAccess($access['User'], $access['Password'], $this->dbhandler->createNewDBName($access['Database']));
 			}
 		}
 	}
@@ -301,10 +303,18 @@ class eZUpgrade extends eZCopy
 	function manualAttentionNotice()
 	{
 		$this->manualAttentionNotificationList[] = "The log file is locateded in lib/ezcopy/logs/";
+		$this->manualAttentionNotificationList[] = "Remember to install eZ Network! Follow the instructions here: ".$this->getNewDistroFolderName()."extension/ez_network/docs/INSTALL.txt";
 		// looping through the notification list to make output with manual attenions notices.
 		foreach ( $this->manualAttentionNotificationList as $notification )
 		{
 			$this->log( $notification . "\n", 'warning' );
+		}
+		
+		if(!$this->varDirIsCopied)
+		{
+			$this->log("\nYou opted not to copy the var/ directory. You will need to do this manually.\n", 'warning');
+			$this->log("You can do this by running the following command:\n", 'warning');
+			$this->log("cp -R ".$this->getOldInstallationPath()."var/* ".$this->getNewDistroFolderName()."var\n\n", 'warning');
 		}
 	}
 	function performUpgrades()
@@ -433,72 +443,6 @@ class eZUpgrade extends eZCopy
 		return $this->getOldInstallationPath() . $this->dbDumpDir;
 	}
 	
-	function copyDatabases()
-	{
-		$this->log("Copying databases\n", 'heading');
-		
-		// fetch the list of unique databases being used
-		$dbList = $this->fetchDbList();
-
-		// for each database
-		foreach($dbList as $db)
-		{
-			// create new database name
-			$newDBName = $this->createNewDBName( $db['Database']);
-			
-			// if, for some strange reason, the old db name is the same as the new one
-			if($db['Database'] == $newDBName)
-			{
-				$this->log("The old and new datebase names are the same(old: '" . $db['Database'] . "' - new: '" . $newDBName . "'). This is probably best handled manually.", 'critical');
-			}
-			
-			// create database
-			$this->createDatabase($newDBName);
-			
-			// apply db dump
-			$sqlFile = $this->getDBDumpLocation() . $db['Database'] . '.sql';
-			$this->applyDatabase($newDBName, $sqlFile);
-		}
-	}
-	
-	function applyDatabaseSql($dbName, $sql)
-	{
-		$this->applyDatabase($dbName, $sql);
-	}
-	
-	function createNewDBName($oldDBName)
-	{
-		// TODO: Here we assume that the db name is something like
-		// "user_ezp" or "user_ezp_410" where the number is the ez version number
-		
-		$dbNameParts = explode("_", $oldDBName);
-		
-		// reverse the array to get the last element with index 0
-		$reverseDBNameParts = array_reverse($dbNameParts);
-		
-		// if there is already a version number at the end of the DB name
-		if(is_numeric($reverseDBNameParts[0]))
-		{
-			// chop off the version number
-			unset($reverseDBNameParts[0]);
-		}
-		
-		// reverse the array back again
-		$dbNameParts = array_reverse($reverseDBNameParts);
-		
-		// remove dots from version number
-		$versionParts = explode(".", $this->upgradeToVersion);
-		
-		// add version number to array of db name parts
-		$dbNameParts[] = implode("", $versionParts);
-		
-		// build new db name
-		$newDBName = implode("_", $dbNameParts);
-		
-		// return new db name
-		return $newDBName;
-	}
-	
 	function getDBAccessList()
 	{
 		// prepare result
@@ -592,7 +536,7 @@ class eZUpgrade extends eZCopy
 				if(version_compare($this->upgradeToVersion, '3.10.1') > 0)
 				{
 					// set new database name
-					$ini->setVariable('DatabaseSettings', 'Database', $this->createNewDBName($oldDBName));
+					$ini->setVariable('DatabaseSettings', 'Database', $this->dbhandler->createNewDBName($oldDBName));
 					
 					// save changes in ini file
 					if(!$ini->save() )
@@ -644,13 +588,42 @@ class eZUpgrade extends eZCopy
 	
 	function copyVarFiles()
 	{
-		$this->log("Copying var/ directory ");
+		$copy = true;
+		$this->varDirIsCopied = false;
+
+		if($this->cfg->getSetting('account', 'Accounts', 'PromptBeforeVarCopy') == 'true')
+		{
+			$copy = false;
+			
+			$this->output->formats->question->color = 'yellow';
+
+			$question = new ezcConsoleQuestionDialog( $this->output );
+			$question->options->text = "Do you want to copy the var directory now?";
+			$question->options->format = 'question';
+			$question->options->showResults = true;
+			$question->options->validator = new ezcConsoleQuestionDialogCollectionValidator(
+				array( "y", "n" ),
+				"y",
+				ezcConsoleQuestionDialogCollectionValidator::CONVERT_LOWER
+			);
+			
+			// if the answer is yes
+			if(ezcConsoleDialogViewer::displayDialog( $question ) == 'y')
+			{
+				$copy = true;
+			}
+		}
+		if($copy)
+		{
+			$this->log("Copying var/ directory ");
 		
-		$cmd = 'cp -R ' . $this->getOldInstallationPath() . 'var/' . '* ' . $this->getNewDistroFolderName() . 'var';
-				
-		exec($cmd, $result);
-		
-		$this->log("OK\n", 'ok');
+			$cmd = 'cp -R ' . $this->getOldInstallationPath() . 'var/' . '* ' . $this->getNewDistroFolderName() . 'var';
+					
+			exec($cmd, $result);
+			
+			$this->log("OK\n", 'ok');
+			$this->varDirIsCopied = true;
+		}
 	}
 	
 	function promptFileOverride($dir)
@@ -694,8 +667,15 @@ class eZUpgrade extends eZCopy
 				}
 				
 				// copy the element
-				$cmd = "cp -R " . $this->getOldInstallationPath() . $dir . $element . " " . $this->getNewDistroFolderName() . $dir;
+				if($this->cfg->getSetting('account', 'Accounts', 'HandleSymlinks') == 'preserve')
+				{
+					$cmd = "cp -R --preserve=links" . $this->getOldInstallationPath() . $dir . $element . " " . $this->getNewDistroFolderName() . $dir;
+				}
+				else
+				{
+					$cmd = "cp -LR " . $this->getOldInstallationPath() . $dir . $element . " " . $this->getNewDistroFolderName() . $dir;
 				
+				}
 				// execute command
 				exec($cmd);
 				
@@ -746,7 +726,6 @@ class eZUpgrade extends eZCopy
 	function prepareAndUnpackDistro()
 	{
 		$basePath = getcwd();
-		
 		
 		// search distros/ for a matching version
 		chdir('distros') or die("can't chdir!\n");
@@ -860,10 +839,31 @@ class eZUpgrade extends eZCopy
 			// if we find a directory name containing the correct eZ Publish version, rename the directory
 			foreach($dirs as $dir)
 			{
-				if (strpos($dir,$this->upgradeToVersion))
+				if (is_dir($dir) && strpos($dir,$this->upgradeToVersion))
 				{
-					exec('mv ' . $dir . ' ' . $this->data['new_distro_folder_name']);
 					$error = false;
+
+					$currentDir = getcwd();
+					chdir($basePath);
+
+					if(!$this->cfg->getSetting('account', 'Accounts', 'CreateVersionDir'))
+					{
+						// move files directly to the destination folder
+						chdir($currentDir);
+						$command = "find {$dir} 2>/dev/null -exec mv {} . \;";
+						exec($command);
+						$command = "rm -rf {$dir}";
+						exec($command);
+					}
+					else
+					{
+						// move the files to an ezpublish-<version> directory
+						chdir($currentDir);
+						$command = 'mv ' . $dir . ' ' . $this->data['new_distro_folder_name'];
+						exec($command);
+					}
+					
+					
 				}
 			}
 			
@@ -1008,7 +1008,7 @@ class eZUpgrade extends eZCopy
 		}
 
 		$this->log("Extracting " . $sourceFile . " to " . $destinationPath . "\n");
-		
+
 		exec("cd " . $destinationPath . "/;" . $cmd . ' '. $sourceFile);
 		
 		$this->log("OK\n", 'ok');

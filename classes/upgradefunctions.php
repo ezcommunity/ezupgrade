@@ -72,10 +72,10 @@ class upgradeFunctions
 		$dbList = $this->upgrade->fetchDbList();
 		foreach($dbList as $db)
 		{
-			$newDBName = $this->upgrade->createNewDBName( $db['Database']);
+			$newDBName = $this->upgrade->dbhandler->createNewDBName( $db['Database']);
 			
 			// apply db dump
-			$this->upgrade->applyDatabaseSql($newDBName, $sql);
+			$this->upgrade->dbhandler->applyDatabaseSql($newDBName, $sql);
 		}
 	}
 	function updateDBForVersion( $version )
