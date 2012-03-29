@@ -227,7 +227,7 @@ class AccountConfiguration {
 					$this->iniParams['ezcopy']["Account_{$this->accountName}"]["additional_db[{$key}][user]"] = $this->getUserInput("Enter the database username for siteaccess {$siteaccess}:");
 					$this->iniParams['ezcopy']["Account_{$this->accountName}"]["additional_db[{$key}][pass]"] = $this->getUserInput("Enter the database password for siteaccess {$siteaccess}:");
 				}
-				while(!$this->validateAddionalDatabaseInfo($key));
+				while(!$this->validateAdditionalDatabaseInfo($key));
 			}
 		}
 	}
