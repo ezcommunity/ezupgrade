@@ -546,7 +546,7 @@ class eZUpgrade extends eZCopy
 				}
 				else
 				{
-					$this->checkpoint('updateDBConnections()', "The file '" . $iniFile . "' must be manually updated to use database '" . $this->createNewDBName($oldDBName) . "'. Then clear the cache.", true);
+					$this->checkpoint('updateDBConnections()', "The file '" . $iniFile . "' must be manually updated to use database '" . $this->dbhandler->createNewDBName($oldDBName) . "'. Then clear the cache.", true);
 				}
 				
 			}
