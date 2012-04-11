@@ -412,7 +412,7 @@ class eZUpgrade extends eZCopy
 			{
 				// if the current version is higher than the version we are upgrading from and
 				// lower or equal to the version we are upgrading to
-				if($key > $upgradeFromPosition AND $key <= $upgradeToPosition)
+				if(version_compare($this->upgradeFromVersion, $versionNo, '<') && version_compare($this->upgradeToVersion, $versionNo, '>='))
 				{
 					// if we can not upgrade to this version
 					if(!$this->canUpgradeTo($versionNo))
@@ -420,7 +420,7 @@ class eZUpgrade extends eZCopy
 						$this->log("Unable to upgrade to version $versionNo as part of the upgrade path. The version has no settings.", 'critical');
 					}
 					else
-					{
+					{	
 						// fetch version settings
 						$currentVersionSettings = $this->fetchVersionSettings( $versionNo );
 						
@@ -434,7 +434,6 @@ class eZUpgrade extends eZCopy
 				}
 			}
 		}
-		
 		return $upgradeStepList;
 	}
 	
