@@ -347,6 +347,24 @@ class upgradeFunctions
 		$this->manualAttention("php update/common/scripts/4.6/removetrashedimages.php");
 		$this->manualAttention("Make sure you have emptied your trash from the administration panel before you run this script!");		
 	}
+
+	public function clearCache()
+	{
+		$script = 'bin/php/ezcache.php --clear-all --purge';
+		$this->runScript($script);
+	}
+
+	public function upgradeScripts470()
+	{
+	}
+
+	public function upgrade470Notice()
+	{
+		$this->manualAttention('Please check Backward compatibility docs in doc/bc/4.7');
+		$this->manualAttention(' ');
+
+		$this->manualAttention('If this installation is using eZ Webin or eZ Flow, these will need to be updated.');
+	}
 }
 
 ?>
