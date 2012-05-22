@@ -16,7 +16,7 @@ class AccountConfiguration {
 		$this->output = new ezcConsoleOutput();
 		$this->output->formats->info->style = array('bold');
 
-		/*$this->showMenu();
+		$this->showMenu();
 
 		$this->setAccountName();
 		$this->setIsRemote();
@@ -25,7 +25,7 @@ class AccountConfiguration {
 		$this->getSiteaccessInfo();
 		$this->getDBMSInfo();
 		$this->getDBInfo();
-		$this->getDBRootInfo();*/
+		$this->getDBRootInfo();
 
 		$this->getUpgradeToVersion();
 		$this->getBasePath();
