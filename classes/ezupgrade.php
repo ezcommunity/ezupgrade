@@ -205,16 +205,18 @@ class eZUpgrade extends eZCopy
 	function getNewDistroFolderName()
 	{
 		if(isset($this->data['new_distro_folder_name']))
-		{
-			return $this->data['new_distro_folder_name'];
+		{			
+			if(version_compare($this->upgradeToVersion, '5.0.0', '<')) {
+				return $this->data['new_distro_folder_name'];
+			} else {
+				return $this->data['new_distro_folder_name'] . 'ezpublish_legacy/';
+			}
 		}
 		else
 		{
 			$this->data['new_distro_folder_name'] = $this->upgradeData['upgrade_base_path'] . 'ezpublish-' . $this->upgradeToVersion . '/';
 			
 			$this->log('The folder name for the new distro is not specified. Guessing ' . $this->data['new_distro_folder_name'] . "\n", 'warning');
-			
-			return $this->data['new_distro_folder_name'];
 		}
 	}
 	function isLocalInstallation()
@@ -1006,9 +1008,18 @@ class eZUpgrade extends eZCopy
 				exit();
 		}
 
+		//$destinationPath .= 'ezpublish-' . $this->upgradeToVersion;
+		$newDirName = 'ezpublish-' . $this->upgradeToVersion;
+		$extraCmd = " --transform 's/ezpublish5/ezpublish-".$this->upgradeToVersion."/'";
+		if(version_compare($this->upgradeToVersion, '5.0.0', '<')) {
+			$extraCmd = '';
+		}
+
+
+
 		$this->log("Extracting " . $sourceFile . " to " . $destinationPath . "\n");
 
-		exec("cd " . $destinationPath . "/;" . $cmd . ' '. $sourceFile);
+		exec("cd " . $destinationPath . "/; mkdir " . $newDirName . '; ' . $cmd . ' ' . $sourceFile . $extraCmd);
 		
 		$this->log("OK\n", 'ok');
 	}
