@@ -82,7 +82,17 @@ class upgradeFunctions
 	{
 		$versionStep 	= explode('.', $version );
 		$sqlFile		= 'sql/' . $versionStep[0] . '.' . $versionStep[1] . '/' . $version .'.sql';
-		$this->updateDB( $sqlFile, false );
+
+		// 5.0.0 is still unstable
+		if(version_compare($version, '5.0.0') == 0) {
+			$sqlFiles = glob($this->upgrade->getNewDistroFolderName() . 'update/database/5.0/unstable/*.sql');
+			sort($sqlFiles);
+			foreach($sqlFiles as $file) {
+				$this->updateDB($file);
+			}
+		} else {
+			$this->updateDB( $sqlFile, false );
+		}
 	}
 	function updateDBOE501()
 	{
@@ -364,6 +374,40 @@ class upgradeFunctions
 		$this->manualAttention(' ');
 
 		$this->manualAttention('If this installation is using eZ Webin or eZ Flow, these will need to be updated.');
+	}
+
+
+	public function execute500Scripts()
+	{
+		foreach(array(	'update/common/scripts/5.0/deduplicatecontentstategrouplanguage.php',
+						'update/common/scripts/5.0/restorexmlrelations.php',
+						'update/common/scripts/5.0/disablesuspicioususers.php',
+						'bin/php/ezpgenerateautoloads.php --extension')
+				as $scriptFile)
+		{
+			exec('php ' . $this->upgrade->getNewDistroFolderName() . $scriptFile);
+		}
+	}
+
+
+	public function generateYmlConfigAndSymlink()
+	{
+		
+	}
+
+
+	public function createRequiredDirectoriesFor500()
+	{
+		$directories = array(	'ezpublish/cache', 'ezpublish/logs', 'ezpublish/config',
+								'ezpublish_legacy/design', 'ezpublish_legacy/extension',
+								'ezpublish_legacy/settings', 'ezpublish_legacy/var');
+		foreach($directories as $directory) {
+			$newDirName = $this->upgrade->getNewDistroRoot() . $directory;
+			if(!file_exists($newDirName)) {
+				exec('mkdir ' . $newDirName);
+			}
+			exec('chmod -R a+rwx ' . $newDirName);
+		}
 	}
 }
 

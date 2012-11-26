@@ -8,7 +8,7 @@
 * @version //autogentag//
 */
 
-include_once( "classes/ezupgrade_5.php" );
+include_once( "classes/ezupgrade.php" );
 $upgrade = new eZUpgrade;
 
 if(isset($argv[1]))

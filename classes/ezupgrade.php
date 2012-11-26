@@ -201,22 +201,27 @@ class eZUpgrade extends eZCopy
 			$this->log("No database dump directory exists. The upgrade process expects a directory named " . $this->getDBDumpLocation() . " which contains the DB dumps as SQL files.", 'critical');
 		}
 	}
-	
-	function getNewDistroFolderName()
+
+	function getNewDistroRoot()
 	{
 		if(isset($this->data['new_distro_folder_name']))
-		{			
-			if(version_compare($this->upgradeToVersion, '5.0.0', '<')) {
-				return $this->data['new_distro_folder_name'];
-			} else {
-				return $this->data['new_distro_folder_name'] . 'ezpublish_legacy/';
-			}
+		{
+			return $this->data['new_distro_folder_name'] . '/';
 		}
 		else
 		{
 			$this->data['new_distro_folder_name'] = $this->upgradeData['upgrade_base_path'] . 'ezpublish-' . $this->upgradeToVersion . '/';
 			
 			$this->log('The folder name for the new distro is not specified. Guessing ' . $this->data['new_distro_folder_name'] . "\n", 'warning');
+		}
+	}
+	
+	function getNewDistroFolderName()
+	{			
+		if(version_compare($this->upgradeToVersion, '5.0.0', '<')) {
+			return $this->getNewDistroRoot();
+		} else {
+			return $this->getNewDistroRoot() . 'ezpublish_legacy/';
 		}
 	}
 	function isLocalInstallation()
