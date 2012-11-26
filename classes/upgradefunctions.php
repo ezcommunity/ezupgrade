@@ -22,7 +22,7 @@ class upgradeFunctions
 		$this->upgrade		= $upgrade;
 	}
 	
-	function runScript($script, $version=5)
+	function runScript($script, $version=5, $root=null)
 	{
 		$phpCli = $this->upgrade->getPathToPHP( $version );
 		$siteAccessList = $this->upgrade->upgradeData['siteaccess_list'];
@@ -30,11 +30,19 @@ class upgradeFunctions
 		{
 			foreach( $siteAccessList as $siteaccess )
 			{
-				$this->upgrade->log("Running script $script  -s" . $siteaccess);
+				$this->upgrade->log("Running script $script  -s" . $siteaccess . "\n");
 				
 				$this->upgrade->checkpoint( 'Running script: ' . $script );
-				
-				exec("cd " . $this->upgrade->getNewDistroFolderName() . ";".$phpCli." " . $script . " -s" . $siteaccess);
+				$distroDir = $this->upgrade->getNewDistroFolderName();
+				if($root)
+				{
+					$distroDir = $root;
+					exec("cd " . $distroDir . ";".$phpCli." " . $script);
+				}
+				else
+				{
+					exec("cd " . $distroDir . ";".$phpCli." " . $script . " -s" . $siteaccess);
+				}
 				$this->upgrade->log("OK\n", 'ok');
 			}
 		}
@@ -70,6 +78,7 @@ class upgradeFunctions
 		
 		// for each database
 		$dbList = $this->upgrade->fetchDbList();
+
 		foreach($dbList as $db)
 		{
 			$newDBName = $this->upgrade->dbhandler->createNewDBName( $db['Database']);
@@ -82,13 +91,12 @@ class upgradeFunctions
 	{
 		$versionStep 	= explode('.', $version );
 		$sqlFile		= 'sql/' . $versionStep[0] . '.' . $versionStep[1] . '/' . $version .'.sql';
-
 		// 5.0.0 is still unstable
-		if(version_compare($version, '5.0.0') == 0) {
-			$sqlFiles = glob($this->upgrade->getNewDistroFolderName() . 'update/database/5.0/unstable/*.sql');
+		if(version_compare($version, '5.0.0', '>=')) {
+			$sqlFiles = glob($this->upgrade->getNewDistroFolderName() . 'update/database/mysql/' . $versionStep[0] . '.' . $versionStep[1] . '/unstable/*.sql');
 			sort($sqlFiles);
 			foreach($sqlFiles as $file) {
-				$this->updateDB($file);
+				$this->updateDB('update/database/mysql/' . $versionStep[0] . '.' . $versionStep[1] . '/unstable/' . basename($file));
 			}
 		} else {
 			$this->updateDB( $sqlFile, false );
@@ -385,14 +393,28 @@ class upgradeFunctions
 						'bin/php/ezpgenerateautoloads.php --extension')
 				as $scriptFile)
 		{
-			exec('php ' . $this->upgrade->getNewDistroFolderName() . $scriptFile);
+			$this->runScript($scriptFile, 5, $this->upgrade->getNewDistroFolderName());
 		}
 	}
 
 
 	public function generateYmlConfigAndSymlink()
 	{
-		
+		foreach(array('dev', 'prod') as $env)
+		{
+			$cmd = sprintf("ezpublish/console ezpublish:configure --env=%s '%s' '%s'",
+				$env, addslashes('site'), addslashes('site_admin'));
+
+			$this->runScript($cmd, 5, $this->upgrade->getNewDistroRoot());
+		}
+
+		// Generate symlinks for assets (var)
+		foreach(array(	'ezpublish/console assets:install --symlink web',
+						'ezpublish/console ezpublish:legacy:assets_install --symlink web')
+				as $scriptFile)
+		{
+			$this->runScript($scriptFile, 5, $this->upgrade->getNewDistroRoot());
+		}
 	}
 
 

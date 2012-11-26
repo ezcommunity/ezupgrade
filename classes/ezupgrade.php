@@ -504,12 +504,12 @@ class eZUpgrade extends eZCopy
 	
 	function getSiteIniFiles()
 	{
-		$siteIniList = ezcBaseFile::findRecursive( $this->getNewDistroPathName() . "settings", array( '@site\.ini@' ) );
+		$siteIniList = ezcBaseFile::findRecursive( $this->getNewDistroFolderName() . "settings", array( '@site\.ini@' ) );
 		
 		$result = array();
 		foreach($siteIniList as $siteIniFilePath)
 		{
-			$parts = explode($this->getNewDistroPathName(), $siteIniFilePath);
+			$parts = explode($this->getNewDistroFolderName(), $siteIniFilePath);
 			
 			// ignore the default site.ini and any temp INI files
 			if($parts[1] != 'settings/site.ini' AND $parts[1] != '/settings/site.ini' AND !strstr($siteIniFilePath, '~') AND !strstr($siteIniFilePath, '.LCK') AND !strpos($parts[1], '.svn'))
@@ -517,15 +517,18 @@ class eZUpgrade extends eZCopy
 				$result[] = $parts[1];
 			}
 		}
+
 		return $result;
 	}
 	function updateDBConnections()
 	{
 		foreach( $this->getSiteIniFiles() as $iniFile )
 		{
+			echo "Processing $iniFile\n";
 			// get instance of current ini file
-			$ini = $this->iniInstance($iniFile);
-			
+			$ini = $this->iniInstance($iniFile, $basePath=$this->getNewDistroFolderName());
+
+
 			$oldDBName = false;
 			
 			// get current db name
@@ -533,7 +536,7 @@ class eZUpgrade extends eZCopy
 			{
 				$oldDBName = $ini->variable('DatabaseSettings', 'Database');
 			}
-			
+
 			// provided that the INI file has a database name set
 			if($oldDBName !== false )
 			{
@@ -545,7 +548,7 @@ class eZUpgrade extends eZCopy
 					$ini->setVariable('DatabaseSettings', 'Database', $this->dbhandler->createNewDBName($oldDBName));
 					
 					// save changes in ini file
-					if(!$ini->save() )
+					if(!$ini->save())
 					{
 						$this->checkpoint('updateDBConnections()', 'Please change your database name in ' . $iniFile, true);
 					}
@@ -555,6 +558,10 @@ class eZUpgrade extends eZCopy
 					$this->checkpoint('updateDBConnections()', "The file '" . $iniFile . "' must be manually updated to use database '" . $this->dbhandler->createNewDBName($oldDBName) . "'. Then clear the cache.", true);
 				}
 				
+			}
+			else
+			{
+				$this->log("Could not find current database info\n");
 			}
 		}
 		$this->log( "end of updateDBConnections()\n" );
