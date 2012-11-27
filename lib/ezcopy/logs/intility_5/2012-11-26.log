@@ -1,0 +1,2696 @@
+Nov 26 16:03:32 [Info] 
+INITIATING UPGRADE
+
+Nov 26 16:03:32 [Info] The existing installation is located locally at /mnt/data/matti/www/intility_47/
+
+Nov 26 16:03:32 [Info] Dumping database
+
+Nov 26 16:03:33 [Info] matti_intility_470: OK (7,6 MB)
+
+Nov 26 16:03:33 [Info] Upgrading intility_5 from version 4.7.0 to version 5.0.0
+
+Nov 26 16:03:33 [Info] Checking requirements 
+Nov 26 16:03:33 [Info] OK
+
+Nov 26 16:03:33 [Info] Performing pre-upgrade checks 
+Nov 26 16:03:33 [Info] OK
+
+Nov 26 16:03:33 [Info] Checking for local distro
+
+Nov 26 16:03:33 [Info] Match found: ezpublish5-5.0.0-rc1-ee-ttl.tar.gz 
+
+Nov 26 16:03:33 [Info] Copying distro from specified location 
+Nov 26 16:03:33 [Info] OK
+
+Nov 26 16:03:34 [Info] Extracting ezpublish5-5.0.0-rc1-ee-ttl.tar.gz to /mnt/data/matti/www/
+
+Nov 26 16:03:42 [Info] OK
+
+Nov 26 16:03:42 [Info] Copying files
+
+Nov 26 16:05:44 [Info] Copying extension/ez_network 
+Nov 26 16:05:44 [Info] OK 
+
+Nov 26 16:05:44 [Info] Copying extension/ezcomments 
+Nov 26 16:05:44 [Info] OK 
+
+Nov 26 16:05:44 [Info] Copying extension/ezgmaplocation 
+Nov 26 16:05:44 [Info] OK 
+
+Nov 26 16:05:44 [Info] Copying extension/ezstarrating 
+Nov 26 16:05:44 [Info] OK 
+
+Nov 26 16:05:44 [Info] Copying extension/ezwebin 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying extension/ezwt 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying extension/nmbase 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying extension/nmcontentclass 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying extension/nmdesignintility 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying extension/nmdesignintility_sites_repo 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying extension/nmstrictfixes 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying extension/swark 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying settings/override/audit.ini.append.php 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying settings/override/content.ini.append.php 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying settings/override/ezmultiupload.ini.append.php 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying settings/override/ezoe_attributes.ini.append.php 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying settings/override/ezxml.ini.append.php 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying settings/override/forum.ini.append.php 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying settings/override/i18n.ini.append.php 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying settings/override/image.ini.append.php 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying settings/override/menu.ini.append.php 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying settings/override/site.ini.append.php 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying settings/override/site.ini.append.php~ 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying settings/override/viewcache.ini.append.php 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying settings/siteaccess/admin 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying settings/siteaccess/eng 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying settings/siteaccess/ezwebin 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying settings/siteaccess/nor 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying settings/siteaccess/site_admin 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying design/admin2 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying design/ezwebin_site 
+Nov 26 16:05:45 [Info] OK 
+
+Nov 26 16:05:45 [Info] Copying databases
+
+Nov 26 16:05:45 [Info] Creating database matti_intility_500 
+Nov 26 16:05:45 [Info] OK
+
+Nov 26 16:05:45 [Info] Applying /mnt/data/matti/www/intility_47/_dbdump/matti_intility_470.sql to database matti_intility_500 
+Nov 26 16:05:49 [Info] OK
+
+Nov 26 16:05:49 [Info] Could not find current database info
+
+Nov 26 16:05:49 [Info] Could not find current database info
+
+Nov 26 16:05:49 [Info] Could not find current database info
+
+Nov 26 16:05:49 [Info] Could not find current database info
+
+Nov 26 16:05:49 [Info] Could not find current database info
+
+Nov 26 16:05:49 [Info] Could not find current database info
+
+Nov 26 16:05:49 [Info] end of updateDBConnections()
+
+Nov 26 16:05:49 [Info] Running upgrades for v. 5.0.0
+
+Nov 26 16:05:49 [Info] Upgrade function createRequiredDirectoriesFor500 
+Nov 26 16:05:49 [Info] run
+
+Nov 26 16:05:50 [Info] Upgrade function updateDBForVersion 
+Nov 26 16:05:50 [Info] run
+
+Nov 26 16:05:50 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-4.7.0-to-5.0.0alpha1.sql to database matti_intility_500 
+Nov 26 16:05:50 [Info] OK
+
+Nov 26 16:05:50 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-5.0.0alpha1-to-5.0.0beta1.sql to database matti_intility_500 
+Nov 26 16:05:50 [Info] OK
+
+Nov 26 16:05:50 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-5.0.0beta1-to-5.0.0beta2.sql to database matti_intility_500 
+Nov 26 16:05:50 [Info] OK
+
+Nov 26 16:05:50 [Info] Upgrade function execute500Scripts 
+Nov 26 16:05:50 [Info] run
+
+Nov 26 16:05:50 [Info] Running script update/common/scripts/5.0/deduplicatecontentstategrouplanguage.php  -snor
+
+Nov 26 16:05:50 [Info] OK
+
+Nov 26 16:05:50 [Info] Running script update/common/scripts/5.0/restorexmlrelations.php  -snor
+
+Nov 26 16:05:50 [Info] OK
+
+Nov 26 16:05:50 [Info] Running script update/common/scripts/5.0/disablesuspicioususers.php  -snor
+
+Nov 26 16:05:50 [Info] OK
+
+Nov 26 16:05:50 [Info] Running script bin/php/ezpgenerateautoloads.php --extension  -snor
+
+Nov 26 16:05:51 [Info] OK
+
+Nov 26 16:05:51 [Info] Upgrade function generateYmlConfigAndSymlink 
+Nov 26 16:05:51 [Info] run
+
+Nov 26 16:05:51 [Info] Running script ezpublish/console ezpublish:configure --env=dev 'site' 'site_admin'  -snor
+
+Nov 26 16:05:53 [Info] OK
+
+Nov 26 16:05:53 [Info] Running script ezpublish/console ezpublish:configure --env=prod 'site' 'site_admin'  -snor
+
+Nov 26 16:05:54 [Info] OK
+
+Nov 26 16:05:54 [Info] Running script ezpublish/console assets:install --symlink web  -snor
+
+Nov 26 16:05:55 [Info] OK
+
+Nov 26 16:05:55 [Info] Running script ezpublish/console ezpublish:legacy:assets_install --symlink web  -snor
+
+Nov 26 16:05:55 [Info] OK
+
+Nov 26 16:05:55 [Info] Upgrade function generateAutoLoads 
+Nov 26 16:05:55 [Info] run
+
+Nov 26 16:05:55 [Info] Running script bin/php/ezpgenerateautoloads.php --extension  -snor
+
+Nov 26 16:05:55 [Info] OK
+
+Nov 26 16:05:55 [Info] Upgrade function generateAutoLoadsKernel 
+Nov 26 16:05:55 [Info] run
+
+Nov 26 16:05:55 [Info] Running script bin/php/ezpgenerateautoloads.php --kernel  -snor
+
+Nov 26 16:05:55 [Info] OK
+
+Nov 26 16:05:55 [Info] Upgrade function clearCache 
+Nov 26 16:05:55 [Info] run
+
+Nov 26 16:05:55 [Info] Running script bin/php/ezcache.php --clear-all --purge  -snor
+
+Nov 26 16:06:02 [Info] OK
+
+Nov 26 16:06:02 [Info] Granting DB user matti access to database matti_intility_500 
+Nov 26 16:06:03 [Info] OK
+
+Nov 26 16:06:03 [Info] Running modfix script 
+Nov 26 16:06:03 [Info] OK
+
+Nov 26 16:06:03 [Info] Giving 777 permissions to the var/ directory 
+Nov 26 16:06:03 [Info] OK
+
+Nov 26 16:06:03 [Info] Deleted database dump from the old site 
+Nov 26 16:06:03 [Info] OK
+
+Nov 26 16:06:03 [Warning] Remember to set up the cronjobs for the upgraded site.
+
+Nov 26 16:06:03 [Warning] You need to clear the cache!
+
+
+Nov 26 16:06:03 [Warning] The log file is locateded in lib/ezcopy/logs/
+
+Nov 26 16:06:03 [Warning] Remember to install eZ Network! Follow the instructions here: /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/extension/ez_network/docs/INSTALL.txt
+
+Nov 26 16:06:03 [Warning] 
+You opted not to copy the var/ directory. You will need to do this manually.
+
+Nov 26 16:06:03 [Warning] You can do this by running the following command:
+
+Nov 26 16:06:03 [Warning] cp -R /mnt/data/matti/www/intility_47/var/* /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/var
+
+
+Nov 26 16:06:03 [Info] Upgrade from v. 4.7.0 to v. 5.0.0 complete
+
+
+Nov 26 16:08:04 [Info] 
+INITIATING UPGRADE
+
+Nov 26 16:08:04 [Info] The existing installation is located locally at /mnt/data/matti/www/intility_47/
+
+Nov 26 16:08:04 [Info] Dumping database
+
+Nov 26 16:08:08 [Info] matti_intility_470: OK (7,6 MB)
+
+Nov 26 16:08:08 [Info] Upgrading intility_5 from version 4.7.0 to version 5.0.0
+
+Nov 26 16:08:08 [Info] Checking requirements 
+Nov 26 16:08:08 [Info] OK
+
+Nov 26 16:08:08 [Info] Performing pre-upgrade checks 
+Nov 26 16:08:08 [Info] OK
+
+Nov 26 16:08:08 [Info] Checking for local distro
+
+Nov 26 16:08:08 [Info] Match found: ezpublish5-5.0.0-rc1-ee-ttl.tar.gz 
+
+Nov 26 16:08:08 [Info] Copying distro from specified location 
+Nov 26 16:08:08 [Info] OK
+
+Nov 26 16:08:08 [Info] Extracting ezpublish5-5.0.0-rc1-ee-ttl.tar.gz to /mnt/data/matti/www/
+
+Nov 26 16:08:14 [Info] 
+INITIATING UPGRADE
+
+Nov 26 16:08:14 [Info] The existing installation is located locally at /mnt/data/matti/www/intility_47/
+
+Nov 26 16:08:14 [Info] Dumping database
+
+Nov 26 16:08:15 [Info] matti_intility_470: OK (7,6 MB)
+
+Nov 26 16:08:15 [Info] Upgrading intility_5 from version 4.7.0 to version 5.0.0
+
+Nov 26 16:08:15 [Info] Checking requirements 
+Nov 26 16:08:15 [Info] OK
+
+Nov 26 16:08:15 [Info] Performing pre-upgrade checks 
+Nov 26 16:08:15 [Info] OK
+
+Nov 26 16:08:15 [Info] Checking for local distro
+
+Nov 26 16:08:15 [Info] Match found: ezpublish5-5.0.0-rc1-ee-ttl.tar.gz 
+
+Nov 26 16:08:15 [Info] Copying distro from specified location 
+Nov 26 16:08:16 [Info] OK
+
+Nov 26 16:08:16 [Info] Extracting ezpublish5-5.0.0-rc1-ee-ttl.tar.gz to /mnt/data/matti/www/
+
+Nov 26 16:08:26 [Info] OK
+
+Nov 26 16:08:26 [Info] Copying files
+
+Nov 26 16:08:27 [Info] Copying extension/ez_network 
+Nov 26 16:08:27 [Info] OK 
+
+Nov 26 16:08:27 [Info] Copying extension/ezcomments 
+Nov 26 16:08:27 [Info] OK 
+
+Nov 26 16:08:27 [Info] Copying extension/ezgmaplocation 
+Nov 26 16:08:27 [Info] OK 
+
+Nov 26 16:08:27 [Info] Copying extension/ezstarrating 
+Nov 26 16:08:27 [Info] OK 
+
+Nov 26 16:08:27 [Info] Copying extension/ezwebin 
+Nov 26 16:08:27 [Info] OK 
+
+Nov 26 16:08:27 [Info] Copying extension/ezwt 
+Nov 26 16:08:27 [Info] OK 
+
+Nov 26 16:08:27 [Info] Copying extension/nmbase 
+Nov 26 16:08:27 [Info] OK 
+
+Nov 26 16:08:27 [Info] Copying extension/nmcontentclass 
+Nov 26 16:08:27 [Info] OK 
+
+Nov 26 16:08:27 [Info] Copying extension/nmdesignintility 
+Nov 26 16:08:27 [Info] OK 
+
+Nov 26 16:08:27 [Info] Copying extension/nmdesignintility_sites_repo 
+Nov 26 16:08:28 [Info] OK 
+
+Nov 26 16:08:28 [Info] Copying extension/nmstrictfixes 
+Nov 26 16:08:28 [Info] OK 
+
+Nov 26 16:08:28 [Info] Copying extension/swark 
+Nov 26 16:08:28 [Info] OK 
+
+Nov 26 16:08:28 [Info] Copying settings/override/audit.ini.append.php 
+Nov 26 16:08:28 [Info] OK 
+
+Nov 26 16:08:28 [Info] Copying settings/override/content.ini.append.php 
+Nov 26 16:08:28 [Info] OK 
+
+Nov 26 16:08:28 [Info] Copying settings/override/ezmultiupload.ini.append.php 
+Nov 26 16:08:28 [Info] OK 
+
+Nov 26 16:08:28 [Info] Copying settings/override/ezoe_attributes.ini.append.php 
+Nov 26 16:08:28 [Info] OK 
+
+Nov 26 16:08:28 [Info] Copying settings/override/ezxml.ini.append.php 
+Nov 26 16:08:28 [Info] OK 
+
+Nov 26 16:08:28 [Info] Copying settings/override/forum.ini.append.php 
+Nov 26 16:08:28 [Info] OK 
+
+Nov 26 16:08:28 [Info] Copying settings/override/i18n.ini.append.php 
+Nov 26 16:08:28 [Info] OK 
+
+Nov 26 16:08:28 [Info] Copying settings/override/image.ini.append.php 
+Nov 26 16:08:28 [Info] OK 
+
+Nov 26 16:08:28 [Info] Copying settings/override/menu.ini.append.php 
+Nov 26 16:08:28 [Info] OK 
+
+Nov 26 16:08:28 [Info] Copying settings/override/site.ini.append.php 
+Nov 26 16:08:28 [Info] OK 
+
+Nov 26 16:08:28 [Info] Copying settings/override/site.ini.append.php~ 
+Nov 26 16:08:28 [Info] OK 
+
+Nov 26 16:08:28 [Info] Copying settings/override/viewcache.ini.append.php 
+Nov 26 16:08:28 [Info] OK 
+
+Nov 26 16:08:28 [Info] Copying settings/siteaccess/admin 
+Nov 26 16:08:28 [Info] OK 
+
+Nov 26 16:08:28 [Info] Copying settings/siteaccess/eng 
+Nov 26 16:08:28 [Info] OK 
+
+Nov 26 16:08:28 [Info] Copying settings/siteaccess/ezwebin 
+Nov 26 16:08:28 [Info] OK 
+
+Nov 26 16:08:28 [Info] Copying settings/siteaccess/nor 
+Nov 26 16:08:28 [Info] OK 
+
+Nov 26 16:08:28 [Info] Copying settings/siteaccess/site_admin 
+Nov 26 16:08:28 [Info] OK 
+
+Nov 26 16:08:28 [Info] Copying design/admin2 
+Nov 26 16:08:28 [Info] OK 
+
+Nov 26 16:08:28 [Info] Copying design/ezwebin_site 
+Nov 26 16:08:28 [Info] OK 
+
+Nov 26 16:08:28 [Info] Copying databases
+
+Nov 26 16:08:28 [Info] Creating database matti_intility_500 
+Nov 26 16:08:28 [Info] OK
+
+Nov 26 16:08:28 [Info] Applying /mnt/data/matti/www/intility_47/_dbdump/matti_intility_470.sql to database matti_intility_500 
+Nov 26 16:08:32 [Info] OK
+
+Nov 26 16:08:32 [Info] Could not find current database info
+
+Nov 26 16:08:32 [Info] Could not find current database info
+
+Nov 26 16:08:32 [Info] Could not find current database info
+
+Nov 26 16:08:32 [Info] Could not find current database info
+
+Nov 26 16:08:32 [Info] Could not find current database info
+
+Nov 26 16:08:32 [Info] Could not find current database info
+
+Nov 26 16:08:32 [Info] end of updateDBConnections()
+
+Nov 26 16:08:32 [Info] Running upgrades for v. 5.0.0
+
+Nov 26 16:08:32 [Info] Upgrade function createRequiredDirectoriesFor500 
+Nov 26 16:08:32 [Info] run
+
+Nov 26 16:08:32 [Info] Upgrade function updateDBForVersion 
+Nov 26 16:08:32 [Info] run
+
+Nov 26 16:08:32 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-4.7.0-to-5.0.0alpha1.sql to database matti_intility_500 
+Nov 26 16:08:32 [Info] OK
+
+Nov 26 16:08:32 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-5.0.0alpha1-to-5.0.0beta1.sql to database matti_intility_500 
+Nov 26 16:08:33 [Info] OK
+
+Nov 26 16:08:33 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-5.0.0beta1-to-5.0.0beta2.sql to database matti_intility_500 
+Nov 26 16:08:33 [Info] OK
+
+Nov 26 16:08:33 [Info] Upgrade function execute500Scripts 
+Nov 26 16:08:33 [Info] run
+
+Nov 26 16:08:33 [Info] Running script update/common/scripts/5.0/deduplicatecontentstategrouplanguage.php  -snor
+
+Nov 26 16:08:33 [Info] OK
+
+Nov 26 16:08:33 [Info] Running script update/common/scripts/5.0/restorexmlrelations.php  -snor
+
+Nov 26 16:08:33 [Info] OK
+
+Nov 26 16:08:33 [Info] Running script update/common/scripts/5.0/disablesuspicioususers.php  -snor
+
+Nov 26 16:08:33 [Info] OK
+
+Nov 26 16:08:33 [Info] Running script bin/php/ezpgenerateautoloads.php --extension  -snor
+
+Nov 26 16:08:34 [Info] OK
+
+Nov 26 16:08:34 [Info] Upgrade function generateYmlConfigAndSymlink 
+Nov 26 16:08:34 [Info] run
+
+Nov 26 16:08:34 [Info] Running script ezpublish/console ezpublish:configure --env=dev 'site' 'site_admin'  -snor
+
+Nov 26 16:08:35 [Info] OK
+
+Nov 26 16:08:35 [Info] Running script ezpublish/console ezpublish:configure --env=prod 'site' 'site_admin'  -snor
+
+Nov 26 16:08:37 [Info] OK
+
+Nov 26 16:08:37 [Info] Running script ezpublish/console assets:install --symlink web  -snor
+
+Nov 26 16:08:38 [Info] OK
+
+Nov 26 16:08:38 [Info] Running script ezpublish/console ezpublish:legacy:assets_install --symlink web  -snor
+
+Nov 26 16:08:38 [Info] OK
+
+Nov 26 16:08:38 [Info] Upgrade function generateAutoLoads 
+Nov 26 16:08:38 [Info] run
+
+Nov 26 16:08:38 [Info] Running script bin/php/ezpgenerateautoloads.php --extension  -snor
+
+Nov 26 16:08:38 [Info] OK
+
+Nov 26 16:08:38 [Info] Upgrade function generateAutoLoadsKernel 
+Nov 26 16:08:38 [Info] run
+
+Nov 26 16:08:38 [Info] Running script bin/php/ezpgenerateautoloads.php --kernel  -snor
+
+Nov 26 16:08:38 [Info] OK
+
+Nov 26 16:08:38 [Info] Upgrade function clearCache 
+Nov 26 16:08:38 [Info] run
+
+Nov 26 16:08:38 [Info] Running script bin/php/ezcache.php --clear-all --purge  -snor
+
+Nov 26 16:08:46 [Info] OK
+
+Nov 26 16:08:46 [Info] Granting DB user matti access to database matti_intility_500 
+Nov 26 16:08:46 [Info] OK
+
+Nov 26 16:08:46 [Info] Running modfix script 
+Nov 26 16:08:46 [Info] OK
+
+Nov 26 16:08:46 [Info] Giving 777 permissions to the var/ directory 
+Nov 26 16:08:46 [Info] OK
+
+Nov 26 16:08:46 [Info] Deleted database dump from the old site 
+Nov 26 16:08:46 [Info] OK
+
+Nov 26 16:08:46 [Warning] Remember to set up the cronjobs for the upgraded site.
+
+Nov 26 16:08:46 [Warning] You need to clear the cache!
+
+
+Nov 26 16:08:46 [Warning] The log file is locateded in lib/ezcopy/logs/
+
+Nov 26 16:08:46 [Warning] Remember to install eZ Network! Follow the instructions here: /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/extension/ez_network/docs/INSTALL.txt
+
+Nov 26 16:08:46 [Warning] 
+You opted not to copy the var/ directory. You will need to do this manually.
+
+Nov 26 16:08:46 [Warning] You can do this by running the following command:
+
+Nov 26 16:08:46 [Warning] cp -R /mnt/data/matti/www/intility_47/var/* /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/var
+
+
+Nov 26 16:08:46 [Info] Upgrade from v. 4.7.0 to v. 5.0.0 complete
+
+
+Nov 26 16:09:20 [Info] 
+INITIATING UPGRADE
+
+Nov 26 16:09:20 [Info] The existing installation is located locally at /mnt/data/matti/www/intility_47/
+
+Nov 26 16:09:20 [Info] Dumping database
+
+Nov 26 16:09:21 [Info] matti_intility_470: OK (7,6 MB)
+
+Nov 26 16:09:21 [Info] Upgrading intility_5 from version 4.7.0 to version 5.0.0
+
+Nov 26 16:09:21 [Info] Checking requirements 
+Nov 26 16:09:21 [Info] OK
+
+Nov 26 16:09:21 [Info] Performing pre-upgrade checks 
+Nov 26 16:09:21 [Info] OK
+
+Nov 26 16:09:21 [Info] Checking for local distro
+
+Nov 26 16:09:21 [Info] Match found: ezpublish5-5.0.0-rc1-ee-ttl.tar.gz 
+
+Nov 26 16:09:21 [Info] Copying distro from specified location 
+Nov 26 16:09:21 [Info] OK
+
+Nov 26 16:09:21 [Info] Extracting ezpublish5-5.0.0-rc1-ee-ttl.tar.gz to /mnt/data/matti/www/
+
+Nov 26 16:09:29 [Info] OK
+
+Nov 26 16:09:29 [Info] Copying files
+
+Nov 26 16:09:41 [Info] Copying extension/ez_network 
+Nov 26 16:09:41 [Info] OK 
+
+Nov 26 16:09:41 [Info] Copying extension/ezcomments 
+Nov 26 16:09:41 [Info] OK 
+
+Nov 26 16:09:41 [Info] Copying extension/ezgmaplocation 
+Nov 26 16:09:41 [Info] OK 
+
+Nov 26 16:09:41 [Info] Copying extension/ezstarrating 
+Nov 26 16:09:41 [Info] OK 
+
+Nov 26 16:09:41 [Info] Copying extension/ezwebin 
+Nov 26 16:09:41 [Info] OK 
+
+Nov 26 16:09:41 [Info] Copying extension/ezwt 
+Nov 26 16:09:41 [Info] OK 
+
+Nov 26 16:09:41 [Info] Copying extension/nmbase 
+Nov 26 16:09:41 [Info] OK 
+
+Nov 26 16:09:41 [Info] Copying extension/nmcontentclass 
+Nov 26 16:09:41 [Info] OK 
+
+Nov 26 16:09:41 [Info] Copying extension/nmdesignintility 
+Nov 26 16:09:42 [Info] OK 
+
+Nov 26 16:09:42 [Info] Copying extension/nmdesignintility_sites_repo 
+Nov 26 16:09:42 [Info] OK 
+
+Nov 26 16:09:42 [Info] Copying extension/nmstrictfixes 
+Nov 26 16:09:42 [Info] OK 
+
+Nov 26 16:09:42 [Info] Copying extension/swark 
+Nov 26 16:09:42 [Info] OK 
+
+Nov 26 16:09:42 [Info] Copying settings/override/audit.ini.append.php 
+Nov 26 16:09:42 [Info] OK 
+
+Nov 26 16:09:42 [Info] Copying settings/override/content.ini.append.php 
+Nov 26 16:09:42 [Info] OK 
+
+Nov 26 16:09:42 [Info] Copying settings/override/ezmultiupload.ini.append.php 
+Nov 26 16:09:42 [Info] OK 
+
+Nov 26 16:09:42 [Info] Copying settings/override/ezoe_attributes.ini.append.php 
+Nov 26 16:09:42 [Info] OK 
+
+Nov 26 16:09:42 [Info] Copying settings/override/ezxml.ini.append.php 
+Nov 26 16:09:42 [Info] OK 
+
+Nov 26 16:09:42 [Info] Copying settings/override/forum.ini.append.php 
+Nov 26 16:09:42 [Info] OK 
+
+Nov 26 16:09:42 [Info] Copying settings/override/i18n.ini.append.php 
+Nov 26 16:09:42 [Info] OK 
+
+Nov 26 16:09:42 [Info] Copying settings/override/image.ini.append.php 
+Nov 26 16:09:42 [Info] OK 
+
+Nov 26 16:09:42 [Info] Copying settings/override/menu.ini.append.php 
+Nov 26 16:09:42 [Info] OK 
+
+Nov 26 16:09:42 [Info] Copying settings/override/site.ini.append.php 
+Nov 26 16:09:42 [Info] OK 
+
+Nov 26 16:09:42 [Info] Copying settings/override/site.ini.append.php~ 
+Nov 26 16:09:42 [Info] OK 
+
+Nov 26 16:09:42 [Info] Copying settings/override/viewcache.ini.append.php 
+Nov 26 16:09:42 [Info] OK 
+
+Nov 26 16:09:42 [Info] Copying settings/siteaccess/admin 
+Nov 26 16:09:42 [Info] OK 
+
+Nov 26 16:09:42 [Info] Copying settings/siteaccess/eng 
+Nov 26 16:09:42 [Info] OK 
+
+Nov 26 16:09:42 [Info] Copying settings/siteaccess/ezwebin 
+Nov 26 16:09:42 [Info] OK 
+
+Nov 26 16:09:42 [Info] Copying settings/siteaccess/nor 
+Nov 26 16:09:42 [Info] OK 
+
+Nov 26 16:09:42 [Info] Copying settings/siteaccess/site_admin 
+Nov 26 16:09:42 [Info] OK 
+
+Nov 26 16:09:42 [Info] Copying design/admin2 
+Nov 26 16:09:43 [Info] OK 
+
+Nov 26 16:09:43 [Info] Copying design/ezwebin_site 
+Nov 26 16:09:43 [Info] OK 
+
+Nov 26 16:09:43 [Info] Copying databases
+
+Nov 26 16:09:43 [Info] Creating database matti_intility_500 
+Nov 26 16:09:43 [Info] OK
+
+Nov 26 16:09:43 [Info] Applying /mnt/data/matti/www/intility_47/_dbdump/matti_intility_470.sql to database matti_intility_500 
+Nov 26 16:09:47 [Info] OK
+
+Nov 26 16:09:47 [Info] Could not find current database info
+
+Nov 26 16:09:47 [Info] Could not find current database info
+
+Nov 26 16:09:47 [Info] Could not find current database info
+
+Nov 26 16:09:47 [Info] Could not find current database info
+
+Nov 26 16:09:47 [Info] Could not find current database info
+
+Nov 26 16:09:47 [Info] Could not find current database info
+
+Nov 26 16:09:47 [Info] end of updateDBConnections()
+
+Nov 26 16:09:47 [Info] Running upgrades for v. 5.0.0
+
+Nov 26 16:09:47 [Info] Upgrade function createRequiredDirectoriesFor500 
+Nov 26 16:09:47 [Info] run
+
+Nov 26 16:09:47 [Info] Upgrade function updateDBForVersion 
+Nov 26 16:09:47 [Info] run
+
+Nov 26 16:09:47 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-4.7.0-to-5.0.0alpha1.sql to database matti_intility_500 
+Nov 26 16:09:47 [Info] OK
+
+Nov 26 16:09:47 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-5.0.0alpha1-to-5.0.0beta1.sql to database matti_intility_500 
+Nov 26 16:09:47 [Info] OK
+
+Nov 26 16:09:47 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-5.0.0beta1-to-5.0.0beta2.sql to database matti_intility_500 
+Nov 26 16:09:47 [Info] OK
+
+Nov 26 16:09:47 [Info] Upgrade function execute500Scripts 
+Nov 26 16:09:47 [Info] run
+
+Nov 26 16:09:47 [Info] Running script update/common/scripts/5.0/deduplicatecontentstategrouplanguage.php  -snor
+
+Nov 26 16:09:47 [Info] OK
+
+Nov 26 16:09:47 [Info] Running script update/common/scripts/5.0/restorexmlrelations.php  -snor
+
+Nov 26 16:09:48 [Info] OK
+
+Nov 26 16:09:48 [Info] Running script update/common/scripts/5.0/disablesuspicioususers.php  -snor
+
+Nov 26 16:09:48 [Info] OK
+
+Nov 26 16:09:48 [Info] Running script bin/php/ezpgenerateautoloads.php --extension  -snor
+
+Nov 26 16:09:49 [Info] OK
+
+Nov 26 16:09:49 [Info] Upgrade function generateYmlConfigAndSymlink 
+Nov 26 16:09:49 [Info] run
+
+Nov 26 16:09:49 [Info] Running script ezpublish/console ezpublish:configure --env=dev 'site' 'site_admin'  -snor
+
+Nov 26 16:09:51 [Info] OK
+
+Nov 26 16:09:51 [Info] Running script ezpublish/console ezpublish:configure --env=prod 'site' 'site_admin'  -snor
+
+Nov 26 16:09:53 [Info] OK
+
+Nov 26 16:09:53 [Info] Running script ezpublish/console assets:install --symlink web  -snor
+
+Nov 26 16:09:53 [Info] OK
+
+Nov 26 16:09:53 [Info] Running script ezpublish/console ezpublish:legacy:assets_install --symlink web  -snor
+
+Nov 26 16:09:53 [Info] OK
+
+Nov 26 16:09:53 [Info] Upgrade function generateAutoLoads 
+Nov 26 16:09:53 [Info] run
+
+Nov 26 16:09:53 [Info] Running script bin/php/ezpgenerateautoloads.php --extension  -snor
+
+Nov 26 16:09:54 [Info] OK
+
+Nov 26 16:09:54 [Info] Upgrade function generateAutoLoadsKernel 
+Nov 26 16:09:54 [Info] run
+
+Nov 26 16:09:54 [Info] Running script bin/php/ezpgenerateautoloads.php --kernel  -snor
+
+Nov 26 16:09:54 [Info] OK
+
+Nov 26 16:09:54 [Info] Upgrade function clearCache 
+Nov 26 16:09:54 [Info] run
+
+Nov 26 16:09:54 [Info] Running script bin/php/ezcache.php --clear-all --purge  -snor
+
+Nov 26 16:10:00 [Info] OK
+
+Nov 26 16:10:00 [Info] Granting DB user matti access to database matti_intility_500 
+Nov 26 16:10:00 [Info] OK
+
+Nov 26 16:10:00 [Info] Running modfix script 
+Nov 26 16:10:01 [Info] OK
+
+Nov 26 16:10:01 [Info] Giving 777 permissions to the var/ directory 
+Nov 26 16:10:01 [Info] OK
+
+Nov 26 16:10:01 [Info] Deleted database dump from the old site 
+Nov 26 16:10:01 [Info] OK
+
+Nov 26 16:10:01 [Warning] Remember to set up the cronjobs for the upgraded site.
+
+Nov 26 16:10:01 [Warning] You need to clear the cache!
+
+
+Nov 26 16:10:01 [Warning] The log file is locateded in lib/ezcopy/logs/
+
+Nov 26 16:10:01 [Warning] Remember to install eZ Network! Follow the instructions here: /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/extension/ez_network/docs/INSTALL.txt
+
+Nov 26 16:10:01 [Warning] 
+You opted not to copy the var/ directory. You will need to do this manually.
+
+Nov 26 16:10:01 [Warning] You can do this by running the following command:
+
+Nov 26 16:10:01 [Warning] cp -R /mnt/data/matti/www/intility_47/var/* /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/var
+
+
+Nov 26 16:10:01 [Info] Upgrade from v. 4.7.0 to v. 5.0.0 complete
+
+
+Nov 26 16:14:48 [Info] 
+INITIATING UPGRADE
+
+Nov 26 16:14:48 [Info] The existing installation is located locally at /mnt/data/matti/www/intility_47/
+
+Nov 26 16:14:48 [Info] Dumping database
+
+Nov 26 16:14:49 [Info] matti_intility_470: OK (7,6 MB)
+
+Nov 26 16:14:49 [Info] Upgrading intility_5 from version 4.7.0 to version 5.0.0
+
+Nov 26 16:14:49 [Info] Checking requirements 
+Nov 26 16:14:49 [Info] OK
+
+Nov 26 16:14:49 [Info] Performing pre-upgrade checks 
+Nov 26 16:14:49 [Info] OK
+
+Nov 26 16:14:49 [Info] Checking for local distro
+
+Nov 26 16:14:49 [Info] Match found: ezpublish5-5.0.0-rc1-ee-ttl.tar.gz 
+
+Nov 26 16:14:49 [Info] Copying distro from specified location 
+Nov 26 16:14:49 [Info] OK
+
+Nov 26 16:14:49 [Info] Extracting ezpublish5-5.0.0-rc1-ee-ttl.tar.gz to /mnt/data/matti/www/
+
+Nov 26 16:14:59 [Info] OK
+
+Nov 26 16:14:59 [Info] Copying files
+
+Nov 26 16:15:03 [Info] Copying extension/ez_network 
+Nov 26 16:15:03 [Info] OK 
+
+Nov 26 16:15:03 [Info] Copying extension/ezcomments 
+Nov 26 16:15:03 [Info] OK 
+
+Nov 26 16:15:03 [Info] Copying extension/ezgmaplocation 
+Nov 26 16:15:03 [Info] OK 
+
+Nov 26 16:15:03 [Info] Copying extension/ezstarrating 
+Nov 26 16:15:03 [Info] OK 
+
+Nov 26 16:15:03 [Info] Copying extension/ezwebin 
+Nov 26 16:15:03 [Info] OK 
+
+Nov 26 16:15:03 [Info] Copying extension/ezwt 
+Nov 26 16:15:04 [Info] OK 
+
+Nov 26 16:15:04 [Info] Copying extension/nmbase 
+Nov 26 16:15:04 [Info] OK 
+
+Nov 26 16:15:04 [Info] Copying extension/nmcontentclass 
+Nov 26 16:15:04 [Info] OK 
+
+Nov 26 16:15:04 [Info] Copying extension/nmdesignintility 
+Nov 26 16:15:04 [Info] OK 
+
+Nov 26 16:15:04 [Info] Copying extension/nmdesignintility_sites_repo 
+Nov 26 16:15:04 [Info] OK 
+
+Nov 26 16:15:04 [Info] Copying extension/nmstrictfixes 
+Nov 26 16:15:04 [Info] OK 
+
+Nov 26 16:15:04 [Info] Copying extension/swark 
+Nov 26 16:15:04 [Info] OK 
+
+Nov 26 16:15:04 [Info] Copying settings/override/audit.ini.append.php 
+Nov 26 16:15:04 [Info] OK 
+
+Nov 26 16:15:04 [Info] Copying settings/override/content.ini.append.php 
+Nov 26 16:15:04 [Info] OK 
+
+Nov 26 16:15:04 [Info] Copying settings/override/ezmultiupload.ini.append.php 
+Nov 26 16:15:04 [Info] OK 
+
+Nov 26 16:15:04 [Info] Copying settings/override/ezoe_attributes.ini.append.php 
+Nov 26 16:15:04 [Info] OK 
+
+Nov 26 16:15:04 [Info] Copying settings/override/ezxml.ini.append.php 
+Nov 26 16:15:04 [Info] OK 
+
+Nov 26 16:15:04 [Info] Copying settings/override/forum.ini.append.php 
+Nov 26 16:15:05 [Info] OK 
+
+Nov 26 16:15:05 [Info] Copying settings/override/i18n.ini.append.php 
+Nov 26 16:15:05 [Info] OK 
+
+Nov 26 16:15:05 [Info] Copying settings/override/image.ini.append.php 
+Nov 26 16:15:05 [Info] OK 
+
+Nov 26 16:15:05 [Info] Copying settings/override/menu.ini.append.php 
+Nov 26 16:15:05 [Info] OK 
+
+Nov 26 16:15:05 [Info] Copying settings/override/site.ini.append.php 
+Nov 26 16:15:05 [Info] OK 
+
+Nov 26 16:15:05 [Info] Copying settings/override/site.ini.append.php~ 
+Nov 26 16:15:05 [Info] OK 
+
+Nov 26 16:15:05 [Info] Copying settings/override/viewcache.ini.append.php 
+Nov 26 16:15:05 [Info] OK 
+
+Nov 26 16:15:05 [Info] Copying settings/siteaccess/admin 
+Nov 26 16:15:05 [Info] OK 
+
+Nov 26 16:15:05 [Info] Copying settings/siteaccess/eng 
+Nov 26 16:15:05 [Info] OK 
+
+Nov 26 16:15:05 [Info] Copying settings/siteaccess/ezwebin 
+Nov 26 16:15:05 [Info] OK 
+
+Nov 26 16:15:05 [Info] Copying settings/siteaccess/nor 
+Nov 26 16:15:05 [Info] OK 
+
+Nov 26 16:15:05 [Info] Copying settings/siteaccess/site_admin 
+Nov 26 16:15:05 [Info] OK 
+
+Nov 26 16:15:05 [Info] Copying design/admin2 
+Nov 26 16:15:05 [Info] OK 
+
+Nov 26 16:15:05 [Info] Copying design/ezwebin_site 
+Nov 26 16:15:05 [Info] OK 
+
+Nov 26 16:15:05 [Info] Copying databases
+
+Nov 26 16:15:05 [Info] Creating database matti_intility_500 
+Nov 26 16:15:05 [Info] OK
+
+Nov 26 16:15:05 [Info] Applying /mnt/data/matti/www/intility_47/_dbdump/matti_intility_470.sql to database matti_intility_500 
+Nov 26 16:15:13 [Info] OK
+
+Nov 26 16:16:42 [Info] 
+INITIATING UPGRADE
+
+Nov 26 16:16:42 [Info] The existing installation is located locally at /mnt/data/matti/www/intility_47/
+
+Nov 26 16:16:42 [Info] Dumping database
+
+Nov 26 16:16:43 [Info] matti_intility_470: OK (7,6 MB)
+
+Nov 26 16:16:43 [Info] Upgrading intility_5 from version 4.7.0 to version 5.0.0
+
+Nov 26 16:16:43 [Info] Checking requirements 
+Nov 26 16:16:43 [Info] OK
+
+Nov 26 16:16:43 [Info] Performing pre-upgrade checks 
+Nov 26 16:16:43 [Info] OK
+
+Nov 26 16:16:43 [Info] Checking for local distro
+
+Nov 26 16:16:43 [Info] Match found: ezpublish5-5.0.0-rc1-ee-ttl.tar.gz 
+
+Nov 26 16:16:43 [Info] Copying distro from specified location 
+Nov 26 16:16:43 [Info] OK
+
+Nov 26 16:16:43 [Info] Extracting ezpublish5-5.0.0-rc1-ee-ttl.tar.gz to /mnt/data/matti/www/
+
+Nov 26 16:16:51 [Info] OK
+
+Nov 26 16:16:51 [Info] Copying files
+
+Nov 26 16:16:53 [Info] Copying extension/ez_network 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying extension/ezcomments 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying extension/ezgmaplocation 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying extension/ezstarrating 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying extension/ezwebin 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying extension/ezwt 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying extension/nmbase 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying extension/nmcontentclass 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying extension/nmdesignintility 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying extension/nmdesignintility_sites_repo 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying extension/nmstrictfixes 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying extension/swark 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying settings/override/audit.ini.append.php 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying settings/override/content.ini.append.php 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying settings/override/ezmultiupload.ini.append.php 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying settings/override/ezoe_attributes.ini.append.php 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying settings/override/ezxml.ini.append.php 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying settings/override/forum.ini.append.php 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying settings/override/i18n.ini.append.php 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying settings/override/image.ini.append.php 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying settings/override/menu.ini.append.php 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying settings/override/site.ini.append.php 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying settings/override/site.ini.append.php~ 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying settings/override/viewcache.ini.append.php 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying settings/siteaccess/admin 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying settings/siteaccess/eng 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying settings/siteaccess/ezwebin 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying settings/siteaccess/nor 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying settings/siteaccess/site_admin 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying design/admin2 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying design/ezwebin_site 
+Nov 26 16:16:53 [Info] OK 
+
+Nov 26 16:16:53 [Info] Copying databases
+
+Nov 26 16:16:53 [Info] Creating database matti_intility_500 
+Nov 26 16:16:53 [Info] OK
+
+Nov 26 16:16:53 [Info] Applying /mnt/data/matti/www/intility_47/_dbdump/matti_intility_470.sql to database matti_intility_500 
+Nov 26 16:16:57 [Info] OK
+
+Nov 26 16:16:57 [Info] Could not find current database info
+
+Nov 26 16:16:57 [Info] Could not find current database info
+
+Nov 26 16:16:57 [Info] Could not find current database info
+
+Nov 26 16:16:57 [Info] Could not find current database info
+
+Nov 26 16:16:57 [Info] Could not find current database info
+
+Nov 26 16:16:57 [Info] Could not find current database info
+
+Nov 26 16:16:57 [Info] end of updateDBConnections()
+
+Nov 26 16:16:57 [Info] Running upgrades for v. 5.0.0
+
+Nov 26 16:16:57 [Info] Upgrade function createRequiredDirectoriesFor500 
+Nov 26 16:16:57 [Info] run
+
+Nov 26 16:16:58 [Info] Upgrade function updateDBForVersion 
+Nov 26 16:16:58 [Info] run
+
+Nov 26 16:16:58 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-4.7.0-to-5.0.0alpha1.sql to database matti_intility_500 
+Nov 26 16:16:58 [Info] OK
+
+Nov 26 16:16:58 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-5.0.0alpha1-to-5.0.0beta1.sql to database matti_intility_500 
+Nov 26 16:16:58 [Info] OK
+
+Nov 26 16:16:58 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-5.0.0beta1-to-5.0.0beta2.sql to database matti_intility_500 
+Nov 26 16:16:58 [Info] OK
+
+Nov 26 16:16:58 [Info] Upgrade function execute500Scripts 
+Nov 26 16:16:58 [Info] run
+
+Nov 26 16:16:58 [Info] Running script update/common/scripts/5.0/deduplicatecontentstategrouplanguage.php  -snor
+
+Nov 26 16:16:58 [Info] OK
+
+Nov 26 16:16:58 [Info] Running script update/common/scripts/5.0/restorexmlrelations.php  -snor
+
+Nov 26 16:16:58 [Info] OK
+
+Nov 26 16:16:58 [Info] Running script update/common/scripts/5.0/disablesuspicioususers.php  -snor
+
+Nov 26 16:16:59 [Info] OK
+
+Nov 26 16:16:59 [Info] Running script bin/php/ezpgenerateautoloads.php --extension  -snor
+
+Nov 26 16:17:00 [Info] OK
+
+Nov 26 16:17:00 [Info] Upgrade function generateYmlConfigAndSymlink 
+Nov 26 16:17:00 [Info] run
+
+Nov 26 16:17:00 [Info] Running script ezpublish/console ezpublish:configure --env=dev 'site' 'site_admin'  -snor
+
+Nov 26 16:17:01 [Info] OK
+
+Nov 26 16:17:01 [Info] Running script ezpublish/console ezpublish:configure --env=prod 'site' 'site_admin'  -snor
+
+Nov 26 16:17:05 [Info] OK
+
+Nov 26 16:17:05 [Info] Running script ezpublish/console assets:install --symlink web  -snor
+
+Nov 26 16:17:06 [Info] OK
+
+Nov 26 16:17:06 [Info] Running script ezpublish/console ezpublish:legacy:assets_install --symlink web  -snor
+
+Nov 26 16:17:06 [Info] OK
+
+Nov 26 16:17:06 [Info] Upgrade function generateAutoLoads 
+Nov 26 16:17:06 [Info] run
+
+Nov 26 16:17:06 [Info] Running script bin/php/ezpgenerateautoloads.php --extension  -snor
+
+Nov 26 16:17:06 [Info] OK
+
+Nov 26 16:17:06 [Info] Upgrade function generateAutoLoadsKernel 
+Nov 26 16:17:06 [Info] run
+
+Nov 26 16:17:06 [Info] Running script bin/php/ezpgenerateautoloads.php --kernel  -snor
+
+Nov 26 16:17:06 [Info] OK
+
+Nov 26 16:17:06 [Info] Upgrade function clearCache 
+Nov 26 16:17:06 [Info] run
+
+Nov 26 16:17:06 [Info] Running script bin/php/ezcache.php --clear-all --purge  -snor
+
+Nov 26 16:17:18 [Info] OK
+
+Nov 26 16:17:18 [Info] Granting DB user matti access to database matti_intility_500 
+Nov 26 16:17:18 [Info] OK
+
+Nov 26 16:17:18 [Info] Running modfix script 
+Nov 26 16:17:18 [Info] OK
+
+Nov 26 16:17:18 [Info] Giving 777 permissions to the var/ directory 
+Nov 26 16:17:18 [Info] OK
+
+Nov 26 16:17:18 [Info] Deleted database dump from the old site 
+Nov 26 16:17:18 [Info] OK
+
+Nov 26 16:17:18 [Warning] Remember to set up the cronjobs for the upgraded site.
+
+Nov 26 16:17:18 [Warning] You need to clear the cache!
+
+
+Nov 26 16:17:18 [Warning] The log file is locateded in lib/ezcopy/logs/
+
+Nov 26 16:17:18 [Warning] Remember to install eZ Network! Follow the instructions here: /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/extension/ez_network/docs/INSTALL.txt
+
+Nov 26 16:17:18 [Warning] 
+You opted not to copy the var/ directory. You will need to do this manually.
+
+Nov 26 16:17:18 [Warning] You can do this by running the following command:
+
+Nov 26 16:17:18 [Warning] cp -R /mnt/data/matti/www/intility_47/var/* /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/var
+
+
+Nov 26 16:17:18 [Info] Upgrade from v. 4.7.0 to v. 5.0.0 complete
+
+
+Nov 26 16:18:24 [Info] 
+INITIATING UPGRADE
+
+Nov 26 16:18:24 [Info] The existing installation is located locally at /mnt/data/matti/www/intility_47/
+
+Nov 26 16:18:24 [Info] Dumping database
+
+Nov 26 16:18:25 [Info] matti_intility_470: OK (7,6 MB)
+
+Nov 26 16:18:25 [Info] Upgrading intility_5 from version 4.7.0 to version 5.0.0
+
+Nov 26 16:18:25 [Info] Checking requirements 
+Nov 26 16:18:25 [Info] OK
+
+Nov 26 16:18:25 [Info] Performing pre-upgrade checks 
+Nov 26 16:18:25 [Info] OK
+
+Nov 26 16:18:25 [Info] Checking for local distro
+
+Nov 26 16:18:25 [Info] Match found: ezpublish5-5.0.0-rc1-ee-ttl.tar.gz 
+
+Nov 26 16:18:25 [Info] Copying distro from specified location 
+Nov 26 16:18:25 [Info] OK
+
+Nov 26 16:18:25 [Info] Extracting ezpublish5-5.0.0-rc1-ee-ttl.tar.gz to /mnt/data/matti/www/
+
+Nov 26 16:18:33 [Info] OK
+
+Nov 26 16:18:33 [Info] Copying files
+
+Nov 26 16:18:34 [Info] Copying extension/ez_network 
+Nov 26 16:18:34 [Info] OK 
+
+Nov 26 16:18:34 [Info] Copying extension/ezcomments 
+Nov 26 16:18:34 [Info] OK 
+
+Nov 26 16:18:34 [Info] Copying extension/ezgmaplocation 
+Nov 26 16:18:34 [Info] OK 
+
+Nov 26 16:18:34 [Info] Copying extension/ezstarrating 
+Nov 26 16:18:34 [Info] OK 
+
+Nov 26 16:18:34 [Info] Copying extension/ezwebin 
+Nov 26 16:18:34 [Info] OK 
+
+Nov 26 16:18:34 [Info] Copying extension/ezwt 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying extension/nmbase 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying extension/nmcontentclass 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying extension/nmdesignintility 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying extension/nmdesignintility_sites_repo 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying extension/nmstrictfixes 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying extension/swark 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying settings/override/audit.ini.append.php 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying settings/override/content.ini.append.php 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying settings/override/ezmultiupload.ini.append.php 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying settings/override/ezoe_attributes.ini.append.php 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying settings/override/ezxml.ini.append.php 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying settings/override/forum.ini.append.php 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying settings/override/i18n.ini.append.php 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying settings/override/image.ini.append.php 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying settings/override/menu.ini.append.php 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying settings/override/site.ini.append.php 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying settings/override/site.ini.append.php~ 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying settings/override/viewcache.ini.append.php 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying settings/siteaccess/admin 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying settings/siteaccess/eng 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying settings/siteaccess/ezwebin 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying settings/siteaccess/nor 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying settings/siteaccess/site_admin 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying design/admin2 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying design/ezwebin_site 
+Nov 26 16:18:35 [Info] OK 
+
+Nov 26 16:18:35 [Info] Copying databases
+
+Nov 26 16:18:35 [Info] Creating database matti_intility_500 
+Nov 26 16:18:35 [Info] OK
+
+Nov 26 16:18:35 [Info] Applying /mnt/data/matti/www/intility_47/_dbdump/matti_intility_470.sql to database matti_intility_500 
+Nov 26 16:18:39 [Info] OK
+
+Nov 26 16:18:39 [Info] Could not find current database info
+
+Nov 26 16:18:39 [Info] Could not find current database info
+
+Nov 26 16:18:39 [Info] Could not find current database info
+
+Nov 26 16:18:39 [Info] Could not find current database info
+
+Nov 26 16:18:39 [Info] Could not find current database info
+
+Nov 26 16:18:39 [Info] Could not find current database info
+
+Nov 26 16:18:39 [Info] end of updateDBConnections()
+
+Nov 26 16:18:39 [Info] Running upgrades for v. 5.0.0
+
+Nov 26 16:18:39 [Info] Upgrade function createRequiredDirectoriesFor500 
+Nov 26 16:18:39 [Info] run
+
+Nov 26 16:18:40 [Info] Upgrade function updateDBForVersion 
+Nov 26 16:18:40 [Info] run
+
+Nov 26 16:18:40 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-4.7.0-to-5.0.0alpha1.sql to database matti_intility_500 
+Nov 26 16:18:40 [Info] OK
+
+Nov 26 16:18:40 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-5.0.0alpha1-to-5.0.0beta1.sql to database matti_intility_500 
+Nov 26 16:18:40 [Info] OK
+
+Nov 26 16:18:40 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-5.0.0beta1-to-5.0.0beta2.sql to database matti_intility_500 
+Nov 26 16:18:40 [Info] OK
+
+Nov 26 16:18:40 [Info] Upgrade function execute500Scripts 
+Nov 26 16:18:40 [Info] run
+
+Nov 26 16:18:40 [Info] Running script update/common/scripts/5.0/deduplicatecontentstategrouplanguage.php  -snor
+
+Nov 26 16:18:40 [Info] OK
+
+Nov 26 16:18:40 [Info] Running script update/common/scripts/5.0/restorexmlrelations.php  -snor
+
+Nov 26 16:18:40 [Info] OK
+
+Nov 26 16:18:40 [Info] Running script update/common/scripts/5.0/disablesuspicioususers.php  -snor
+
+Nov 26 16:18:40 [Info] OK
+
+Nov 26 16:18:40 [Info] Running script bin/php/ezpgenerateautoloads.php --extension  -snor
+
+Nov 26 16:18:41 [Info] OK
+
+Nov 26 16:18:41 [Info] Upgrade function generateYmlConfigAndSymlink 
+Nov 26 16:18:41 [Info] run
+
+Nov 26 16:18:41 [Info] Running script ezpublish/console ezpublish:configure --env=dev 'site' 'site_admin'  -snor
+
+Nov 26 16:18:43 [Info] OK
+
+Nov 26 16:18:43 [Info] Running script ezpublish/console ezpublish:configure --env=prod 'site' 'site_admin'  -snor
+
+Nov 26 16:18:44 [Info] OK
+
+Nov 26 16:18:44 [Info] Running script ezpublish/console assets:install --symlink web  -snor
+
+Nov 26 16:18:45 [Info] OK
+
+Nov 26 16:18:45 [Info] Running script ezpublish/console ezpublish:legacy:assets_install --symlink web  -snor
+
+Nov 26 16:18:45 [Info] OK
+
+Nov 26 16:18:45 [Info] Upgrade function generateAutoLoads 
+Nov 26 16:18:45 [Info] run
+
+Nov 26 16:18:45 [Info] Running script bin/php/ezpgenerateautoloads.php --extension  -snor
+
+Nov 26 16:18:45 [Info] OK
+
+Nov 26 16:18:45 [Info] Upgrade function generateAutoLoadsKernel 
+Nov 26 16:18:45 [Info] run
+
+Nov 26 16:18:45 [Info] Running script bin/php/ezpgenerateautoloads.php --kernel  -snor
+
+Nov 26 16:18:45 [Info] OK
+
+Nov 26 16:18:45 [Info] Upgrade function clearCache 
+Nov 26 16:18:45 [Info] run
+
+Nov 26 16:18:45 [Info] Running script bin/php/ezcache.php --clear-all --purge  -snor
+
+Nov 26 16:18:52 [Info] OK
+
+Nov 26 16:18:52 [Info] Granting DB user matti access to database matti_intility_500 
+Nov 26 16:18:53 [Info] OK
+
+Nov 26 16:18:53 [Info] Running modfix script 
+Nov 26 16:18:53 [Info] OK
+
+Nov 26 16:18:53 [Info] Giving 777 permissions to the var/ directory 
+Nov 26 16:18:53 [Info] OK
+
+Nov 26 16:18:53 [Info] Deleted database dump from the old site 
+Nov 26 16:18:53 [Info] OK
+
+Nov 26 16:18:53 [Warning] Remember to set up the cronjobs for the upgraded site.
+
+Nov 26 16:18:53 [Warning] You need to clear the cache!
+
+
+Nov 26 16:18:53 [Warning] The log file is locateded in lib/ezcopy/logs/
+
+Nov 26 16:18:53 [Warning] Remember to install eZ Network! Follow the instructions here: /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/extension/ez_network/docs/INSTALL.txt
+
+Nov 26 16:18:53 [Warning] 
+You opted not to copy the var/ directory. You will need to do this manually.
+
+Nov 26 16:18:53 [Warning] You can do this by running the following command:
+
+Nov 26 16:18:53 [Warning] cp -R /mnt/data/matti/www/intility_47/var/* /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/var
+
+
+Nov 26 16:18:53 [Info] Upgrade from v. 4.7.0 to v. 5.0.0 complete
+
+
+Nov 26 16:20:58 [Info] 
+INITIATING UPGRADE
+
+Nov 26 16:20:58 [Info] The existing installation is located locally at /mnt/data/matti/www/intility_47/
+
+Nov 26 16:20:58 [Info] Dumping database
+
+Nov 26 16:20:58 [Info] matti_intility_470: OK (7,6 MB)
+
+Nov 26 16:20:58 [Info] Upgrading intility_5 from version 4.7.0 to version 5.0.0
+
+Nov 26 16:20:58 [Info] Checking requirements 
+Nov 26 16:20:58 [Info] OK
+
+Nov 26 16:20:58 [Info] Performing pre-upgrade checks 
+Nov 26 16:20:58 [Info] OK
+
+Nov 26 16:20:58 [Info] Checking for local distro
+
+Nov 26 16:20:58 [Info] Match found: ezpublish5-5.0.0-rc1-ee-ttl.tar.gz 
+
+Nov 26 16:20:58 [Info] Copying distro from specified location 
+Nov 26 16:20:59 [Info] OK
+
+Nov 26 16:20:59 [Info] Extracting ezpublish5-5.0.0-rc1-ee-ttl.tar.gz to /mnt/data/matti/www/
+
+Nov 26 16:21:10 [Info] OK
+
+Nov 26 16:21:10 [Info] Copying files
+
+Nov 26 16:21:11 [Info] Copying extension/ez_network 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying extension/ezcomments 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying extension/ezgmaplocation 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying extension/ezstarrating 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying extension/ezwebin 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying extension/ezwt 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying extension/nmbase 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying extension/nmcontentclass 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying extension/nmdesignintility 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying extension/nmdesignintility_sites_repo 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying extension/nmstrictfixes 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying extension/swark 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying settings/override/audit.ini.append.php 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying settings/override/content.ini.append.php 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying settings/override/ezmultiupload.ini.append.php 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying settings/override/ezoe_attributes.ini.append.php 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying settings/override/ezxml.ini.append.php 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying settings/override/forum.ini.append.php 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying settings/override/i18n.ini.append.php 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying settings/override/image.ini.append.php 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying settings/override/menu.ini.append.php 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying settings/override/site.ini.append.php 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying settings/override/site.ini.append.php~ 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying settings/override/viewcache.ini.append.php 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying settings/siteaccess/admin 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying settings/siteaccess/eng 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying settings/siteaccess/ezwebin 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying settings/siteaccess/nor 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying settings/siteaccess/site_admin 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying design/admin2 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying design/ezwebin_site 
+Nov 26 16:21:11 [Info] OK 
+
+Nov 26 16:21:11 [Info] Copying databases
+
+Nov 26 16:21:11 [Info] Creating database matti_intility_500 
+Nov 26 16:21:11 [Info] OK
+
+Nov 26 16:21:11 [Info] Applying /mnt/data/matti/www/intility_47/_dbdump/matti_intility_470.sql to database matti_intility_500 
+Nov 26 16:21:20 [Info] OK
+
+Nov 26 16:21:20 [Info] Could not find current database info
+
+Nov 26 16:21:20 [Info] Could not find current database info
+
+Nov 26 16:21:20 [Info] Could not find current database info
+
+Nov 26 16:21:20 [Info] Could not find current database info
+
+Nov 26 16:21:20 [Info] Could not find current database info
+
+Nov 26 16:21:20 [Info] Could not find current database info
+
+Nov 26 16:21:20 [Info] end of updateDBConnections()
+
+Nov 26 16:21:20 [Info] Running upgrades for v. 5.0.0
+
+Nov 26 16:21:20 [Info] Upgrade function createRequiredDirectoriesFor500 
+Nov 26 16:21:20 [Info] run
+
+Nov 26 16:21:20 [Info] Upgrade function updateDBForVersion 
+Nov 26 16:21:20 [Info] run
+
+Nov 26 16:21:20 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-4.7.0-to-5.0.0alpha1.sql to database matti_intility_500 
+Nov 26 16:21:20 [Info] OK
+
+Nov 26 16:21:20 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-5.0.0alpha1-to-5.0.0beta1.sql to database matti_intility_500 
+Nov 26 16:21:20 [Info] OK
+
+Nov 26 16:21:20 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-5.0.0beta1-to-5.0.0beta2.sql to database matti_intility_500 
+Nov 26 16:21:20 [Info] OK
+
+Nov 26 16:21:20 [Info] Upgrade function execute500Scripts 
+Nov 26 16:21:20 [Info] run
+
+Nov 26 16:21:20 [Info] Running script update/common/scripts/5.0/deduplicatecontentstategrouplanguage.php  -snor
+
+Nov 26 16:21:20 [Info] OK
+
+Nov 26 16:21:20 [Info] Running script update/common/scripts/5.0/restorexmlrelations.php  -snor
+
+Nov 26 16:21:21 [Info] OK
+
+Nov 26 16:21:21 [Info] Running script update/common/scripts/5.0/disablesuspicioususers.php  -snor
+
+Nov 26 16:21:21 [Info] OK
+
+Nov 26 16:21:21 [Info] Running script bin/php/ezpgenerateautoloads.php --extension  -snor
+
+Nov 26 16:21:22 [Info] OK
+
+Nov 26 16:21:22 [Info] Upgrade function generateYmlConfigAndSymlink 
+Nov 26 16:21:22 [Info] run
+
+Nov 26 16:21:22 [Info] Running script ezpublish/console ezpublish:configure --env=dev 'site' 'site_admin'  -snor
+
+Nov 26 16:21:23 [Info] OK
+
+Nov 26 16:21:23 [Info] Running script ezpublish/console ezpublish:configure --env=prod 'site' 'site_admin'  -snor
+
+Nov 26 16:21:25 [Info] OK
+
+Nov 26 16:21:25 [Info] Running script ezpublish/console assets:install --symlink web  -snor
+
+Nov 26 16:21:25 [Info] OK
+
+Nov 26 16:21:25 [Info] Running script ezpublish/console ezpublish:legacy:assets_install --symlink web  -snor
+
+Nov 26 16:21:25 [Info] OK
+
+Nov 26 16:21:25 [Info] Upgrade function generateAutoLoads 
+Nov 26 16:21:25 [Info] run
+
+Nov 26 16:21:25 [Info] Running script bin/php/ezpgenerateautoloads.php --extension  -snor
+
+Nov 26 16:21:25 [Info] OK
+
+Nov 26 16:21:25 [Info] Upgrade function generateAutoLoadsKernel 
+Nov 26 16:21:25 [Info] run
+
+Nov 26 16:21:25 [Info] Running script bin/php/ezpgenerateautoloads.php --kernel  -snor
+
+Nov 26 16:21:25 [Info] OK
+
+Nov 26 16:21:25 [Info] Upgrade function clearCache 
+Nov 26 16:21:25 [Info] run
+
+Nov 26 16:21:25 [Info] Running script bin/php/ezcache.php --clear-all --purge  -snor
+
+Nov 26 16:21:32 [Info] OK
+
+Nov 26 16:21:32 [Info] Granting DB user matti access to database matti_intility_500 
+Nov 26 16:21:32 [Info] OK
+
+Nov 26 16:21:32 [Info] Running modfix script 
+Nov 26 16:21:32 [Info] OK
+
+Nov 26 16:21:32 [Info] Giving 777 permissions to the var/ directory 
+Nov 26 16:21:32 [Info] OK
+
+Nov 26 16:21:32 [Info] Deleted database dump from the old site 
+Nov 26 16:21:32 [Info] OK
+
+Nov 26 16:21:32 [Warning] Remember to set up the cronjobs for the upgraded site.
+
+Nov 26 16:21:32 [Warning] You need to clear the cache!
+
+
+Nov 26 16:21:32 [Warning] The log file is locateded in lib/ezcopy/logs/
+
+Nov 26 16:21:32 [Warning] Remember to install eZ Network! Follow the instructions here: /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/extension/ez_network/docs/INSTALL.txt
+
+Nov 26 16:21:32 [Warning] 
+You opted not to copy the var/ directory. You will need to do this manually.
+
+Nov 26 16:21:32 [Warning] You can do this by running the following command:
+
+Nov 26 16:21:32 [Warning] cp -R /mnt/data/matti/www/intility_47/var/* /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/var
+
+
+Nov 26 16:21:32 [Info] Upgrade from v. 4.7.0 to v. 5.0.0 complete
+
+
+Nov 26 16:22:39 [Info] 
+INITIATING UPGRADE
+
+Nov 26 16:22:39 [Info] The existing installation is located locally at /mnt/data/matti/www/intility_47/
+
+Nov 26 16:22:39 [Info] Dumping database
+
+Nov 26 16:22:40 [Info] matti_intility_470: OK (7,6 MB)
+
+Nov 26 16:22:40 [Info] Upgrading intility_5 from version 4.7.0 to version 5.0.0
+
+Nov 26 16:22:40 [Info] Checking requirements 
+Nov 26 16:22:40 [Info] OK
+
+Nov 26 16:22:40 [Info] Performing pre-upgrade checks 
+Nov 26 16:22:40 [Info] OK
+
+Nov 26 16:22:40 [Info] Checking for local distro
+
+Nov 26 16:22:40 [Info] Match found: ezpublish5-5.0.0-rc1-ee-ttl.tar.gz 
+
+Nov 26 16:22:40 [Info] Copying distro from specified location 
+Nov 26 16:22:40 [Info] OK
+
+Nov 26 16:22:40 [Info] Extracting ezpublish5-5.0.0-rc1-ee-ttl.tar.gz to /mnt/data/matti/www/
+
+Nov 26 16:22:49 [Info] OK
+
+Nov 26 16:22:49 [Info] Copying files
+
+Nov 26 16:22:51 [Info] Copying extension/ez_network 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying extension/ezcomments 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying extension/ezgmaplocation 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying extension/ezstarrating 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying extension/ezwebin 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying extension/ezwt 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying extension/nmbase 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying extension/nmcontentclass 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying extension/nmdesignintility 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying extension/nmdesignintility_sites_repo 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying extension/nmstrictfixes 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying extension/swark 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying settings/override/audit.ini.append.php 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying settings/override/content.ini.append.php 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying settings/override/ezmultiupload.ini.append.php 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying settings/override/ezoe_attributes.ini.append.php 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying settings/override/ezxml.ini.append.php 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying settings/override/forum.ini.append.php 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying settings/override/i18n.ini.append.php 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying settings/override/image.ini.append.php 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying settings/override/menu.ini.append.php 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying settings/override/site.ini.append.php 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying settings/override/site.ini.append.php~ 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying settings/override/viewcache.ini.append.php 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying settings/siteaccess/admin 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying settings/siteaccess/eng 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying settings/siteaccess/ezwebin 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying settings/siteaccess/nor 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying settings/siteaccess/site_admin 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying design/admin2 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying design/ezwebin_site 
+Nov 26 16:22:51 [Info] OK 
+
+Nov 26 16:22:51 [Info] Copying databases
+
+Nov 26 16:22:51 [Info] Creating database matti_intility_500 
+Nov 26 16:22:51 [Info] OK
+
+Nov 26 16:22:51 [Info] Applying /mnt/data/matti/www/intility_47/_dbdump/matti_intility_470.sql to database matti_intility_500 
+Nov 26 16:22:55 [Info] OK
+
+Nov 26 16:22:56 [Info] Could not find current database info
+
+Nov 26 16:22:56 [Info] Could not find current database info
+
+Nov 26 16:22:56 [Info] Could not find current database info
+
+Nov 26 16:22:56 [Info] Could not find current database info
+
+Nov 26 16:22:56 [Info] Could not find current database info
+
+Nov 26 16:22:56 [Info] Could not find current database info
+
+Nov 26 16:22:56 [Info] end of updateDBConnections()
+
+Nov 26 16:22:56 [Info] Running upgrades for v. 5.0.0
+
+Nov 26 16:22:56 [Info] Upgrade function createRequiredDirectoriesFor500 
+Nov 26 16:22:56 [Info] run
+
+Nov 26 16:22:56 [Info] Upgrade function updateDBForVersion 
+Nov 26 16:22:56 [Info] run
+
+Nov 26 16:22:56 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-4.7.0-to-5.0.0alpha1.sql to database matti_intility_500 
+Nov 26 16:22:56 [Info] OK
+
+Nov 26 16:22:56 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-5.0.0alpha1-to-5.0.0beta1.sql to database matti_intility_500 
+Nov 26 16:22:56 [Info] OK
+
+Nov 26 16:22:56 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-5.0.0beta1-to-5.0.0beta2.sql to database matti_intility_500 
+Nov 26 16:22:56 [Info] OK
+
+Nov 26 16:22:56 [Info] Upgrade function execute500Scripts 
+Nov 26 16:22:56 [Info] run
+
+Nov 26 16:22:56 [Info] Running script update/common/scripts/5.0/deduplicatecontentstategrouplanguage.php  -snor
+
+Nov 26 16:22:56 [Info] OK
+
+Nov 26 16:22:56 [Info] Running script update/common/scripts/5.0/restorexmlrelations.php  -snor
+
+Nov 26 16:22:56 [Info] OK
+
+Nov 26 16:22:56 [Info] Running script update/common/scripts/5.0/disablesuspicioususers.php  -snor
+
+Nov 26 16:22:57 [Info] OK
+
+Nov 26 16:22:57 [Info] Running script bin/php/ezpgenerateautoloads.php --extension  -snor
+
+Nov 26 16:22:57 [Info] OK
+
+Nov 26 16:22:57 [Info] Upgrade function generateYmlConfigAndSymlink 
+Nov 26 16:22:57 [Info] run
+
+Nov 26 16:22:57 [Info] Running script ezpublish/console ezpublish:configure --env=dev 'site' 'site_admin'  -snor
+
+Nov 26 16:22:59 [Info] OK
+
+Nov 26 16:22:59 [Info] Running script ezpublish/console ezpublish:configure --env=prod 'site' 'site_admin'  -snor
+
+Nov 26 16:23:02 [Info] OK
+
+Nov 26 16:23:02 [Info] Running script ezpublish/console assets:install --symlink web  -snor
+
+Nov 26 16:23:03 [Info] OK
+
+Nov 26 16:23:03 [Info] Running script ezpublish/console ezpublish:legacy:assets_install --symlink web  -snor
+
+Nov 26 16:23:04 [Info] OK
+
+Nov 26 16:23:04 [Info] Upgrade function generateAutoLoads 
+Nov 26 16:23:04 [Info] run
+
+Nov 26 16:23:04 [Info] Running script bin/php/ezpgenerateautoloads.php --extension  -snor
+
+Nov 26 16:23:04 [Info] OK
+
+Nov 26 16:23:04 [Info] Upgrade function generateAutoLoadsKernel 
+Nov 26 16:23:04 [Info] run
+
+Nov 26 16:23:04 [Info] Running script bin/php/ezpgenerateautoloads.php --kernel  -snor
+
+Nov 26 16:23:04 [Info] OK
+
+Nov 26 16:23:04 [Info] Upgrade function clearCache 
+Nov 26 16:23:04 [Info] run
+
+Nov 26 16:23:04 [Info] Running script bin/php/ezcache.php --clear-all --purge  -snor
+
+Nov 26 16:23:11 [Info] OK
+
+Nov 26 16:23:11 [Info] Granting DB user matti access to database matti_intility_500 
+Nov 26 16:23:11 [Info] OK
+
+Nov 26 16:23:11 [Info] Running modfix script 
+Nov 26 16:23:12 [Info] OK
+
+Nov 26 16:23:12 [Info] Giving 777 permissions to the var/ directory 
+Nov 26 16:23:12 [Info] OK
+
+Nov 26 16:23:12 [Info] Deleted database dump from the old site 
+Nov 26 16:23:12 [Info] OK
+
+Nov 26 16:23:12 [Warning] Remember to set up the cronjobs for the upgraded site.
+
+Nov 26 16:23:12 [Warning] You need to clear the cache!
+
+
+Nov 26 16:23:12 [Warning] The log file is locateded in lib/ezcopy/logs/
+
+Nov 26 16:23:12 [Warning] Remember to install eZ Network! Follow the instructions here: /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/extension/ez_network/docs/INSTALL.txt
+
+Nov 26 16:23:12 [Warning] 
+You opted not to copy the var/ directory. You will need to do this manually.
+
+Nov 26 16:23:12 [Warning] You can do this by running the following command:
+
+Nov 26 16:23:12 [Warning] cp -R /mnt/data/matti/www/intility_47/var/* /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/var
+
+
+Nov 26 16:23:12 [Info] Upgrade from v. 4.7.0 to v. 5.0.0 complete
+
+
+Nov 26 16:25:01 [Info] 
+INITIATING UPGRADE
+
+Nov 26 16:25:01 [Info] The existing installation is located locally at /mnt/data/matti/www/intility_47/
+
+Nov 26 16:25:01 [Info] Dumping database
+
+Nov 26 16:25:03 [Info] matti_intility_470: OK (7,6 MB)
+
+Nov 26 16:25:03 [Info] Upgrading intility_5 from version 4.7.0 to version 5.0.0
+
+Nov 26 16:25:03 [Info] Checking requirements 
+Nov 26 16:25:03 [Info] OK
+
+Nov 26 16:25:03 [Info] Performing pre-upgrade checks 
+Nov 26 16:25:03 [Info] OK
+
+Nov 26 16:25:03 [Info] Checking for local distro
+
+Nov 26 16:25:03 [Info] Match found: ezpublish5-5.0.0-rc1-ee-ttl.tar.gz 
+
+Nov 26 16:25:03 [Info] Copying distro from specified location 
+Nov 26 16:25:03 [Info] OK
+
+Nov 26 16:25:04 [Info] Extracting ezpublish5-5.0.0-rc1-ee-ttl.tar.gz to /mnt/data/matti/www/
+
+Nov 26 16:25:13 [Info] OK
+
+Nov 26 16:25:13 [Info] Copying files
+
+Nov 26 16:25:17 [Info] Copying extension/ez_network 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying extension/ezcomments 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying extension/ezgmaplocation 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying extension/ezstarrating 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying extension/ezwebin 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying extension/ezwt 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying extension/nmbase 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying extension/nmcontentclass 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying extension/nmdesignintility 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying extension/nmdesignintility_sites_repo 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying extension/nmstrictfixes 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying extension/swark 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying settings/override/audit.ini.append.php 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying settings/override/content.ini.append.php 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying settings/override/ezmultiupload.ini.append.php 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying settings/override/ezoe_attributes.ini.append.php 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying settings/override/ezxml.ini.append.php 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying settings/override/forum.ini.append.php 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying settings/override/i18n.ini.append.php 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying settings/override/image.ini.append.php 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying settings/override/menu.ini.append.php 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying settings/override/site.ini.append.php 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying settings/override/site.ini.append.php~ 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying settings/override/viewcache.ini.append.php 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying settings/siteaccess/admin 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying settings/siteaccess/eng 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying settings/siteaccess/ezwebin 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying settings/siteaccess/nor 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying settings/siteaccess/site_admin 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying design/admin2 
+Nov 26 16:25:17 [Info] OK 
+
+Nov 26 16:25:17 [Info] Copying design/ezwebin_site 
+Nov 26 16:25:18 [Info] OK 
+
+Nov 26 16:25:18 [Info] Copying databases
+
+Nov 26 16:25:18 [Info] Creating database matti_intility_500 
+Nov 26 16:25:18 [Info] OK
+
+Nov 26 16:25:18 [Info] Applying /mnt/data/matti/www/intility_47/_dbdump/matti_intility_470.sql to database matti_intility_500 
+Nov 26 16:25:22 [Info] OK
+
+Nov 26 16:25:42 [Info] 
+INITIATING UPGRADE
+
+Nov 26 16:25:42 [Info] The existing installation is located locally at /mnt/data/matti/www/intility_47/
+
+Nov 26 16:25:42 [Info] Dumping database
+
+Nov 26 16:25:43 [Info] matti_intility_470: OK (7,6 MB)
+
+Nov 26 16:25:43 [Info] Upgrading intility_5 from version 4.7.0 to version 5.0.0
+
+Nov 26 16:25:43 [Info] Checking requirements 
+Nov 26 16:25:43 [Info] OK
+
+Nov 26 16:25:43 [Info] Performing pre-upgrade checks 
+Nov 26 16:25:43 [Info] OK
+
+Nov 26 16:25:43 [Info] Checking for local distro
+
+Nov 26 16:25:43 [Info] Match found: ezpublish5-5.0.0-rc1-ee-ttl.tar.gz 
+
+Nov 26 16:25:43 [Info] Copying distro from specified location 
+Nov 26 16:25:43 [Info] OK
+
+Nov 26 16:25:43 [Info] Extracting ezpublish5-5.0.0-rc1-ee-ttl.tar.gz to /mnt/data/matti/www/
+
+Nov 26 16:25:52 [Info] OK
+
+Nov 26 16:25:52 [Info] Copying files
+
+Nov 26 16:25:59 [Info] Copying extension/ez_network 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying extension/ezcomments 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying extension/ezgmaplocation 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying extension/ezstarrating 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying extension/ezwebin 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying extension/ezwt 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying extension/nmbase 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying extension/nmcontentclass 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying extension/nmdesignintility 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying extension/nmdesignintility_sites_repo 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying extension/nmstrictfixes 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying extension/swark 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying settings/override/audit.ini.append.php 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying settings/override/content.ini.append.php 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying settings/override/ezmultiupload.ini.append.php 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying settings/override/ezoe_attributes.ini.append.php 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying settings/override/ezxml.ini.append.php 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying settings/override/forum.ini.append.php 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying settings/override/i18n.ini.append.php 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying settings/override/image.ini.append.php 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying settings/override/menu.ini.append.php 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying settings/override/site.ini.append.php 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying settings/override/site.ini.append.php~ 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying settings/override/viewcache.ini.append.php 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying settings/siteaccess/admin 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying settings/siteaccess/eng 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying settings/siteaccess/ezwebin 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying settings/siteaccess/nor 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying settings/siteaccess/site_admin 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying design/admin2 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying design/ezwebin_site 
+Nov 26 16:26:00 [Info] OK 
+
+Nov 26 16:26:00 [Info] Copying databases
+
+Nov 26 16:26:00 [Info] Creating database matti_intility_500 
+Nov 26 16:26:00 [Info] OK
+
+Nov 26 16:26:00 [Info] Applying /mnt/data/matti/www/intility_47/_dbdump/matti_intility_470.sql to database matti_intility_500 
+Nov 26 16:26:08 [Info] OK
+
+Nov 26 16:26:08 [Info] Could not find current database info
+
+Nov 26 16:26:08 [Info] Could not find current database info
+
+Nov 26 16:26:08 [Info] Could not find current database info
+
+Nov 26 16:26:08 [Info] Could not find current database info
+
+Nov 26 16:26:08 [Info] Could not find current database info
+
+Nov 26 16:26:08 [Info] Could not find current database info
+
+Nov 26 16:26:08 [Info] end of updateDBConnections()
+
+Nov 26 16:26:08 [Info] Running upgrades for v. 5.0.0
+
+Nov 26 16:26:08 [Info] Upgrade function createRequiredDirectoriesFor500 
+Nov 26 16:26:08 [Info] run
+
+Nov 26 16:26:08 [Info] Upgrade function updateDBForVersion 
+Nov 26 16:26:08 [Info] run
+
+Nov 26 16:26:08 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-4.7.0-to-5.0.0alpha1.sql to database matti_intility_500 
+Nov 26 16:26:08 [Info] OK
+
+Nov 26 16:26:08 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-5.0.0alpha1-to-5.0.0beta1.sql to database matti_intility_500 
+Nov 26 16:26:08 [Info] OK
+
+Nov 26 16:26:08 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-5.0.0beta1-to-5.0.0beta2.sql to database matti_intility_500 
+Nov 26 16:26:09 [Info] OK
+
+Nov 26 16:26:09 [Info] Upgrade function execute500Scripts 
+Nov 26 16:26:09 [Info] run
+
+Nov 26 16:26:09 [Info] Running script update/common/scripts/5.0/deduplicatecontentstategrouplanguage.php  -snor
+
+Nov 26 16:26:09 [Info] OK
+
+Nov 26 16:26:09 [Info] Running script update/common/scripts/5.0/restorexmlrelations.php  -snor
+
+Nov 26 16:26:09 [Info] OK
+
+Nov 26 16:26:09 [Info] Running script update/common/scripts/5.0/disablesuspicioususers.php  -snor
+
+Nov 26 16:26:09 [Info] OK
+
+Nov 26 16:26:09 [Info] Running script bin/php/ezpgenerateautoloads.php --extension  -snor
+
+Nov 26 16:26:10 [Info] OK
+
+Nov 26 16:26:10 [Info] Upgrade function generateYmlConfigAndSymlink 
+Nov 26 16:26:10 [Info] run
+
+Nov 26 16:26:10 [Info] Running script ezpublish/console ezpublish:configure --env=dev 'site' 'site_admin'  -snor
+
+Nov 26 16:26:11 [Info] OK
+
+Nov 26 16:26:11 [Info] Running script ezpublish/console ezpublish:configure --env=prod 'site' 'site_admin'  -snor
+
+Nov 26 16:26:13 [Info] OK
+
+Nov 26 16:26:13 [Info] Running script ezpublish/console assets:install --symlink web  -snor
+
+Nov 26 16:26:13 [Info] OK
+
+Nov 26 16:26:13 [Info] Running script ezpublish/console ezpublish:legacy:assets_install --symlink web  -snor
+
+Nov 26 16:26:14 [Info] OK
+
+Nov 26 16:26:14 [Info] Upgrade function generateAutoLoads 
+Nov 26 16:26:14 [Info] run
+
+Nov 26 16:26:14 [Info] Running script bin/php/ezpgenerateautoloads.php --extension  -snor
+
+Nov 26 16:26:14 [Info] OK
+
+Nov 26 16:26:14 [Info] Upgrade function generateAutoLoadsKernel 
+Nov 26 16:26:14 [Info] run
+
+Nov 26 16:26:14 [Info] Running script bin/php/ezpgenerateautoloads.php --kernel  -snor
+
+Nov 26 16:26:14 [Info] OK
+
+Nov 26 16:26:14 [Info] Upgrade function clearCache 
+Nov 26 16:26:14 [Info] run
+
+Nov 26 16:26:14 [Info] Running script bin/php/ezcache.php --clear-all --purge  -snor
+
+Nov 26 16:26:24 [Info] OK
+
+Nov 26 16:26:24 [Info] Granting DB user matti access to database matti_intility_500 
+Nov 26 16:26:24 [Info] OK
+
+Nov 26 16:26:24 [Info] Running modfix script 
+Nov 26 16:26:24 [Info] OK
+
+Nov 26 16:26:24 [Info] Giving 777 permissions to the var/ directory 
+Nov 26 16:26:24 [Info] OK
+
+Nov 26 16:26:24 [Info] Deleted database dump from the old site 
+Nov 26 16:26:24 [Info] OK
+
+Nov 26 16:26:24 [Warning] Remember to set up the cronjobs for the upgraded site.
+
+Nov 26 16:26:24 [Warning] You need to clear the cache!
+
+
+Nov 26 16:26:24 [Warning] The log file is locateded in lib/ezcopy/logs/
+
+Nov 26 16:26:24 [Warning] Remember to install eZ Network! Follow the instructions here: /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/extension/ez_network/docs/INSTALL.txt
+
+Nov 26 16:26:24 [Warning] 
+You opted not to copy the var/ directory. You will need to do this manually.
+
+Nov 26 16:26:24 [Warning] You can do this by running the following command:
+
+Nov 26 16:26:24 [Warning] cp -R /mnt/data/matti/www/intility_47/var/* /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/var
+
+
+Nov 26 16:26:24 [Info] Upgrade from v. 4.7.0 to v. 5.0.0 complete
+
+
+Nov 26 16:27:19 [Info] 
+INITIATING UPGRADE
+
+Nov 26 16:27:19 [Info] The existing installation is located locally at /mnt/data/matti/www/intility_47/
+
+Nov 26 16:27:19 [Info] Dumping database
+
+Nov 26 16:27:21 [Info] matti_intility_470: OK (7,6 MB)
+
+Nov 26 16:27:21 [Info] Upgrading intility_5 from version 4.7.0 to version 5.0.0
+
+Nov 26 16:27:21 [Info] Checking requirements 
+Nov 26 16:27:21 [Info] OK
+
+Nov 26 16:27:21 [Info] Performing pre-upgrade checks 
+Nov 26 16:27:21 [Info] OK
+
+Nov 26 16:27:21 [Info] Checking for local distro
+
+Nov 26 16:27:21 [Info] Match found: ezpublish5-5.0.0-rc1-ee-ttl.tar.gz 
+
+Nov 26 16:27:21 [Info] Copying distro from specified location 
+Nov 26 16:27:21 [Info] OK
+
+Nov 26 16:27:22 [Info] Extracting ezpublish5-5.0.0-rc1-ee-ttl.tar.gz to /mnt/data/matti/www/
+
+Nov 26 16:27:33 [Info] OK
+
+Nov 26 16:27:33 [Info] Copying files
+
+Nov 26 16:27:36 [Info] Copying extension/ez_network 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying extension/ezcomments 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying extension/ezgmaplocation 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying extension/ezstarrating 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying extension/ezwebin 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying extension/ezwt 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying extension/nmbase 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying extension/nmcontentclass 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying extension/nmdesignintility 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying extension/nmdesignintility_sites_repo 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying extension/nmstrictfixes 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying extension/swark 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying settings/override/audit.ini.append.php 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying settings/override/content.ini.append.php 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying settings/override/ezmultiupload.ini.append.php 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying settings/override/ezoe_attributes.ini.append.php 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying settings/override/ezxml.ini.append.php 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying settings/override/forum.ini.append.php 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying settings/override/i18n.ini.append.php 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying settings/override/image.ini.append.php 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying settings/override/menu.ini.append.php 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying settings/override/site.ini.append.php 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying settings/override/site.ini.append.php~ 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying settings/override/viewcache.ini.append.php 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying settings/siteaccess/admin 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying settings/siteaccess/eng 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying settings/siteaccess/ezwebin 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying settings/siteaccess/nor 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying settings/siteaccess/site_admin 
+Nov 26 16:27:36 [Info] OK 
+
+Nov 26 16:27:36 [Info] Copying design/admin2 
+Nov 26 16:27:37 [Info] OK 
+
+Nov 26 16:27:37 [Info] Copying design/ezwebin_site 
+Nov 26 16:27:37 [Info] OK 
+
+Nov 26 16:27:37 [Info] Copying databases
+
+Nov 26 16:27:37 [Info] Creating database matti_intility_500 
+Nov 26 16:27:37 [Info] OK
+
+Nov 26 16:27:37 [Info] Applying /mnt/data/matti/www/intility_47/_dbdump/matti_intility_470.sql to database matti_intility_500 
+Nov 26 16:27:42 [Info] OK
+
+Nov 26 16:28:54 [Info] 
+INITIATING UPGRADE
+
+Nov 26 16:28:54 [Info] The existing installation is located locally at /mnt/data/matti/www/intility_47/
+
+Nov 26 16:28:54 [Info] Dumping database
+
+Nov 26 16:28:55 [Info] matti_intility_470: OK (7,6 MB)
+
+Nov 26 16:28:55 [Info] Upgrading intility_5 from version 4.7.0 to version 5.0.0
+
+Nov 26 16:28:55 [Info] Checking requirements 
+Nov 26 16:28:55 [Info] OK
+
+Nov 26 16:28:55 [Info] Performing pre-upgrade checks 
+Nov 26 16:28:55 [Info] OK
+
+Nov 26 16:28:55 [Info] Checking for local distro
+
+Nov 26 16:28:55 [Info] Match found: ezpublish5-5.0.0-rc1-ee-ttl.tar.gz 
+
+Nov 26 16:28:55 [Info] Copying distro from specified location 
+Nov 26 16:28:55 [Info] OK
+
+Nov 26 16:28:55 [Info] Extracting ezpublish5-5.0.0-rc1-ee-ttl.tar.gz to /mnt/data/matti/www/
+
+Nov 26 16:29:06 [Info] OK
+
+Nov 26 16:29:06 [Info] Copying files
+
+Nov 26 16:29:08 [Info] Copying extension/ez_network 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying extension/ezcomments 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying extension/ezgmaplocation 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying extension/ezstarrating 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying extension/ezwebin 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying extension/ezwt 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying extension/nmbase 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying extension/nmcontentclass 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying extension/nmdesignintility 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying extension/nmdesignintility_sites_repo 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying extension/nmstrictfixes 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying extension/swark 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying settings/override/audit.ini.append.php 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying settings/override/content.ini.append.php 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying settings/override/ezmultiupload.ini.append.php 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying settings/override/ezoe_attributes.ini.append.php 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying settings/override/ezxml.ini.append.php 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying settings/override/forum.ini.append.php 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying settings/override/i18n.ini.append.php 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying settings/override/image.ini.append.php 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying settings/override/menu.ini.append.php 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying settings/override/site.ini.append.php 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying settings/override/site.ini.append.php~ 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying settings/override/viewcache.ini.append.php 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying settings/siteaccess/admin 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying settings/siteaccess/eng 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying settings/siteaccess/ezwebin 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying settings/siteaccess/nor 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying settings/siteaccess/site_admin 
+Nov 26 16:29:08 [Info] OK 
+
+Nov 26 16:29:08 [Info] Copying design/admin2 
+Nov 26 16:29:09 [Info] OK 
+
+Nov 26 16:29:09 [Info] Copying design/ezwebin_site 
+Nov 26 16:29:09 [Info] OK 
+
+Nov 26 16:29:09 [Info] Copying databases
+
+Nov 26 16:29:09 [Info] Creating database matti_intility_500 
+Nov 26 16:29:09 [Info] OK
+
+Nov 26 16:29:09 [Info] Applying /mnt/data/matti/www/intility_47/_dbdump/matti_intility_470.sql to database matti_intility_500 
+Nov 26 16:29:13 [Info] OK
+
+Nov 26 16:29:13 [Info] Could not find current database info
+
+Nov 26 16:29:13 [Info] Could not find current database info
+
+Nov 26 16:29:13 [Info] Could not find current database info
+
+Nov 26 16:29:13 [Info] Could not find current database info
+
+Nov 26 16:29:13 [Info] Could not find current database info
+
+Nov 26 16:29:13 [Info] Could not find current database info
+
+Nov 26 16:29:13 [Info] end of updateDBConnections()
+
+Nov 26 16:29:13 [Info] Running upgrades for v. 5.0.0
+
+Nov 26 16:29:13 [Info] Upgrade function createRequiredDirectoriesFor500 
+Nov 26 16:29:13 [Info] run
+
+Nov 26 16:29:13 [Info] Upgrade function updateDBForVersion 
+Nov 26 16:29:13 [Info] run
+
+Nov 26 16:29:13 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-4.7.0-to-5.0.0alpha1.sql to database matti_intility_500 
+Nov 26 16:29:13 [Info] OK
+
+Nov 26 16:29:13 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-5.0.0alpha1-to-5.0.0beta1.sql to database matti_intility_500 
+Nov 26 16:29:13 [Info] OK
+
+Nov 26 16:29:13 [Info] Applying /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/update/database/mysql/5.0/unstable/dbupdate-5.0.0beta1-to-5.0.0beta2.sql to database matti_intility_500 
+Nov 26 16:29:13 [Info] OK
+
+Nov 26 16:29:13 [Info] Upgrade function execute500Scripts 
+Nov 26 16:29:13 [Info] run
+
+Nov 26 16:29:13 [Info] Running script update/common/scripts/5.0/deduplicatecontentstategrouplanguage.php  -snor
+
+Nov 26 16:29:13 [Info] OK
+
+Nov 26 16:29:13 [Info] Running script update/common/scripts/5.0/restorexmlrelations.php  -snor
+
+Nov 26 16:29:14 [Info] OK
+
+Nov 26 16:29:14 [Info] Running script update/common/scripts/5.0/disablesuspicioususers.php  -snor
+
+Nov 26 16:29:14 [Info] OK
+
+Nov 26 16:29:14 [Info] Running script bin/php/ezpgenerateautoloads.php --extension  -snor
+
+Nov 26 16:29:15 [Info] OK
+
+Nov 26 16:29:15 [Info] Upgrade function generateYmlConfigAndSymlink 
+Nov 26 16:29:15 [Info] run
+
+Nov 26 16:29:15 [Info] Running script ezpublish/console ezpublish:configure --env=dev 'site' 'site_admin'  -snor
+
+Nov 26 16:29:16 [Info] OK
+
+Nov 26 16:29:16 [Info] Running script ezpublish/console ezpublish:configure --env=prod 'site' 'site_admin'  -snor
+
+Nov 26 16:29:18 [Info] OK
+
+Nov 26 16:29:18 [Info] Running script ezpublish/console assets:install --symlink web  -snor
+
+Nov 26 16:29:18 [Info] OK
+
+Nov 26 16:29:18 [Info] Running script ezpublish/console ezpublish:legacy:assets_install --symlink web  -snor
+
+Nov 26 16:29:19 [Info] OK
+
+Nov 26 16:29:19 [Info] Upgrade function generateAutoLoads 
+Nov 26 16:29:19 [Info] run
+
+Nov 26 16:29:19 [Info] Running script bin/php/ezpgenerateautoloads.php --extension  -snor
+
+Nov 26 16:29:19 [Info] OK
+
+Nov 26 16:29:19 [Info] Upgrade function generateAutoLoadsKernel 
+Nov 26 16:29:19 [Info] run
+
+Nov 26 16:29:19 [Info] Running script bin/php/ezpgenerateautoloads.php --kernel  -snor
+
+Nov 26 16:29:19 [Info] OK
+
+Nov 26 16:29:19 [Info] Upgrade function clearCache 
+Nov 26 16:29:19 [Info] run
+
+Nov 26 16:29:19 [Info] Running script bin/php/ezcache.php --clear-all --purge  -snor
+
+Nov 26 16:29:27 [Info] OK
+
+Nov 26 16:29:27 [Info] Granting DB user matti access to database matti_intility_500 
+Nov 26 16:29:27 [Info] OK
+
+Nov 26 16:29:27 [Info] Running modfix script 
+Nov 26 16:29:28 [Info] OK
+
+Nov 26 16:29:28 [Info] Giving 777 permissions to the var/ directory 
+Nov 26 16:29:28 [Info] OK
+
+Nov 26 16:29:28 [Info] Deleted database dump from the old site 
+Nov 26 16:29:28 [Info] OK
+
+Nov 26 16:29:28 [Warning] Remember to set up the cronjobs for the upgraded site.
+
+Nov 26 16:29:28 [Warning] You need to clear the cache!
+
+
+Nov 26 16:29:28 [Warning] The log file is locateded in lib/ezcopy/logs/
+
+Nov 26 16:29:28 [Warning] Remember to install eZ Network! Follow the instructions here: /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/extension/ez_network/docs/INSTALL.txt
+
+Nov 26 16:29:28 [Warning] 
+You opted not to copy the var/ directory. You will need to do this manually.
+
+Nov 26 16:29:28 [Warning] You can do this by running the following command:
+
+Nov 26 16:29:28 [Warning] cp -R /mnt/data/matti/www/intility_47/var/* /mnt/data/matti/www/ezpublish-5.0.0//ezpublish_legacy/var
+
+
+Nov 26 16:29:28 [Info] Upgrade from v. 4.7.0 to v. 5.0.0 complete
+
+

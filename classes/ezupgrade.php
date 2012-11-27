@@ -528,8 +528,9 @@ class eZUpgrade extends eZCopy
 			// get instance of current ini file
 			$ini = $this->iniInstance($iniFile, $basePath=$this->getNewDistroFolderName());
 
-			$oldDBName = false;
 
+			$oldDBName = false;
+			
 			// get current db name
 			if ( $ini->hasVariable( 'DatabaseSettings', 'Database' ) )
 			{

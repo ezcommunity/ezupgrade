@@ -1,0 +1,52 @@
+#!/usr/bin/php
+<?php
+
+// the phpsecure library throws some notices - ignore these
+error_reporting(E_ALL ^ E_NOTICE);
+
+include_once('classes/ezcopy.php');
+
+// instanciate objects
+$ezcopy 	= new eZCopy;
+
+// if no arguments are provided
+if($argc < 2)
+{
+	$ezcopy->describeUsage();
+	exit();
+}
+
+// get details from arguments
+$action		= $argv[1];
+$identifier = $argv[2];
+
+// if additional arguments are provided
+if(isset($argv[3]))
+{
+	$ezcopy->setAdditionalOptions(array_slice($argv, 3));
+}
+
+$actionArray = array(	'download-install' 	=> 'actionInstallAll', 
+						'download'			=> 'actionDownloadAll', 
+						'install'			=> 'actionInstall', 
+						'delete'			=> 'actionDeleteAll', 
+						'update-db'			=> 'actionUpdateDatabase',
+						'download-db'		=> 'actionDownloadDatabase', 
+						'list'				=> 'actionListInstallations',
+						'package'			=> 'actionCreateArchive' );
+
+// if we know what to do with this action
+if(isset($actionArray[$action]))
+{
+	$ezcopy->initializeDBHandler($identifier);
+	$methodName = $actionArray[$action];
+	$ezcopy->$methodName($identifier);
+}
+
+// if the action is unknown
+else
+{
+	$ezcopy->log("Unknown action", 'critical');
+}
+
+?>

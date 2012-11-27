@@ -1,0 +1,2 @@
+* The logger to file often writes the same lines multiple times.
+* In some versions modifx can not find var/webdav
