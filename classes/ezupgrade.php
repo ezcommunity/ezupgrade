@@ -528,9 +528,8 @@ class eZUpgrade extends eZCopy
 			// get instance of current ini file
 			$ini = $this->iniInstance($iniFile, $basePath=$this->getNewDistroFolderName());
 
-
 			$oldDBName = false;
-			
+
 			// get current db name
 			if ( $ini->hasVariable( 'DatabaseSettings', 'Database' ) )
 			{
@@ -838,7 +837,7 @@ class eZUpgrade extends eZCopy
 		}
 		
 		// unpacking archice
-		$this->extractArchive($filename, $this->upgradeData['upgrade_base_path']);
+		$this->extractArchive($filename, $this->upgradeData['upgrade_base_path'], $newDistroFolderName);
 		
 		// set the correct installation path
 		$this->data['new_distro_folder_name'] = $this->upgradeData['upgrade_base_path'] . $newDistroFolderName . '/';
@@ -1002,36 +1001,63 @@ class eZUpgrade extends eZCopy
 		return true;
 	}
 	
-	function extractArchive($sourceFile, $destinationPath)
+	function rrmDir($directory)
 	{
+		return exec(sprintf('rm -rf %s', $directory));
+	}
+
+	function extractArchive($sourceFile, $destinationPath, $newDistroFolderName)
+	{
+
+		$pathToSourceFile = $destinationPath . $sourceFile;
+		if(!file_exists($pathToSourceFile))
+		{
+			$this->log("Path to source file not found " . $pathToSourceFile .". Aborting\n", 'critical');
+			exit();
+		}
+
+		$pathToDistroFolder = $destinationPath . $newDistroFolderName;
+		if(is_dir($pathToDistroFolder))
+		{
+			$this->output->formats->question->color = 'yellow';
+			$question = new ezcConsoleQuestionDialog( $this->output );
+			$question->options->text = "Directory " . $pathToDistroFolder ." already exists. Do you want to overwrite it?";
+			$question->options->format = 'question';
+			$question->options->showResults = true;
+			$question->options->validator = new ezcConsoleQuestionDialogCollectionValidator(
+				array( "y", "n" ),
+				"n",
+				ezcConsoleQuestionDialogCollectionValidator::CONVERT_LOWER
+				);
+			
+			if(ezcConsoleDialogViewer::displayDialog( $question ) != 'y')
+			{
+				$this->log("Aborting\n", 'critical');
+				exit();		
+			}
+			else
+			{
+				$this->rrmDir($pathToDistroFolder);
+			}
+		}
+
 		switch( $this->get_mime_type($sourceFile) )
 		{
-			case 'application/x-gzip':
-				$cmd = 'tar xfvz';
-				break;
 			case 'application/x-tar':
-				$cmd = 'tar xfv';
+			case 'application/x-gzip':
+				$cmd = 'mkdir '.$newDistroFolderName.'; tar --extract --file=' . $sourceFile . ' --strip-components=1 --directory=' . $newDistroFolderName;
 				break;
 			case 'application/zip':
-				$cmd = 'unzip';
+				$cmd = 'cd' . $destinationPath . '/; unzip '. $sourceFile;
 				break;
 			default:
 				$this->log("File MIME type of " . $sourceFile . " not recognized. Aborting\n", 'critical');
 				exit();
 		}
 
-		//$destinationPath .= 'ezpublish-' . $this->upgradeToVersion;
-		$newDirName = 'ezpublish-' . $this->upgradeToVersion;
-		$extraCmd = " --transform 's/ezpublish5/ezpublish-".$this->upgradeToVersion."/'";
-		if(version_compare($this->upgradeToVersion, '5.0.0', '<')) {
-			$extraCmd = '';
-		}
-
-
-
 		$this->log("Extracting " . $sourceFile . " to " . $destinationPath . "\n");
 
-		exec("cd " . $destinationPath . "/; mkdir " . $newDirName . '; ' . $cmd . ' ' . $sourceFile . $extraCmd);
+		exec($cmd);
 		
 		$this->log("OK\n", 'ok');
 	}
