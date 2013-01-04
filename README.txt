@@ -90,6 +90,8 @@ FROM		TO
 3.9.3		3.10.1
 3.10.1		4.0.3
 4.0.3		4.5.0
+4.5.0   4.7.0
+4.7.0   5.0.0
 
 Tip! Instead of upgrading on the server, you could upgrade on your computer
 (if its unix based). Download a webserver that have both php4 and php5 set the

@@ -13,6 +13,7 @@ class upgradeFunctions
 	var $dbBasePath;
 	var $dbType;
 	var $upgrade;
+	var $output;
 	
 	function upgradeFunctions(&$upgrade)
 	{
@@ -20,9 +21,10 @@ class upgradeFunctions
 		$this->dbBasePath 	= 'update/database/';
 		$this->dbType		= 'mysql';
 		$this->upgrade		= $upgrade;
+		$this->output 		= new ezcConsoleOutput();
 	}
 	
-	function runScript($script, $version=5)
+	function runScript($script, $version=5, $root=null)
 	{
 		$phpCli = $this->upgrade->getPathToPHP( $version );
 		$siteAccessList = $this->upgrade->upgradeData['siteaccess_list'];
@@ -30,11 +32,19 @@ class upgradeFunctions
 		{
 			foreach( $siteAccessList as $siteaccess )
 			{
-				$this->upgrade->log("Running script $script  -s" . $siteaccess);
+				$this->upgrade->log("Running script $script  -s" . $siteaccess . "\n");
 				
 				$this->upgrade->checkpoint( 'Running script: ' . $script );
-				
-				exec("cd " . $this->upgrade->getNewDistroFolderName() . ";".$phpCli." " . $script . " -s" . $siteaccess);
+				$distroDir = $this->upgrade->getNewDistroFolderName();
+				if($root)
+				{
+					$distroDir = $root;
+					exec("cd " . $distroDir . ";".$phpCli." " . $script);
+				}
+				else
+				{
+					exec("cd " . $distroDir . ";".$phpCli." " . $script . " -s" . $siteaccess);
+				}
 				$this->upgrade->log("OK\n", 'ok');
 			}
 		}
@@ -70,6 +80,7 @@ class upgradeFunctions
 		
 		// for each database
 		$dbList = $this->upgrade->fetchDbList();
+
 		foreach($dbList as $db)
 		{
 			$newDBName = $this->upgrade->dbhandler->createNewDBName( $db['Database']);
@@ -82,6 +93,17 @@ class upgradeFunctions
 	{
 		$versionStep 	= explode('.', $version );
 		$sqlFile		= 'sql/' . $versionStep[0] . '.' . $versionStep[1] . '/' . $version .'.sql';
+		/*
+		if(version_compare($version, '5.0.0', '>=')) {
+			$sqlFiles = glob($this->upgrade->getNewDistroFolderName() . 'update/database/mysql/' . $versionStep[0] . '.' . $versionStep[1] . '/unstable/*.sql');
+			sort($sqlFiles);
+			foreach($sqlFiles as $file) {
+				$this->updateDB('update/database/mysql/' . $versionStep[0] . '.' . $versionStep[1] . '/unstable/' . basename($file));
+			}
+		} else {
+			$this->updateDB( $sqlFile, false );
+		}
+		*/
 		$this->updateDB( $sqlFile, false );
 	}
 	function updateDBOE501()
@@ -364,6 +386,112 @@ class upgradeFunctions
 		$this->manualAttention(' ');
 
 		$this->manualAttention('If this installation is using eZ Webin or eZ Flow, these will need to be updated.');
+	}
+
+
+	public function execute500Scripts()
+	{
+		$scripts = array(
+			'update/common/scripts/5.0/deduplicatecontentstategrouplanguage.php',
+			'update/common/scripts/5.0/restorexmlrelations.php',
+			'update/common/scripts/5.0/disablesuspicioususers.php',
+			'bin/php/ezpgenerateautoloads.php --extension'
+			);
+
+		foreach($scripts as $script)
+		{
+			$this->runScript($script, 5, $this->upgrade->getNewDistroFolderName());
+		}
+	}
+
+
+	public function generateYmlConfigAndSymlink()
+	{
+		$this->output->formats->string->color = 'yellow';
+
+		while(1)
+		{
+			$group = new ezcConsoleQuestionDialog( $this->output );
+			$group->options->text = 'Type in the name of the siteaccess group:';
+			$group->options->format = 'string';
+			$groupInput = ezcConsoleDialogViewer::displayDialog( $group );
+			if(strlen($groupInput) > 0)
+				break;
+		}
+
+		while(1)
+		{
+			$admin = new ezcConsoleQuestionDialog( $this->output );
+			$admin->options->text = 'Type in the name of the admin siteaccess:';
+			$admin->options->format = 'string';
+			$adminInput = ezcConsoleDialogViewer::displayDialog( $admin );
+			if(strlen($adminInput) > 0)
+				break;
+		}
+
+		foreach(array('dev','prod') as $envName)
+		{
+			$cmd = sprintf("ezpublish/console ezpublish:configure --env=%s '%s' '%s'", $envName, stripslashes($groupInput), stripslashes($adminInput));
+
+			$this->runScript($cmd, 5, $this->upgrade->getNewDistroRoot());
+		}
+
+		$scripts = array(
+			'ezpublish/console assets:install --symlink web --relative',
+			'ezpublish/console ezpublish:legacy:assets_install --symlink web --relative'
+			);
+ 
+		// Generate symlinks for assets (var)
+		foreach($scripts as $script)
+		{
+			$this->runScript($script, 5, $this->upgrade->getNewDistroRoot());
+		}
+	}
+
+
+	public function createRequiredDirectoriesFor500()
+	{
+		$directories = array(
+			'ezpublish/cache',
+			'ezpublish/logs',
+			'ezpublish/config',
+			'ezpublish_legacy/design',
+			'ezpublish_legacy/extension',
+			'ezpublish_legacy/settings',
+			'ezpublish_legacy/var'
+			);
+
+		foreach($directories as $directory)
+		{
+			$newDirName = $this->upgrade->getNewDistroRoot() . $directory;
+			if(!file_exists($newDirName))
+			{
+				exec('mkdir ' . $newDirName);
+			}
+			exec('chmod -R a+rwx ' . $newDirName);
+		}
+	}
+
+	public function clearCacheFor500()
+	{
+		$phpCli = $this->upgrade->getPathToPHP( 5 );
+		$scripts = array(
+			'find {ezpublish/{cache,logs,config},ezpublish_legacy/{design,extension,settings,var}} -type d | xargs chmod -R 777',
+			'find {ezpublish/{cache,logs,config},ezpublish_legacy/{design,extension,settings,var}} -type f | xargs chmod -R 666',
+			$phpCli . ' ezpublish/console cache:clear --env dev',
+			$phpCli . ' ezpublish/console cache:clear --env prod',
+			);
+
+		foreach($scripts as $script)
+		{
+			exec('cd ' . $this->upgrade->getNewDistroRoot() . ';' . $script);
+		}
+	}
+
+	public function upgrade500Notice()
+	{
+		$this->manualAttention('Finish the installation by configuring the virtual host setup as explained on:');
+		$this->manualAttention('http://doc.ez.no/eZ-Publish/Technical-manual/5.x/Installation/Virtual-host-setup');
 	}
 }
 
