@@ -201,20 +201,27 @@ class eZUpgrade extends eZCopy
 			$this->log("No database dump directory exists. The upgrade process expects a directory named " . $this->getDBDumpLocation() . " which contains the DB dumps as SQL files.", 'critical');
 		}
 	}
-	
-	function getNewDistroFolderName()
+
+	function getNewDistroRoot()
 	{
 		if(isset($this->data['new_distro_folder_name']))
 		{
-			return $this->data['new_distro_folder_name'];
+			return $this->data['new_distro_folder_name'] . '/';
 		}
 		else
 		{
 			$this->data['new_distro_folder_name'] = $this->upgradeData['upgrade_base_path'] . 'ezpublish-' . $this->upgradeToVersion . '/';
 			
 			$this->log('The folder name for the new distro is not specified. Guessing ' . $this->data['new_distro_folder_name'] . "\n", 'warning');
-			
-			return $this->data['new_distro_folder_name'];
+		}
+	}
+	
+	function getNewDistroFolderName()
+	{			
+		if(version_compare($this->upgradeToVersion, '5.0.0', '<')) {
+			return $this->getNewDistroRoot();
+		} else {
+			return $this->getNewDistroRoot() . 'ezpublish_legacy/';
 		}
 	}
 	function isLocalInstallation()
@@ -497,12 +504,12 @@ class eZUpgrade extends eZCopy
 	
 	function getSiteIniFiles()
 	{
-		$siteIniList = ezcBaseFile::findRecursive( $this->getNewDistroPathName() . "settings", array( '@site\.ini@' ) );
+		$siteIniList = ezcBaseFile::findRecursive( $this->getNewDistroFolderName() . "settings", array( '@site\.ini@' ) );
 		
 		$result = array();
 		foreach($siteIniList as $siteIniFilePath)
 		{
-			$parts = explode($this->getNewDistroPathName(), $siteIniFilePath);
+			$parts = explode($this->getNewDistroFolderName(), $siteIniFilePath);
 			
 			// ignore the default site.ini and any temp INI files
 			if($parts[1] != 'settings/site.ini' AND $parts[1] != '/settings/site.ini' AND !strstr($siteIniFilePath, '~') AND !strstr($siteIniFilePath, '.LCK') AND !strpos($parts[1], '.svn'))
@@ -510,23 +517,25 @@ class eZUpgrade extends eZCopy
 				$result[] = $parts[1];
 			}
 		}
+
 		return $result;
 	}
 	function updateDBConnections()
 	{
 		foreach( $this->getSiteIniFiles() as $iniFile )
 		{
+			echo "Processing $iniFile\n";
 			// get instance of current ini file
-			$ini = $this->iniInstance($iniFile);
-			
+			$ini = $this->iniInstance($iniFile, $basePath=$this->getNewDistroFolderName());
+
 			$oldDBName = false;
-			
+
 			// get current db name
 			if ( $ini->hasVariable( 'DatabaseSettings', 'Database' ) )
 			{
 				$oldDBName = $ini->variable('DatabaseSettings', 'Database');
 			}
-			
+
 			// provided that the INI file has a database name set
 			if($oldDBName !== false )
 			{
@@ -538,7 +547,7 @@ class eZUpgrade extends eZCopy
 					$ini->setVariable('DatabaseSettings', 'Database', $this->dbhandler->createNewDBName($oldDBName));
 					
 					// save changes in ini file
-					if(!$ini->save() )
+					if(!$ini->save())
 					{
 						$this->checkpoint('updateDBConnections()', 'Please change your database name in ' . $iniFile, true);
 					}
@@ -548,6 +557,10 @@ class eZUpgrade extends eZCopy
 					$this->checkpoint('updateDBConnections()', "The file '" . $iniFile . "' must be manually updated to use database '" . $this->dbhandler->createNewDBName($oldDBName) . "'. Then clear the cache.", true);
 				}
 				
+			}
+			else
+			{
+				$this->log("Could not find current database info\n");
 			}
 		}
 		$this->log( "end of updateDBConnections()\n" );
@@ -824,7 +837,7 @@ class eZUpgrade extends eZCopy
 		}
 		
 		// unpacking archice
-		$this->extractArchive($filename, $this->upgradeData['upgrade_base_path']);
+		$this->extractArchive($filename, $this->upgradeData['upgrade_base_path'], $newDistroFolderName);
 		
 		// set the correct installation path
 		$this->data['new_distro_folder_name'] = $this->upgradeData['upgrade_base_path'] . $newDistroFolderName . '/';
@@ -988,18 +1001,54 @@ class eZUpgrade extends eZCopy
 		return true;
 	}
 	
-	function extractArchive($sourceFile, $destinationPath)
+	function rrmDir($directory)
 	{
+		return exec(sprintf('rm -rf %s', $directory));
+	}
+
+	function extractArchive($sourceFile, $destinationPath, $newDistroFolderName)
+	{
+
+		$pathToSourceFile = $destinationPath . $sourceFile;
+		if(!file_exists($pathToSourceFile))
+		{
+			$this->log("Path to source file not found " . $pathToSourceFile .". Aborting\n", 'critical');
+			exit();
+		}
+
+		$pathToDistroFolder = $destinationPath . $newDistroFolderName;
+		if(is_dir($pathToDistroFolder))
+		{
+			$this->output->formats->question->color = 'yellow';
+			$question = new ezcConsoleQuestionDialog( $this->output );
+			$question->options->text = "Directory " . $pathToDistroFolder ." already exists. Do you want to overwrite it?";
+			$question->options->format = 'question';
+			$question->options->showResults = true;
+			$question->options->validator = new ezcConsoleQuestionDialogCollectionValidator(
+				array( "y", "n" ),
+				"n",
+				ezcConsoleQuestionDialogCollectionValidator::CONVERT_LOWER
+				);
+			
+			if(ezcConsoleDialogViewer::displayDialog( $question ) != 'y')
+			{
+				$this->log("Aborting\n", 'critical');
+				exit();		
+			}
+			else
+			{
+				$this->rrmDir($pathToDistroFolder);
+			}
+		}
+
 		switch( $this->get_mime_type($sourceFile) )
 		{
-			case 'application/x-gzip':
-				$cmd = 'tar xfvz';
-				break;
 			case 'application/x-tar':
-				$cmd = 'tar xfv';
+			case 'application/x-gzip':
+				$cmd = 'mkdir '.$newDistroFolderName.'; tar --extract --file=' . $sourceFile . ' --strip-components=1 --directory=' . $newDistroFolderName;
 				break;
 			case 'application/zip':
-				$cmd = 'unzip';
+				$cmd = 'cd' . $destinationPath . '/; unzip '. $sourceFile;
 				break;
 			default:
 				$this->log("File MIME type of " . $sourceFile . " not recognized. Aborting\n", 'critical');
@@ -1008,7 +1057,7 @@ class eZUpgrade extends eZCopy
 
 		$this->log("Extracting " . $sourceFile . " to " . $destinationPath . "\n");
 
-		exec("cd " . $destinationPath . "/;" . $cmd . ' '. $sourceFile);
+		exec($cmd);
 		
 		$this->log("OK\n", 'ok');
 	}
