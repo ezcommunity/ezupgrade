@@ -74,6 +74,9 @@ php ezupgrade [account_username]
 If you haven't set up any accounts, run `php ezupgrade` to initialize the
 configuration wizard.
 
+NOTE ABOUT UPGRADING FROM VERSION 4.X TO 5.0.0
+
+eZUpgrade supports upgrading from any 4.x version to 5.0.0.
 
 IMPORTANT NOTE ABOUT UPGRADING FROM VERSION 3.x TO 4.x
 
@@ -89,9 +92,6 @@ FROM		TO
 3.8.7		3.9.3
 3.9.3		3.10.1
 3.10.1		4.0.3
-4.0.3		4.5.0
-4.5.0   4.7.0
-4.7.0   5.0.0
 
 Tip! Instead of upgrading on the server, you could upgrade on your computer
 (if its unix based). Download a webserver that have both php4 and php5 set the
